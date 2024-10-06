@@ -1,21 +1,18 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-// An attempt to re-create Recount :)
+// An attempt to re-create Recount :) kinda...
 
-// Store per combat damage for each party member
-// Storing amount of damage per character per source
-// DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+// Store this data to calculate damage:
+// 1. For each party member store damage dealt   per combat   DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+// 2.                                             per level   DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+// 3.                                               overall   DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_Damage)
+
+// And this data to calculate average DPR (damage per round)
+// 4. For each party member store combat rounds completed count  per combat   DB_PPMeter_LastCombatRounds((CHARACTER)_Character, (INTEGER)_Count)
+// 5.                                                             per level   DB_PPMeter_LastLevelRounds((CHARACTER)_Character, (INTEGER)_Count)
+// 6.                                                               overall   DB_PPMeter_OverallRounds((CHARACTER)_Character, (INTEGER)_Count)
 KBSECTION
-//REGION Add passive to each party member if it does not have it
-IF
-DB_PartyMembers((CHARACTER)_Character)
-AND
-HasPassive(_Character, "PPMeterToggleable", 0)
-THEN
-AddPassive(_Character, "PPMeterToggleable");
-//END_REGION
-
 //REGION PROC_PPMeter_CreateCombatToltalIfNeeded
 PROC
 PROC_PPMeter_CreateCombatToltalIfNeeded((CHARACTER)_Character)
@@ -49,7 +46,17 @@ ConcatenateInteger("Total: ", _NewTotal, _msg)
 THEN
 NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageTotal);
 DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewTotal);
+
 DebugText(_Character, _msg);
+//END_REGION
+
+//REGION Add PPMeterToggleable passive to each party member if it does not have it
+IF
+DB_PartyMembers((CHARACTER)_Character)
+AND
+HasPassive(_Character, "PPMeterToggleable", 0)
+THEN
+AddPassive(_Character, "PPMeterToggleable");
 //END_REGION
 
 //REGION On new combat set DB total damage to 0 or create DB
@@ -94,7 +101,6 @@ ConcatenateInteger("My damage in combat is ", _Damage, _msg)
 THEN
 DebugText(_Character, _msg);
 //END_REGION
-
 
 //REGION ShowOff spell casted - make caster say its stats
 IF
