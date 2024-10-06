@@ -79,6 +79,7 @@ PROC_PPMeter_AddDamage((CHARACTER)_AttackerOwner, (INTEGER)_DamageAmount);
 //DebugText(_AttackerOwner, _msg);
 
 
+// For debugging - make everyone say their stats
 IF
 TextEvent("pp")
 AND
@@ -90,21 +91,17 @@ ConcatenateInteger("My damage in combat is ", _Damage, _msg)
 THEN
 DebugText(_Character, _msg);
 
-/*
+
+// ShowOff spell casted - make caster say its stats
 IF
-CombatEnded(_)
+CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PartyMembers(_Character)
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
 AND
-DB_PPMeter_LastCombatTotalDamage((GUIDSTRING)_Character, (INTEGER)_Damage)
-AND
-ConcatenateInteger("Total damage: ", _Damage, _msg)
+ConcatenateInteger("My damage in combat is ", _Damage, _msg)
 THEN
 DebugText(_Character, _msg);
-DebugLog(_msg);
 
-
-*/
 EXITSECTION
 
 ENDEXITSECTION
