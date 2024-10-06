@@ -8,8 +8,9 @@
 /Data/Projects/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
 /Data/Editor/Mods/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
 
-# some strange binary file
+# some strange auto-generated binary files
 /Data/Mods/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/GUI/metadata.lsf
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/GUI/metadata.lsf
 
 # BG3 stock files
 /Data/*.pak
