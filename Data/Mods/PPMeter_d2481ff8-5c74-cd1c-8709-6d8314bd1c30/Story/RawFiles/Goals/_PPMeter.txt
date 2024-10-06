@@ -101,6 +101,16 @@ THEN
 AddPassive(_Character, "PPMeterToggleable");
 //END_REGION
 
+//REGION On leveled up reset damage on level
+IF
+LeveledUp((CHARACTER)_Character)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage(_Character);
+PROC_SetZero_DB_PPMeter_LastLevelTotalDamage(_Character);
+//END_REGION
+
 //REGION On new combat set DB total damage to 0 or create DB
 IF
 EnteredCombat((CHARACTER)_Character, _)
