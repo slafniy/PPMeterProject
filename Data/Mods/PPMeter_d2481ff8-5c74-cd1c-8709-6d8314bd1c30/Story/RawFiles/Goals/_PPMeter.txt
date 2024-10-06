@@ -1,0 +1,111 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+// An attempt to re-create Recount :)
+
+// Store per combat damage for each party member
+// Storing amount of damage per character per source
+// DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+KBSECTION
+//REGION Add passive to each party member if it does not have it
+IF
+DB_PartyMembers((CHARACTER)_Character)
+AND
+HasPassive(_Character, "PPMeterToggleable", 0)
+THEN
+AddPassive(_Character, "PPMeterToggleable");
+//END_REGION
+
+
+PROC
+PROC_PPMeter_CreateCombatToltalIfNeeded((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_LastCombatTotalDamage(_Character, _)
+THEN
+DB_PPMeter_LastCombatTotalDamage(_Character, 0);
+DebugText(_Character, "NEW DB");
+
+
+PROC
+PROC_PPMeter_SetCombatToltalToZero((CHARACTER)_Character)
+AND
+DB_PPMeter_LastCombatTotalDamage(_Character, _Damage)
+THEN
+NOT DB_PPMeter_LastCombatTotalDamage(_Character, _Damage);
+DB_PPMeter_LastCombatTotalDamage(_Character, 0);
+DebugText(_Character, "ZERO");
+
+
+PROC
+PROC_PPMeter_AddDamage((CHARACTER)_Character, (INTEGER)_Damage)
+AND
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageTotal)
+AND
+IntegerSum(_Damage, _DamageTotal, _NewTotal)
+AND
+ConcatenateInteger("Total: ", _NewTotal, _msg)
+THEN
+NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageTotal);
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewTotal);
+DebugText(_Character, _msg);
+
+
+// On new combat set DB total damage to 0 or create DB
+IF
+EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_CreateCombatToltalIfNeeded(_Character);
+PROC_PPMeter_SetCombatToltalToZero(_Character);
+
+
+IF
+AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
+AND
+DB_PartyMembers(_AttackerOwner)
+AND
+_DamageAmount > 0
+AND
+ConcatenateInteger("Vlomil ", _DamageAmount, _msg1)
+AND
+Concatenate(_msg1, " damagi ", _msg2)
+AND
+Concatenate(_msg2, " ot ", _msg3)
+AND
+Concatenate(_msg3, _DamageCause, _msg)
+THEN
+PROC_PPMeter_AddDamage((CHARACTER)_AttackerOwner, (INTEGER)_DamageAmount);
+//DebugText(_AttackerOwner, _msg);
+
+
+IF
+TextEvent("pp")
+AND
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+AND
+DB_PartyMembers(_Character)
+AND
+ConcatenateInteger("My damage in combat is ", _Damage, _msg)
+THEN
+DebugText(_Character, _msg);
+
+/*
+IF
+CombatEnded(_)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_LastCombatTotalDamage((GUIDSTRING)_Character, (INTEGER)_Damage)
+AND
+ConcatenateInteger("Total damage: ", _Damage, _msg)
+THEN
+DebugText(_Character, _msg);
+DebugLog(_msg);
+
+
+*/
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "__Start"
