@@ -13,9 +13,9 @@ INITSECTION
 // 5.                                                             per level   DB_PPMeter_LastLevelRounds((CHARACTER)_Character, (INTEGER)_Count)
 // 6.                                                               overall   DB_PPMeter_OverallRounds((CHARACTER)_Character, (INTEGER)_Count)
 KBSECTION
-//REGION PROC_PPMeter_CreateCombatToltalIfNeeded
+//REGION PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage
 PROC
-PROC_PPMeter_CreateCombatToltalIfNeeded((CHARACTER)_Character)
+PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character)
 AND
 NOT DB_PPMeter_LastCombatTotalDamage(_Character, _)
 THEN
@@ -23,9 +23,9 @@ DB_PPMeter_LastCombatTotalDamage(_Character, 0);
 //DebugText(_Character, "NEW DB");
 //END_REGION
 
-//REGION PROC_PPMeter_SetCombatToltalToZero
+//REGION PROC_SetZero_DB_PPMeter_LastCombatTotalDamage
 PROC
-PROC_PPMeter_SetCombatToltalToZero((CHARACTER)_Character)
+PROC_SetZero_DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character)
 AND
 DB_PPMeter_LastCombatTotalDamage(_Character, _Damage)
 THEN
@@ -65,8 +65,8 @@ EnteredCombat((CHARACTER)_Character, _)
 AND
 DB_PartyMembers(_Character)
 THEN
-PROC_PPMeter_CreateCombatToltalIfNeeded(_Character);
-PROC_PPMeter_SetCombatToltalToZero(_Character);
+PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage(_Character);
+PROC_SetZero_DB_PPMeter_LastCombatTotalDamage(_Character);
 //END_REGION
 
 //REGION Handle damage dealt
