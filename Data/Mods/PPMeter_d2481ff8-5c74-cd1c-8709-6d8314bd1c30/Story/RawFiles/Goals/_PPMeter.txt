@@ -4,7 +4,7 @@ INITSECTION
 // An attempt to re-create Recount :) kinda...
 
 // Store this data to calculate damage:
-// 1. For each party member store damage dealt   per combat   DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+// 1. For each party member store damage dealt   per combat   DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage, (INTEGER)_Rounds, (REAL)_DPR)
 // 2.                                             per level   DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
 // 3.                                               overall   DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_Damage)
 // 4.                                               per day   DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_Damage)
@@ -19,9 +19,9 @@ KBSECTION
 PROC
 PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character)
 AND
-NOT DB_PPMeter_LastCombatTotalDamage(_Character, _)
+NOT DB_PPMeter_LastCombatTotalDamage(_Character, _, _, _)
 THEN
-DB_PPMeter_LastCombatTotalDamage(_Character, 0);
+DB_PPMeter_LastCombatTotalDamage(_Character, 0, 0, 0.0);
 //END_REGION
 
 //REGION PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage
@@ -55,10 +55,10 @@ DB_PPMeter_OverallDamage(_Character, 0);
 PROC
 PROC_SetZero_DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character)
 AND
-DB_PPMeter_LastCombatTotalDamage(_Character, _Damage)
+DB_PPMeter_LastCombatTotalDamage(_Character, _Damage, _Rounds, _DPR)
 THEN
-NOT DB_PPMeter_LastCombatTotalDamage(_Character, _Damage);
-DB_PPMeter_LastCombatTotalDamage(_Character, 0);
+NOT DB_PPMeter_LastCombatTotalDamage(_Character, _Damage, _Rounds, _DPR);
+DB_PPMeter_LastCombatTotalDamage(_Character, 0, 0, 0.0);
 //END_REGION
 
 //REGION PROC_SetZero_DB_PPMeter_LastLevelTotalDamage
@@ -85,13 +85,14 @@ DB_PPMeter_LastDayDamage(_Character, 0);
 PROC
 PROC_PPMeter_AddDamage((CHARACTER)_Character, (INTEGER)_Damage)
 AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat)
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat, (INTEGER)_OldRoundsCombat, _OldDPRCombat)
 AND
 DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel)
 AND
 DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_OldDay)
-AND
+AND 
 DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_OldOverall)
+
 AND
 IntegerSum(_Damage, _OldCombat, _NewCombat)
 AND
@@ -100,10 +101,23 @@ AND
 IntegerSum(_Damage, _OldLevel, _NewLevel)
 AND
 IntegerSum(_Damage, _OldOverall, _NewOverall)
+
+AND
+IntegerSum(1, _OldRoundsCombat, _NewRoundsCombat)
+AND
+IntegerToReal(_NewCombat, _NewCombalReal)
+AND
+IntegerToReal(_NewRoundsCombat, _NewRoundsCombatReal)
+AND
+RealDivide(_NewCombalReal, _NewRoundsCombatReal, _NewDPRCombat)
+AND
+ConcatenateReal("Combat DPR: ", _NewDPRCombat, _MsgDPR)
+
 THEN
 
-NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat);
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewCombat);
+NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat, (INTEGER)_OldRoundsCombat,(REAL)_OldDPRCombat);
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewCombat, (INTEGER)_NewRoundsCombat, (REAL)_NewDPRCombat);
+DebugText(_Character, _MsgDPR);
 
 NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_OldDay);
 DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_NewDay);
@@ -171,24 +185,12 @@ THEN
 PROC_PPMeter_AddDamage((CHARACTER)_AttackerOwner, (INTEGER)_DamageAmount);
 //END_REGION
 
-//REGION For debugging - make everyone say their stats
-IF
-TextEvent("pp")
-AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
-AND
-DB_PartyMembers(_Character)
-AND
-ConcatenateInteger("My damage in combat is ", _Damage, _msg)
-THEN
-DebugText(_Character, _msg);
-//END_REGION
 
 //REGION ShowOff spell casted but no damage records yet
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, _)
+NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, _, _, _)
 AND
 NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, _)
 AND
@@ -203,7 +205,7 @@ DebugText(_Character, "I need to fight some enemy first");
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageCombat)
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageCombat, _, _)
 AND
 ConcatenateInteger("COMBAT: ", _DamageCombat, _msgCombat)
 AND
