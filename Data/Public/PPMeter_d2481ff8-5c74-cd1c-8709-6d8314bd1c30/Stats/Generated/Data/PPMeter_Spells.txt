@@ -1,3 +1,4 @@
+# Toggleable passive, if is ON gives PPMeterBOOST boost
 new entry "PPMeterToggleable"
 type "PassiveData"
 data "DisplayName" "h44a1887fg2726g4958gad4ag6cf1b1c74e73;1"
@@ -10,6 +11,7 @@ data "ToggleOffFunctors" "RemoveStatus(PPMeterBOOST)"
 data "ToggleGroup" "PPMeterToggleable"
 
 
+# Gives PPMeterShowOff spell
 new entry "PPMeterBOOST"
 type "StatusData"
 data "StatusType" "BOOST"
@@ -18,9 +20,13 @@ data "Boosts" "UnlockSpell(PPMeterShowOff)"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
 
+# Does nothing only triggers Osiris event
 new entry "PPMeterShowOff"
 type "SpellData"
-data "SpellType" "Target"
+data "SpellType" "Shout"
 data "DisplayName" ";1"
 data "Description" ";1"
-data "SpellAnimation" "50e7cd15-5b95-47e9-b6f8-ed7900d23d9d,,;,,;289b4f53-3ca5-4dff-a1d4-e84a84a283f0,,;772a34bf-06c1-43ee-ae7b-1a1ffd3fef9e,,;03239618-40c7-47ab-a7b4-d2e0b111e5f7,,;,,;bc09e561-370b-4307-88d7-6462b6fbabec,,;,,;,,"
+data "SpellSuccess" ""
+data "CastTextEvent" "Cast"
+data "VerbalIntent" "Utility"
+data "SpellAnimation" "5e57443f-284e-47b2-915e-5b6417db269c,,;925779e7-8bf6-4d56-8c4d-42c3bc01c60c,,;50398f4e-dd82-4d6a-ad43-aedd578543d9,,;1c343e00-7e6c-4f53-b588-074a3cdb9c7d,,;5bcdefbb-2194-46c2-ac77-0b2d8472a5f7,,;,,;0b07883a-08b8-43b6-ac18-84dc9e84ff50,,;,,;,,"
