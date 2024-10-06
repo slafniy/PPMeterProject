@@ -123,13 +123,13 @@ DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_NewOverall);
 //END_REGION
 
 
-//REGION Add PPMeterToggleable passive to each party member if it does not have it
+//REGION Add PPMeterBOOST to each party member if it does not have it (gives Show Off spell)
 IF
 DB_PartyMembers((CHARACTER)_Character)
 AND
-HasPassive(_Character, "PPMeterToggleable", 0)
+HasAppliedStatus(_Character, "PPMeterBOOST", 0)
 THEN
-AddPassive(_Character, "PPMeterToggleable");
+ApplyStatus(_Character, "PPMeterBOOST", -1.0, 1, _Character);
 //END_REGION
 
 //REGION On Long Rest

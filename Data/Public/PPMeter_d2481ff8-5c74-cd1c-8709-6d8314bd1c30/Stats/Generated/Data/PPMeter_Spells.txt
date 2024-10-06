@@ -1,14 +1,14 @@
 # Toggleable passive, if is ON gives PPMeterBOOST boost
-new entry "PPMeterToggleable"
-type "PassiveData"
-data "DisplayName" "h44a1887fg2726g4958gad4ag6cf1b1c74e73;1"
-data "Description" "h4ef2dbccg4f08g4b2cg8732ge2add39e3541;1"
-data "ExtraDescription" "h1ed29414gb35ag4667g9235g051480b99d66;1"
-data "Icon" "PassiveFeature_Generic_Info"
-data "Properties" "IsToggled;ToggledDefaultOn;ToggledDefaultAddToHotbar;"
-data "ToggleOnFunctors" "ApplyStatus(PPMeterBOOST,100,-1)"
-data "ToggleOffFunctors" "RemoveStatus(PPMeterBOOST)"
-data "ToggleGroup" "PPMeterToggleable"
+#new entry "PPMeterToggleable"
+#type "PassiveData"
+#data "DisplayName" "h44a1887fg2726g4958gad4ag6cf1b1c74e73;1"
+#data "Description" "h4ef2dbccg4f08g4b2cg8732ge2add39e3541;1"
+#data "ExtraDescription" "h1ed29414gb35ag4667g9235g051480b99d66;1"
+#data "Icon" "PassiveFeature_Generic_Info"
+#data "Properties" "IsToggled;ToggledDefaultOn;ToggledDefaultAddToHotbar;"
+#data "ToggleOnFunctors" "ApplyStatus(PPMeterBOOST,100,-1)"
+#data "ToggleOffFunctors" "RemoveStatus(PPMeterBOOST)"
+#data "ToggleGroup" "PPMeterToggleable"
 
 
 # Gives PPMeterShowOff spell
