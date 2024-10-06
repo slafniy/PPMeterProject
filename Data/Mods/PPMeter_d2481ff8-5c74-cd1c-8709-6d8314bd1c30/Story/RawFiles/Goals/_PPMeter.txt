@@ -7,11 +7,13 @@ INITSECTION
 // 1. For each party member store damage dealt   per combat   DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
 // 2.                                             per level   DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
 // 3.                                               overall   DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_Damage)
+// 4.                                               per day   DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_Damage)
 
 // And this data to calculate average DPR (damage per round)
-// 4. For each party member store combat rounds completed count  per combat   DB_PPMeter_LastCombatRounds((CHARACTER)_Character, (INTEGER)_Count)
-// 5.                                                             per level   DB_PPMeter_LastLevelRounds((CHARACTER)_Character, (INTEGER)_Count)
-// 6.                                                               overall   DB_PPMeter_OverallRounds((CHARACTER)_Character, (INTEGER)_Count)
+// 1. For each party member store combat rounds completed count  per combat   DB_PPMeter_LastCombatRounds((CHARACTER)_Character, (INTEGER)_Count)
+// 2.                                                             per level   DB_PPMeter_LastLevelRounds((CHARACTER)_Character, (INTEGER)_Count)
+// 3.                                                               overall   DB_PPMeter_OverallRounds((CHARACTER)_Character, (INTEGER)_Count)
+// 4.                                                               per day   DB_PPMeter_LastDayRounds((CHARACTER)_Character, (INTEGER)_Count)
 KBSECTION
 //REGION PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage
 PROC
@@ -31,6 +33,16 @@ NOT DB_PPMeter_LastLevelTotalDamage(_Character, _)
 THEN
 DB_PPMeter_LastLevelTotalDamage(_Character, 0);
 DebugText(_Character, "NEW DB LEVEL");
+//END_REGION
+
+//REGION PROC_EnsureCreated_DB_PPMeter_LastDayDamage
+PROC
+PROC_EnsureCreated_DB_PPMeter_LastDayDamage((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, _)
+THEN
+DB_PPMeter_LastDayDamage(_Character, 0);
+DebugText(_Character, "NEW DB DAY");
 //END_REGION
 
 //REGION PROC_EnsureCreated_DB_PPMeter_OverallDamage
@@ -65,6 +77,17 @@ DB_PPMeter_LastLevelTotalDamage(_Character, 0);
 DebugText(_Character, "ZERO - LEVEL");
 //END_REGION
 
+//REGION PROC_SetZero_DB_PPMeter_LastDayDamage
+PROC
+PROC_SetZero_DB_PPMeter_LastDayDamage((CHARACTER)_Character)
+AND
+DB_PPMeter_LastDayDamage(_Character, _Damage)
+THEN
+NOT DB_PPMeter_LastDayDamage(_Character, _Damage);
+DB_PPMeter_LastDayDamage(_Character, 0);
+DebugText(_Character, "ZERO - DAY");
+//END_REGION
+
 //REGION PROC_PPMeter_AddDamage
 PROC
 PROC_PPMeter_AddDamage((CHARACTER)_Character, (INTEGER)_Damage)
@@ -73,16 +96,24 @@ DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat)
 AND
 DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel)
 AND
+DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_OldDay)
+AND
 DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_OldOverall)
 AND
 IntegerSum(_Damage, _OldCombat, _NewCombat)
+AND
+IntegerSum(_Damage, _OldDay, _NewDay)
 AND
 IntegerSum(_Damage, _OldLevel, _NewLevel)
 AND
 IntegerSum(_Damage, _OldOverall, _NewOverall)
 THEN
+
 NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat);
 DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewCombat);
+
+NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_OldDay);
+DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_NewDay);
 
 NOT DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel);
 DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_NewLevel);
@@ -101,6 +132,16 @@ THEN
 AddPassive(_Character, "PPMeterToggleable");
 //END_REGION
 
+//REGION On Long Rest
+IF
+LongRestFinished()
+AND
+DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
+THEN
+PROC_EnsureCreated_DB_PPMeter_LastDayDamage(_Character);
+PROC_SetZero_DB_PPMeter_LastDayDamage(_Character);
+//END_REGION
+
 //REGION On leveled up reset damage on level
 IF
 LeveledUp((CHARACTER)_Character)
@@ -111,7 +152,7 @@ PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage(_Character);
 PROC_SetZero_DB_PPMeter_LastLevelTotalDamage(_Character);
 //END_REGION
 
-//REGION On new combat set DB total damage to 0 or create DB
+//REGION On new combat set DB total damage to 0 and ensure DBs per level, overall and day exists
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND
@@ -121,6 +162,7 @@ THEN
 PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage(_Character);
 PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage(_Character);
 PROC_EnsureCreated_DB_PPMeter_OverallDamage(_Character);
+PROC_EnsureCreated_DB_PPMeter_LastDayDamage(_Character);
 
 PROC_SetZero_DB_PPMeter_LastCombatTotalDamage(_Character);
 //END_REGION
@@ -157,6 +199,10 @@ DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageCombat)
 AND
 ConcatenateInteger("COMBAT: ", _DamageCombat, _msgCombat)
 AND
+DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_DamageDay)
+AND
+ConcatenateInteger("DAY: ", _DamageDay, _msgDay)
+AND
 DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_DamageLevel)
 AND
 ConcatenateInteger("LEVEL: ", _DamageLevel, _msgLevel)
@@ -166,6 +212,7 @@ AND
 ConcatenateInteger("OVERALL: ", _DamageOverall, _msgOverall)
 THEN
 DebugText(_Character, _msgCombat);
+DebugText(_Character, _msgDay);
 DebugText(_Character, _msgLevel);
 DebugText(_Character, _msgOverall);
 //END_REGION
