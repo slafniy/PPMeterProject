@@ -20,7 +20,27 @@ AND
 NOT DB_PPMeter_LastCombatTotalDamage(_Character, _)
 THEN
 DB_PPMeter_LastCombatTotalDamage(_Character, 0);
-//DebugText(_Character, "NEW DB");
+DebugText(_Character, "NEW DB COMBAT");
+//END_REGION
+
+//REGION PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage
+PROC
+PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_LastLevelTotalDamage(_Character, _)
+THEN
+DB_PPMeter_LastLevelTotalDamage(_Character, 0);
+DebugText(_Character, "NEW DB LEVEL");
+//END_REGION
+
+//REGION PROC_EnsureCreated_DB_PPMeter_OverallDamage
+PROC
+PROC_EnsureCreated_DB_PPMeter_OverallDamage((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_OverallDamage(_Character, _)
+THEN
+DB_PPMeter_OverallDamage(_Character, 0);
+DebugText(_Character, "NEW DB OVERALL");
 //END_REGION
 
 //REGION PROC_SetZero_DB_PPMeter_LastCombatTotalDamage
@@ -31,24 +51,46 @@ DB_PPMeter_LastCombatTotalDamage(_Character, _Damage)
 THEN
 NOT DB_PPMeter_LastCombatTotalDamage(_Character, _Damage);
 DB_PPMeter_LastCombatTotalDamage(_Character, 0);
-//DebugText(_Character, "ZERO");
+DebugText(_Character, "ZERO - COMBAT");
+//END_REGION
+
+//REGION PROC_SetZero_DB_PPMeter_LastLevelTotalDamage
+PROC
+PROC_SetZero_DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character)
+AND
+DB_PPMeter_LastLevelTotalDamage(_Character, _Damage)
+THEN
+NOT DB_PPMeter_LastLevelTotalDamage(_Character, _Damage);
+DB_PPMeter_LastLevelTotalDamage(_Character, 0);
+DebugText(_Character, "ZERO - LEVEL");
 //END_REGION
 
 //REGION PROC_PPMeter_AddDamage
 PROC
 PROC_PPMeter_AddDamage((CHARACTER)_Character, (INTEGER)_Damage)
 AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageTotal)
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat)
 AND
-IntegerSum(_Damage, _DamageTotal, _NewTotal)
+DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel)
 AND
-ConcatenateInteger("Total: ", _NewTotal, _msg)
+DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_OldOverall)
+AND
+IntegerSum(_Damage, _OldCombat, _NewCombat)
+AND
+IntegerSum(_Damage, _OldLevel, _NewLevel)
+AND
+IntegerSum(_Damage, _OldOverall, _NewOverall)
 THEN
-NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageTotal);
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewTotal);
+NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat);
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewCombat);
 
-DebugText(_Character, _msg);
+NOT DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel);
+DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_NewLevel);
+
+NOT DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_OldOverall);
+DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_NewOverall);
 //END_REGION
+
 
 //REGION Add PPMeterToggleable passive to each party member if it does not have it
 IF
@@ -65,7 +107,11 @@ EnteredCombat((CHARACTER)_Character, _)
 AND
 DB_PartyMembers(_Character)
 THEN
+// Make sure we have databases for damage data
 PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage(_Character);
+PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage(_Character);
+PROC_EnsureCreated_DB_PPMeter_OverallDamage(_Character);
+
 PROC_SetZero_DB_PPMeter_LastCombatTotalDamage(_Character);
 //END_REGION
 
@@ -76,17 +122,8 @@ AND
 DB_PartyMembers(_AttackerOwner)
 AND
 _DamageAmount > 0
-AND
-ConcatenateInteger("Vlomil ", _DamageAmount, _msg1)
-AND
-Concatenate(_msg1, " damagi ", _msg2)
-AND
-Concatenate(_msg2, " ot ", _msg3)
-AND
-Concatenate(_msg3, _DamageCause, _msg)
 THEN
 PROC_PPMeter_AddDamage((CHARACTER)_AttackerOwner, (INTEGER)_DamageAmount);
-//DebugText(_AttackerOwner, _msg);
 //END_REGION
 
 //REGION For debugging - make everyone say their stats
@@ -106,11 +143,21 @@ DebugText(_Character, _msg);
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
+DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageCombat)
 AND
-ConcatenateInteger("My damage in combat is ", _Damage, _msg)
+ConcatenateInteger("COMBAT: ", _DamageCombat, _msgCombat)
+AND
+DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_DamageLevel)
+AND
+ConcatenateInteger("LEVEL: ", _DamageLevel, _msgLevel)
+AND
+DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_DamageOverall)
+AND
+ConcatenateInteger("OVERALL: ", _DamageOverall, _msgOverall)
 THEN
-DebugText(_Character, _msg);
+DebugText(_Character, _msgCombat);
+DebugText(_Character, _msgLevel);
+DebugText(_Character, _msgOverall);
 //END_REGION
 
 EXITSECTION
