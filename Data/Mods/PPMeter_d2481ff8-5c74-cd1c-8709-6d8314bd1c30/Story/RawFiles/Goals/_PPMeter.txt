@@ -127,9 +127,9 @@ DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_NewOverall);
 IF
 DB_PartyMembers((CHARACTER)_Character)
 AND
-HasAppliedStatus(_Character, "PPMeterBOOST", 0)
+HasSpell(_Character, "PPMeterShowOff", 0)
 THEN
-ApplyStatus(_Character, "PPMeterBOOST", -1.0, 1, _Character);
+AddSpell(_Character, "PPMeterShowOff", 1);
 //END_REGION
 
 //REGION On Long Rest
