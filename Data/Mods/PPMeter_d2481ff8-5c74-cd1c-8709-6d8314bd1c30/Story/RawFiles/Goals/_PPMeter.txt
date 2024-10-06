@@ -16,16 +16,17 @@ THEN
 AddPassive(_Character, "PPMeterToggleable");
 //END_REGION
 
-
+//REGION PROC_PPMeter_CreateCombatToltalIfNeeded
 PROC
 PROC_PPMeter_CreateCombatToltalIfNeeded((CHARACTER)_Character)
 AND
 NOT DB_PPMeter_LastCombatTotalDamage(_Character, _)
 THEN
 DB_PPMeter_LastCombatTotalDamage(_Character, 0);
-DebugText(_Character, "NEW DB");
+//DebugText(_Character, "NEW DB");
+//END_REGION
 
-
+//REGION PROC_PPMeter_SetCombatToltalToZero
 PROC
 PROC_PPMeter_SetCombatToltalToZero((CHARACTER)_Character)
 AND
@@ -33,9 +34,10 @@ DB_PPMeter_LastCombatTotalDamage(_Character, _Damage)
 THEN
 NOT DB_PPMeter_LastCombatTotalDamage(_Character, _Damage);
 DB_PPMeter_LastCombatTotalDamage(_Character, 0);
-DebugText(_Character, "ZERO");
+//DebugText(_Character, "ZERO");
+//END_REGION
 
-
+//REGION PROC_PPMeter_AddDamage
 PROC
 PROC_PPMeter_AddDamage((CHARACTER)_Character, (INTEGER)_Damage)
 AND
@@ -48,9 +50,9 @@ THEN
 NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageTotal);
 DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewTotal);
 DebugText(_Character, _msg);
+//END_REGION
 
-
-// On new combat set DB total damage to 0 or create DB
+//REGION On new combat set DB total damage to 0 or create DB
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND
@@ -58,8 +60,9 @@ DB_PartyMembers(_Character)
 THEN
 PROC_PPMeter_CreateCombatToltalIfNeeded(_Character);
 PROC_PPMeter_SetCombatToltalToZero(_Character);
+//END_REGION
 
-
+//REGION Handle damage dealt
 IF
 AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
 AND
@@ -77,9 +80,9 @@ Concatenate(_msg3, _DamageCause, _msg)
 THEN
 PROC_PPMeter_AddDamage((CHARACTER)_AttackerOwner, (INTEGER)_DamageAmount);
 //DebugText(_AttackerOwner, _msg);
+//END_REGION
 
-
-// For debugging - make everyone say their stats
+//REGION For debugging - make everyone say their stats
 IF
 TextEvent("pp")
 AND
@@ -90,9 +93,10 @@ AND
 ConcatenateInteger("My damage in combat is ", _Damage, _msg)
 THEN
 DebugText(_Character, _msg);
+//END_REGION
 
 
-// ShowOff spell casted - make caster say its stats
+//REGION ShowOff spell casted - make caster say its stats
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
@@ -101,6 +105,7 @@ AND
 ConcatenateInteger("My damage in combat is ", _Damage, _msg)
 THEN
 DebugText(_Character, _msg);
+//END_REGION
 
 EXITSECTION
 
