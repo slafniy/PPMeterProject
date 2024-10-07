@@ -1,120 +1,111 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
+// PPMeter mod by slafniy
 // An attempt to re-create Recount :) kinda...
 
-// Store this data to calculate damage:
-// 1. For each party member store damage dealt   per combat   DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
-// 2.                                             per level   DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_Damage)
-// 3.                                               overall   DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_Damage)
-// 4.                                               per day   DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_Damage)
 
-// And this data to calculate average DPR (damage per round)
-// 1. For each party member store combat rounds completed count  per combat   DB_PPMeter_LastCombatRounds((CHARACTER)_Character, (INTEGER)_Count)
-// 2.                                                             per level   DB_PPMeter_LastLevelRounds((CHARACTER)_Character, (INTEGER)_Count)
-// 3.                                                               overall   DB_PPMeter_OverallRounds((CHARACTER)_Character, (INTEGER)_Count)
-// 4.                                                               per day   DB_PPMeter_LastDayRounds((CHARACTER)_Character, (INTEGER)_Count)
+// Data Lifetime enum
+DB_PPMeter_Lifetime("Round");
+DB_PPMeter_Lifetime("Combat");
+DB_PPMeter_Lifetime("Day");
+DB_PPMeter_Lifetime("Level");
+DB_PPMeter_Lifetime("Act");
+DB_PPMeter_Lifetime("Overall");
+
+// Data stats type enum
+DB_PPMeter_StatsType("Damage");
+DB_PPMeter_StatsType("RoundsCount");
+
+// INTEGER Tables (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
+NOT DB_PPMeter_DataInteger((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0);
 KBSECTION
-//REGION PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage
+// Set accumulated data to zero for given character and lifetime for each StatsType
+// Reset DB_PPMeter_DataInteger
+//REGION PROC_Reset_LifetimeData
 PROC
-PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character)
+PROC_Reset_LifetimeData((CHARACTER)_Character, (STRING)_Lifetime)
 AND
-NOT DB_PPMeter_LastCombatTotalDamage(_Character, _)
+DB_PPMeter_StatsType(_StatsType)
+AND
+QRY_PPMeter_EnsureInitialized_DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // making sure it exists in DB_PPMeter_Lifetime enum
+AND
+DB_PPMeter_StatsType(_StatsType)  // making sure it exists in DB_PPMeter_StatsType enum
 THEN
-DB_PPMeter_LastCombatTotalDamage(_Character, 0);
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
-//REGION PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage
-PROC
-PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character)
+// QRY ensure table per characted initialized (only once per character)
+//REGION QRY_PPMeter_EnsureInitialized_DB_PPMeter_DataInteger
+QRY
+QRY_PPMeter_EnsureInitialized_DB_PPMeter_DataInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatType)
 AND
-NOT DB_PPMeter_LastLevelTotalDamage(_Character, _)
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatType, _)
 THEN
-DB_PPMeter_LastLevelTotalDamage(_Character, 0);
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatType, 0);
 //END_REGION
 
-//REGION PROC_EnsureCreated_DB_PPMeter_LastDayDamage
+//REGION PROC_PPMeter_AddInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value)
 PROC
-PROC_EnsureCreated_DB_PPMeter_LastDayDamage((CHARACTER)_Character)
+PROC_PPMeter_AddInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value)
 AND
-NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, _)
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _OldValue)
+AND
+IntegerSum(_OldValue, _Value, _NewValue)
 THEN
-DB_PPMeter_LastDayDamage(_Character, 0);
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _NewValue);
 //END_REGION
 
-//REGION PROC_EnsureCreated_DB_PPMeter_OverallDamage
-PROC
-PROC_EnsureCreated_DB_PPMeter_OverallDamage((CHARACTER)_Character)
+//REGION Handle damage dealt
+IF
+AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
 AND
-NOT DB_PPMeter_OverallDamage(_Character, _)
+DB_PartyMembers(_AttackerOwner)
+AND
+_DamageAmount > 0
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
-DB_PPMeter_OverallDamage(_Character, 0);
+PROC_PPMeter_AddInteger(_AttackerOwner, (STRING)_Lifetime, "Damage", _DamageAmount);
 //END_REGION
 
-//REGION PROC_SetZero_DB_PPMeter_LastCombatTotalDamage
-PROC
-PROC_SetZero_DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character)
+//REGION On Long Rest
+IF
+LongRestFinished()
 AND
-DB_PPMeter_LastCombatTotalDamage(_Character, _Damage)
+DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
 THEN
-NOT DB_PPMeter_LastCombatTotalDamage(_Character, _Damage);
-DB_PPMeter_LastCombatTotalDamage(_Character, 0);
+PROC_Reset_LifetimeData(_Character, "Day");
 //END_REGION
 
-//REGION PROC_SetZero_DB_PPMeter_LastLevelTotalDamage
-PROC
-PROC_SetZero_DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character)
+//REGION On leveled up reset damage on level
+IF
+LeveledUp((CHARACTER)_Character)
 AND
-DB_PPMeter_LastLevelTotalDamage(_Character, _Damage)
+DB_PartyMembers(_Character)
 THEN
-NOT DB_PPMeter_LastLevelTotalDamage(_Character, _Damage);
-DB_PPMeter_LastLevelTotalDamage(_Character, 0);
+PROC_Reset_LifetimeData(_Character, "Level");
 //END_REGION
 
-//REGION PROC_SetZero_DB_PPMeter_LastDayDamage
-PROC
-PROC_SetZero_DB_PPMeter_LastDayDamage((CHARACTER)_Character)
+//REGION On new combat set DB total damage to 0 and ensure DBs per level, overall and day exists
+IF
+EnteredCombat((CHARACTER)_Character, _)
 AND
-DB_PPMeter_LastDayDamage(_Character, _Damage)
+DB_PartyMembers(_Character)
 THEN
-NOT DB_PPMeter_LastDayDamage(_Character, _Damage);
-DB_PPMeter_LastDayDamage(_Character, 0);
+PROC_Reset_LifetimeData(_Character, "Combat");
 //END_REGION
 
-//REGION PROC_PPMeter_AddDamage
-PROC
-PROC_PPMeter_AddDamage((CHARACTER)_Character, (INTEGER)_Damage)
+//REGION ShowOff spell casted but no damage records yet
+IF
+CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat)
-AND
-DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel)
-AND
-DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_OldDay)
-AND
-DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_OldOverall)
-AND
-IntegerSum(_Damage, _OldCombat, _NewCombat)
-AND
-IntegerSum(_Damage, _OldDay, _NewDay)
-AND
-IntegerSum(_Damage, _OldLevel, _NewLevel)
-AND
-IntegerSum(_Damage, _OldOverall, _NewOverall)
+NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, _, _)
 THEN
-
-NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_OldCombat);
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_NewCombat);
-
-NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_OldDay);
-DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_NewDay);
-
-NOT DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_OldLevel);
-DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_NewLevel);
-
-NOT DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_OldOverall);
-DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_NewOverall);
+DebugText(_Character, "I need to fight some enemy first");
 //END_REGION
-
 
 //REGION Add PPMeterBOOST to each party member if it does not have it (gives Show Off spell)
 IF
@@ -125,91 +116,22 @@ THEN
 AddSpell(_Character, "PPMeterShowOff", 1);
 //END_REGION
 
-//REGION On Long Rest
-IF
-LongRestFinished()
-AND
-DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
-THEN
-PROC_EnsureCreated_DB_PPMeter_LastDayDamage(_Character);
-PROC_SetZero_DB_PPMeter_LastDayDamage(_Character);
-//END_REGION
-
-//REGION On leveled up reset damage on level
-IF
-LeveledUp((CHARACTER)_Character)
-AND
-DB_PartyMembers(_Character)
-THEN
-PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage(_Character);
-PROC_SetZero_DB_PPMeter_LastLevelTotalDamage(_Character);
-//END_REGION
-
-//REGION On new combat set DB total damage to 0 and ensure DBs per level, overall and day exists
-IF
-EnteredCombat((CHARACTER)_Character, _)
-AND
-DB_PartyMembers(_Character)
-THEN
-// Make sure we have databases for damage data
-PROC_EnsureCreated_DB_PPMeter_LastCombatTotalDamage(_Character);
-PROC_EnsureCreated_DB_PPMeter_LastLevelTotalDamage(_Character);
-PROC_EnsureCreated_DB_PPMeter_OverallDamage(_Character);
-PROC_EnsureCreated_DB_PPMeter_LastDayDamage(_Character);
-
-PROC_SetZero_DB_PPMeter_LastCombatTotalDamage(_Character);
-//END_REGION
-
-//REGION Handle damage dealt
-IF
-AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
-AND
-DB_PartyMembers(_AttackerOwner)
-AND
-_DamageAmount > 0
-THEN
-PROC_PPMeter_AddDamage((CHARACTER)_AttackerOwner, (INTEGER)_DamageAmount);
-//END_REGION
-
-//REGION ShowOff spell casted but no damage records yet
-IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
-AND
-NOT DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, _)
-AND
-NOT DB_PPMeter_LastDayDamage((CHARACTER)_Character, _)
-AND
-NOT DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, _)
-AND
-NOT DB_PPMeter_OverallDamage((CHARACTER)_Character, _)
-THEN
-DebugText(_Character, "I need to fight some enemy first");
-//END_REGION
-
 //REGION ShowOff spell casted - make caster say its stats
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PPMeter_LastCombatTotalDamage((CHARACTER)_Character, (INTEGER)_DamageCombat)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType, _Value)
 AND
-ConcatenateInteger("COMBAT: ", _DamageCombat, _msgCombat)
+Concatenate(_Lifetime, " ", _msg1)
 AND
-DB_PPMeter_LastDayDamage((CHARACTER)_Character, (INTEGER)_DamageDay)
+Concatenate(_msg1, _StatsType, _msg2)
 AND
-ConcatenateInteger("DAY: ", _DamageDay, _msgDay)
+Concatenate(_msg2, ": ", _msg3)
 AND
-DB_PPMeter_LastLevelTotalDamage((CHARACTER)_Character, (INTEGER)_DamageLevel)
-AND
-ConcatenateInteger("LEVEL: ", _DamageLevel, _msgLevel)
-AND
-DB_PPMeter_OverallDamage((CHARACTER)_Character, (INTEGER)_DamageOverall)
-AND
-ConcatenateInteger("OVERALL: ", _DamageOverall, _msgOverall)
+ConcatenateInteger(_msg3, _Value, _msg)
 THEN
-DebugText(_Character, _msgCombat);
-DebugText(_Character, _msgDay);
-DebugText(_Character, _msgLevel);
-DebugText(_Character, _msgOverall);
+DebugText(_Character, _msg);
+//END_REGION
 EXITSECTION
 
 ENDEXITSECTION
