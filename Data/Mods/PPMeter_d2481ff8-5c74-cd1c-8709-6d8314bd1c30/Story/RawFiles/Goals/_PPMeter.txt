@@ -26,25 +26,31 @@ KBSECTION
 PROC
 PROC_Reset_LifetimeData((CHARACTER)_Character, (STRING)_Lifetime)
 AND
-DB_PPMeter_StatsType(_StatsType)
-AND
-QRY_PPMeter_EnsureInitialized_DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType)
-AND
 DB_PPMeter_Lifetime(_Lifetime)  // making sure it exists in DB_PPMeter_Lifetime enum
 AND
 DB_PPMeter_StatsType(_StatsType)  // making sure it exists in DB_PPMeter_StatsType enum
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _Value)
 THEN
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _Value);
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
+DebugText(_Character, "reset!");
 //END_REGION
 
-// QRY ensure table per characted initialized (only once per character)
-//REGION QRY_PPMeter_EnsureInitialized_DB_PPMeter_DataInteger
-QRY
-QRY_PPMeter_EnsureInitialized_DB_PPMeter_DataInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatType)
+
+//REGION PROC_OnlyOnceCreateDBs
+PROC
+PROC_OnlyOnceCreateDBs((CHARACTER)_Character)
 AND
-NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatType, _)
-THEN
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatType, 0);
+QRY_OnlyOnce("PPMeterDBsAreInitialized")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+DB_PPMeter_StatsType(_StatsType)
+THEN 
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
 //REGION PROC_PPMeter_AddInteger
@@ -107,7 +113,9 @@ EnteredCombat((CHARACTER)_Character, _)
 AND
 DB_PartyMembers(_Character)
 THEN
+PROC_OnlyOnceCreateDBs(_Character);
 PROC_Reset_LifetimeData(_Character, "Combat");
+DebugText(_Character, "Calling PROC_Reset_LifetimeData");
 //END_REGION
 
 //REGION ShowOff spell casted but no damage records yet
