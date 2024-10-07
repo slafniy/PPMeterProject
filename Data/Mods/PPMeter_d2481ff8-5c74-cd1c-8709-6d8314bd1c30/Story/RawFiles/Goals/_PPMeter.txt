@@ -47,7 +47,7 @@ THEN
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatType, 0);
 //END_REGION
 
-//REGION PROC_PPMeter_AddInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value)
+//REGION PROC_PPMeter_AddInteger
 PROC
 PROC_PPMeter_AddInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value)
 AND
@@ -55,6 +55,7 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _OldValue)
 AND
 IntegerSum(_OldValue, _Value, _NewValue)
 THEN
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _OldValue);
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _NewValue);
 //END_REGION
 
@@ -69,6 +70,17 @@ AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
 PROC_PPMeter_AddInteger(_AttackerOwner, (STRING)_Lifetime, "Damage", _DamageAmount);
+//END_REGION
+
+//REGION Handle turn start
+IF
+TurnStarted((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+THEN
+PROC_PPMeter_AddInteger(_Character, _Lifetime, "RoundsCount", 1);
 //END_REGION
 
 //REGION On Long Rest
