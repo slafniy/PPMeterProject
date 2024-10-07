@@ -34,21 +34,23 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _Value)
 THEN
 NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _Value);
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
-DebugText(_Character, "reset!");
 //END_REGION
-
 
 //REGION PROC_OnlyOnceCreateDBs
 PROC
 PROC_OnlyOnceCreateDBs((CHARACTER)_Character)
 AND
-QRY_OnlyOnce("PPMeterDBsAreInitialized")
+QRY_OnlyOnce("PPMeterDBsAreInitialized_fb453031-6bdd-49af-b8d9-ca88d42b0bb7")
 AND
 DB_PartyMembers(_Character)
 AND
 DB_PPMeter_Lifetime(_Lifetime)
 AND
 DB_PPMeter_StatsType(_StatsType)
+AND
+Concatenate(_Lifetime, _StatsType, _LifetimeStatsType)
+AND
+_LifetimeStatsType != "RoundRoundsCount"  // Pretty sure each round lasts only one round
 THEN 
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
@@ -78,7 +80,7 @@ THEN
 PROC_PPMeter_AddInteger(_AttackerOwner, (STRING)_Lifetime, "Damage", _DamageAmount);
 //END_REGION
 
-//REGION Handle turn start
+//REGION Handle turn start - count rounds
 IF
 TurnStarted((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
 AND
