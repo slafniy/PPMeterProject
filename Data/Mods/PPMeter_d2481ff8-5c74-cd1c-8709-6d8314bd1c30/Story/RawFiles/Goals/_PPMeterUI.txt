@@ -5,6 +5,8 @@ INITSECTION
 KBSECTION
 //REGION Add Show Off spell to each party member if it does not have it
 IF
+GainedControl((CHARACTER)_Character)
+AND
 DB_PartyMembers((CHARACTER)_Character)
 AND
 HasSpell(_Character, "PPMeterShowOff", 0)
