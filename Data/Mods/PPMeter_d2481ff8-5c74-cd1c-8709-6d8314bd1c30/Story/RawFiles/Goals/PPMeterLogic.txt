@@ -5,24 +5,33 @@ INITSECTION
 // An attempt to re-create Recount :) kinda...
 
 
-// Data Lifetime enum
+/*// Data Lifetime enum
 DB_PPMeter_Lifetime("Round");
 DB_PPMeter_Lifetime("Combat");
 DB_PPMeter_Lifetime("Day");
 DB_PPMeter_Lifetime("Level");
 DB_PPMeter_Lifetime("Act");
-DB_PPMeter_Lifetime("Overall");
+DB_PPMeter_Lifetime("Overall");*/
 
 // Data stats type enum
-DB_PPMeter_StatsType("Damage");
-DB_PPMeter_StatsType("RoundsCount");
+//DB_PPMeter_StatsType("Damage");
+//DB_PPMeter_StatsType("RoundsCount");
 
 // INTEGER Tables (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
-NOT DB_PPMeter_DataInteger((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0);
 
-NOT DB_PPMeter_TEMP(0);
+
 KBSECTION
-// Set accumulated data to zero for given character and lifetime for each StatsType
+//REGION Handle turn start - count rounds
+IF
+TurnStarted((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeterIncrement((CHARACTER)_Character, "Combat", "RoundsCount");
+//END_REGION
+
+
+/*// Set accumulated data to zero for given character and lifetime for each StatsType
 // Reset DB_PPMeter_DataInteger
 //REGION PROC_Reset_LifetimeData
 PROC
@@ -130,14 +139,7 @@ THEN
 DebugText(_Character, "I need to fight some enemy first");
 //END_REGION
 
-//REGION Add PPMeterBOOST to each party member if it does not have it (gives Show Off spell)
-IF
-DB_PartyMembers((CHARACTER)_Character)
-AND
-HasSpell(_Character, "PPMeterShowOff", 0)
-THEN
-AddSpell(_Character, "PPMeterShowOff", 1);
-//END_REGION
+
 
 //REGION ShowOff spell casted - make caster say its DPR
 IF
@@ -188,6 +190,7 @@ ConcatenateInteger(_msg1, _DPR, _msg)
 THEN
 DebugText(_Character, _msg);
 //END_REGION
+*/
 EXITSECTION
 
 ENDEXITSECTION

@@ -1,0 +1,28 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+//REGION Add Show Off spell to each party member if it does not have it
+IF
+DB_PartyMembers((CHARACTER)_Character)
+AND
+HasSpell(_Character, "PPMeterShowOff", 0)
+THEN
+AddSpell(_Character, "PPMeterShowOff", 1);
+//END_REGION
+
+//REGION ShowOff spell casted
+IF
+CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+AND
+DB_PPMeter_DataInteger((CHARACTER)_Character, _, _, _Val)
+AND
+ConcatenateInteger("Val in DB: ", _Val, _Msg)
+THEN
+DebugText(_Character, _Msg);
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"

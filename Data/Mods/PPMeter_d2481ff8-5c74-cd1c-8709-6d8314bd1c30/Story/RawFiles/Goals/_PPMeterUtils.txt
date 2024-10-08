@@ -1,0 +1,46 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+// INTEGER Tables format: (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
+NOT DB_PPMeter_DataInteger((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0);
+KBSECTION
+//REGION PROC_PPMeter_WriteToDB - reset DB_PPMeter_DataInteger with given params and write a new one with new value
+PROC
+PROC_PPMeter_WriteToDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_NewValue)
+THEN
+//PROC_EnsureDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName);  // create if needed
+PROC_ClearDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName);  // clean if needed 
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _NewValue); // write value
+//END_REGION
+
+//REGION PROC_ClearDB
+PROC
+PROC_ClearDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName)
+AND
+DB_PPMeter_DataInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_Value)
+THEN
+NOT DB_PPMeter_DataInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_Value);
+//END_REGION
+
+//REGION PROC_PPMeterIncrement // _Value++
+PROC
+PROC_PPMeterIncrement((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _OldValue)
+AND
+IntegerSum(_OldValue, 1, _NewValue)
+THEN
+PROC_PPMeter_WriteToDB(_Character, _Lifetime, _StatsName, _NewValue);
+
+
+PROC  // case DB doesn't exist
+PROC_PPMeterIncrement((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName)
+AND
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _)
+THEN
+PROC_PPMeter_WriteToDB(_Character, _Lifetime, _StatsName, 1);
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"
