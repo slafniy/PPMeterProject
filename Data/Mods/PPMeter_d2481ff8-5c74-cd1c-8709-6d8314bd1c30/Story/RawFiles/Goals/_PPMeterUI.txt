@@ -16,11 +16,20 @@ AddSpell(_Character, "PPMeterShowOff", 1);
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _, _, _Val)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _, _Val)
 AND
-ConcatenateInteger("Val in DB: ", _Val, _Msg)
+Concatenate(_Lifetime, " ", _msg1)
+AND
+ConcatenateInteger(_msg1, _Val, _Msg)
 THEN
 DebugText(_Character, _Msg);
+
+IF
+CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+AND
+NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, _, _)
+THEN
+DebugText(_Character, "I need to fight first!");
 //END_REGION
 EXITSECTION
 

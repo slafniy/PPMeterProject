@@ -5,17 +5,17 @@ INITSECTION
 // An attempt to re-create Recount :) kinda...
 
 
-/*// Data Lifetime enum
+// Data Lifetime enum
 DB_PPMeter_Lifetime("Round");
 DB_PPMeter_Lifetime("Combat");
-DB_PPMeter_Lifetime("Day");
+//DB_PPMeter_Lifetime("Day");
 DB_PPMeter_Lifetime("Level");
-DB_PPMeter_Lifetime("Act");
-DB_PPMeter_Lifetime("Overall");*/
+//DB_PPMeter_Lifetime("Act");
+DB_PPMeter_Lifetime("Overall");
 
 // Data stats type enum
-//DB_PPMeter_StatsType("Damage");
-//DB_PPMeter_StatsType("RoundsCount");
+DB_PPMeter_StatsType("Damage");
+DB_PPMeter_StatsType("RoundsCount");
 
 // INTEGER Tables (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
 
@@ -26,8 +26,24 @@ IF
 TurnStarted((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
 AND
 DB_PartyMembers(_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+_Lifetime != "Round"  // Its always 1 round in each round
 THEN
-PROC_PPMeterIncrement((CHARACTER)_Character, "Combat", "RoundsCount");
+PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
+//END_REGION
+
+
+//REGION On new combat - reset per-combat stats for each StatsType
+IF
+EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_ClearDB((CHARACTER)_Character, "Combat", (STRING)_StatsName);
 //END_REGION
 
 
@@ -91,17 +107,6 @@ THEN
 PROC_PPMeter_AddInteger(_AttackerOwner, (STRING)_Lifetime, "Damage", _DamageAmount);
 //END_REGION
 
-//REGION Handle turn start - count rounds
-IF
-TurnStarted((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_Lifetime(_Lifetime)
-THEN
-PROC_PPMeter_AddInteger(_Character, _Lifetime, "RoundsCount", 1);
-//END_REGION
-
 //REGION On Long Rest
 IF
 LongRestFinished()
@@ -120,15 +125,7 @@ THEN
 PROC_Reset_LifetimeData(_Character, "Level");
 //END_REGION
 
-//REGION On new combat set DB total damage to 0 and ensure DBs per level, overall and day exists
-IF
-EnteredCombat((CHARACTER)_Character, _)
-AND
-DB_PartyMembers(_Character)
-THEN
-PROC_OnlyOnceCreateDBs(_Character);
-PROC_Reset_LifetimeData(_Character, "Combat");
-//END_REGION
+
 
 //REGION ShowOff spell casted but no damage records yet
 IF
