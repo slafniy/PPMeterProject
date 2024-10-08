@@ -16,20 +16,40 @@ AddSpell(_Character, "PPMeterShowOff", 1);
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _, _Val)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "Damage", _Val1)
 AND
-Concatenate(_Lifetime, " ", _msg1)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "RoundsCount", _Val2)
 AND
-ConcatenateInteger(_msg1, _Val, _Msg)
+Concatenate(_Lifetime, " Rounds: ", _msg1)
+AND
+ConcatenateInteger(_msg1, _Val2, _msg2)
+AND
+Concatenate(_msg2, " Damage: " , _msg3)
+AND
+ConcatenateInteger(_msg3, _Val1, _msg)
 THEN
-DebugText(_Character, _Msg);
+DebugText(_Character, _msg);
 
-IF
+/*IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 AND
 NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, _, _)
 THEN
-DebugText(_Character, "I need to fight first!");
+DebugText(_Character, "I need to fight first!");*/
+
+IF
+CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+AND
+NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "Damage", _)
+THEN
+DebugText(_Character, "I need to hit someone first!");
+
+IF
+CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+AND
+NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "RoundsCount", _)
+THEN
+DebugText(_Character, "I need to end turn first!");
 //END_REGION
 EXITSECTION
 

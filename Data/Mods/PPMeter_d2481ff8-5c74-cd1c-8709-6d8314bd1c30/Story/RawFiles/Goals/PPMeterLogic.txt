@@ -17,7 +17,7 @@ DB_PPMeter_Lifetime("Overall");
 DB_PPMeter_StatsType("Damage");
 DB_PPMeter_StatsType("RoundsCount");
 
-// INTEGER Tables (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
+// INTEGER Tables DB_PPMeter_DataInteger (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
 
 
 KBSECTION
@@ -30,7 +30,6 @@ AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_ClearDB((CHARACTER)_Character, "Combat", (STRING)_StatsName);
-DebugText(_Character, "Combat data reset");
 //END_REGION
 
 
@@ -60,6 +59,19 @@ THEN
 PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
 //END_REGION
 
+
+//REGION Handle damage dealt
+IF
+AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
+AND
+DB_PartyMembers(_AttackerOwner)
+AND
+_DamageAmount > 0
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
+THEN
+PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
+//END_REGION
 
 
 /*// Set accumulated data to zero for given character and lifetime for each StatsType
@@ -109,18 +121,7 @@ NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _OldValue);
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _NewValue);
 //END_REGION
 
-//REGION Handle damage dealt
-IF
-AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
-AND
-DB_PartyMembers(_AttackerOwner)
-AND
-_DamageAmount > 0
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
-THEN
-PROC_PPMeter_AddInteger(_AttackerOwner, (STRING)_Lifetime, "Damage", _DamageAmount);
-//END_REGION
+
 
 //REGION On Long Rest
 IF

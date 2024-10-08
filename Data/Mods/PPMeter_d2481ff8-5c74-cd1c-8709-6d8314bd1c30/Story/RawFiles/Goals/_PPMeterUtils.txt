@@ -22,6 +22,7 @@ THEN
 NOT DB_PPMeter_DataInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_Value);
 //END_REGION
 
+
 //REGION PROC_PPMeterIncrement // _Value++
 PROC
 PROC_PPMeterIncrement((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName)
@@ -39,6 +40,28 @@ AND
 NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _)
 THEN
 PROC_PPMeter_WriteToDB(_Character, _Lifetime, _StatsName, 1);
+//END_REGION
+
+
+//REGION PROC_PPMeterAdd // _Value += _NewValue
+PROC
+PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_Value)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _OldValue)
+AND
+IntegerSum(_OldValue, _Value, _NewValue)
+THEN
+PROC_PPMeter_WriteToDB(_Character, _Lifetime, _StatsName, _NewValue);
+DebugText(_Character, "PROC_PPMeterAdd case 1");
+
+
+PROC  // case DB doesn't exist
+PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_Value)
+AND
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _)
+THEN
+PROC_PPMeter_WriteToDB(_Character, _Lifetime, _StatsName, _Value);
+DebugText(_Character, "PROC_PPMeterAdd case 2");
 //END_REGION
 EXITSECTION
 
