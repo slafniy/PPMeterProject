@@ -19,6 +19,8 @@ DB_PPMeter_StatsType("RoundsCount");
 
 // INTEGER Tables (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
 NOT DB_PPMeter_DataInteger((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0);
+
+NOT DB_PPMeter_TEMP(0);
 KBSECTION
 // Set accumulated data to zero for given character and lifetime for each StatsType
 // Reset DB_PPMeter_DataInteger
@@ -140,27 +142,47 @@ AddSpell(_Character, "PPMeterShowOff", 1);
 //REGION ShowOff spell casted - make caster say its DPR
 IF
 CastedSpell((CHARACTER)_Character, "PPMeterShowOff", _, _, _)
-THEN
-PROC_ShowDPRStats(_Character);
-//END_REGION
-
-//REGION Print DPR
-PROC
-PROC_ShowDPRStats((CHARACTER)_Character)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType1, _Value1)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType1, _Damage)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType2, _Value2)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType2, _Rounds)
 AND
 _StatsType1 == "Damage"
 AND
 _StatsType2 == "RoundsCount"
+THEN
+PROC_DivideHandleZeroAsZero(_Damage, _Rounds);  // calculate DPR
+PROC_SayDPR(_Character, _Lifetime);
+//END_REGION
+
+//REGION PROC_DivideHandleZeroAsZero - divide and store result in DB_PPMeter_TEMP
+PROC
+PROC_DivideHandleZeroAsZero((INTEGER)_Val1, (INTEGER)_Val2)
 AND
-_Value2 != 0  // TODO: process case with 0 condidering DPR = 0
+_Val2 == 0
+THEN
+SysClear("DB_PPMeter_TEMP", 1);
+DB_PPMeter_TEMP(0);
+
+PROC
+PROC_DivideHandleZeroAsZero((INTEGER)_Val1, (INTEGER)_Val2)
 AND
-IntegerDivide(_Value1, _Value2, _DPR)
+_Val2 != 0
 AND
-Concatenate(_Lifetime, " DRP: ", _msg1)
+IntegerDivide(_Val1, _Val2, _Res)
+THEN
+SysClear("DB_PPMeter_TEMP", 1);
+DB_PPMeter_TEMP(_Res);
+//END_REGION
+
+
+//REGION
+PROC
+PROC_SayDPR((CHARACTER)_Character, (STRING)_Lifetime)
+AND
+DB_PPMeter_TEMP(_DPR)
+AND
+Concatenate(_Lifetime, " DPR: ", _msg1)
 AND
 ConcatenateInteger(_msg1, _DPR, _msg)
 THEN
