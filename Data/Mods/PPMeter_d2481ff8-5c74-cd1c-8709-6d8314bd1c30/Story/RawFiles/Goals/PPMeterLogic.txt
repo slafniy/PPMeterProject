@@ -6,7 +6,7 @@ INITSECTION
 
 
 // Data Lifetime enum
-DB_PPMeter_Lifetime("Round");
+//DB_PPMeter_Lifetime("Round");
 DB_PPMeter_Lifetime("Combat");
 //DB_PPMeter_Lifetime("Day");
 DB_PPMeter_Lifetime("Level");
@@ -44,6 +44,18 @@ AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_ClearDB((CHARACTER)_Character, "Combat", (STRING)_StatsName);
+//END_REGION
+
+
+//REGION On leveled up - reset per Level stats
+IF
+LeveledUp((CHARACTER)_Character)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_ClearDB((CHARACTER)_Character, "Level", (STRING)_StatsName);
 //END_REGION
 
 
@@ -116,14 +128,7 @@ THEN
 PROC_Reset_LifetimeData(_Character, "Day");
 //END_REGION
 
-//REGION On leveled up reset damage on level
-IF
-LeveledUp((CHARACTER)_Character)
-AND
-DB_PartyMembers(_Character)
-THEN
-PROC_Reset_LifetimeData(_Character, "Level");
-//END_REGION
+
 
 
 
