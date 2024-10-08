@@ -117,7 +117,6 @@ DB_PartyMembers(_Character)
 THEN
 PROC_OnlyOnceCreateDBs(_Character);
 PROC_Reset_LifetimeData(_Character, "Combat");
-DebugText(_Character, "Calling PROC_Reset_LifetimeData");
 //END_REGION
 
 //REGION ShowOff spell casted but no damage records yet
@@ -138,19 +137,30 @@ THEN
 AddSpell(_Character, "PPMeterShowOff", 1);
 //END_REGION
 
-//REGION ShowOff spell casted - make caster say its stats
+//REGION ShowOff spell casted - make caster say its DPR
 IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+CastedSpell((CHARACTER)_Character, "PPMeterShowOff", _, _, _)
+THEN
+PROC_ShowDPRStats(_Character);
+//END_REGION
+
+//REGION Print DPR
+PROC
+PROC_ShowDPRStats((CHARACTER)_Character)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType, _Value)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType1, _Value1)
 AND
-Concatenate(_Lifetime, " ", _msg1)
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType2, _Value2)
 AND
-Concatenate(_msg1, _StatsType, _msg2)
+_StatsType1 == "Damage"
 AND
-Concatenate(_msg2, ": ", _msg3)
+_StatsType2 == "RoundsCount"
 AND
-ConcatenateInteger(_msg3, _Value, _msg)
+IntegerDivide(_Value1, _Value2, _DPR)
+AND
+Concatenate(_Lifetime, " DRP: ", _msg1)
+AND
+ConcatenateInteger(_msg1, _DPR, _msg)
 THEN
 DebugText(_Character, _msg);
 //END_REGION
