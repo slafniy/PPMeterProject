@@ -21,20 +21,6 @@ DB_PPMeter_StatsType("RoundsCount");
 
 
 KBSECTION
-//REGION Handle turn start - count rounds
-IF
-TurnStarted((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_Lifetime(_Lifetime)
-AND
-_Lifetime != "Round"  // Its always 1 round in each round
-THEN
-PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
-//END_REGION
-
-
 //REGION On new combat - reset per-combat stats for each StatsType
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -44,6 +30,7 @@ AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_ClearDB((CHARACTER)_Character, "Combat", (STRING)_StatsName);
+DebugText(_Character, "Combat data reset");
 //END_REGION
 
 
@@ -57,6 +44,22 @@ DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_ClearDB((CHARACTER)_Character, "Level", (STRING)_StatsName);
 //END_REGION
+
+
+//REGION Handle turn end - count rounds 
+// Note: cannot count on round start because it races with EnteredCombat event in case if player joined to existing fight
+IF
+TurnEnded((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+_Lifetime != "Round"  // Its always 1 round in each round
+THEN
+PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
+//END_REGION
+
 
 
 /*// Set accumulated data to zero for given character and lifetime for each StatsType
