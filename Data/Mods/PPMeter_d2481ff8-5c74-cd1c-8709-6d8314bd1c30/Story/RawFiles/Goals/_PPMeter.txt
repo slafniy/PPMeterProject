@@ -156,6 +156,8 @@ _StatsType1 == "Damage"
 AND
 _StatsType2 == "RoundsCount"
 AND
+_Value2 != 0  // TODO: process case with 0 condidering DPR = 0
+AND
 IntegerDivide(_Value1, _Value2, _DPR)
 AND
 Concatenate(_Lifetime, " DRP: ", _msg1)
