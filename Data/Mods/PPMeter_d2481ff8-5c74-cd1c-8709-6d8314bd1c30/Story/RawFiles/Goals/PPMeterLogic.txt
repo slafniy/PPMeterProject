@@ -8,7 +8,7 @@ INITSECTION
 // Data Lifetime enum
 //DB_PPMeter_Lifetime("Round");
 DB_PPMeter_Lifetime("Combat");
-//DB_PPMeter_Lifetime("Day");
+DB_PPMeter_Lifetime("Day");
 DB_PPMeter_Lifetime("Level");
 //DB_PPMeter_Lifetime("Act");
 DB_PPMeter_Lifetime("Overall");
@@ -74,94 +74,20 @@ PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
 //END_REGION
 
 
-/*// Set accumulated data to zero for given character and lifetime for each StatsType
-// Reset DB_PPMeter_DataInteger
-//REGION PROC_Reset_LifetimeData
-PROC
-PROC_Reset_LifetimeData((CHARACTER)_Character, (STRING)_Lifetime)
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // making sure it exists in DB_PPMeter_Lifetime enum
-AND
-DB_PPMeter_StatsType(_StatsType)  // making sure it exists in DB_PPMeter_StatsType enum
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _Value)
-THEN
-NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _Value);
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
-//END_REGION
-
-//REGION PROC_OnlyOnceCreateDBs
-PROC
-PROC_OnlyOnceCreateDBs((CHARACTER)_Character)
-AND
-QRY_OnlyOnce("PPMeterDBsAreInitialized_fb453031-6bdd-49af-b8d9-ca88d42b0bb7")
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_Lifetime(_Lifetime)
-AND
-DB_PPMeter_StatsType(_StatsType)
-AND
-Concatenate(_Lifetime, _StatsType, _LifetimeStatsType)
-AND
-_LifetimeStatsType != "RoundRoundsCount"  // Pretty sure each round lasts only one round
-THEN 
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
-//END_REGION
-
-//REGION PROC_PPMeter_AddInteger
-PROC
-PROC_PPMeter_AddInteger((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _OldValue)
-AND
-IntegerSum(_OldValue, _Value, _NewValue)
-THEN
-NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _OldValue);
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _NewValue);
-//END_REGION
-
-
-
 //REGION On Long Rest
 IF
 LongRestFinished()
 AND
 DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
+AND
+DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_Reset_LifetimeData(_Character, "Day");
+PROC_ClearDB(_Character, "Day", _StatsName);
 //END_REGION
 
 
 
-
-
-//REGION ShowOff spell casted but no damage records yet
-IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
-AND
-NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, _, _)
-THEN
-DebugText(_Character, "I need to fight some enemy first");
-//END_REGION
-
-
-
-//REGION ShowOff spell casted - make caster say its DPR
-IF
-CastedSpell((CHARACTER)_Character, "PPMeterShowOff", _, _, _)
-AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType1, _Damage)
-AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, _StatsType2, _Rounds)
-AND
-_StatsType1 == "Damage"
-AND
-_StatsType2 == "RoundsCount"
-THEN
-PROC_DivideHandleZeroAsZero(_Damage, _Rounds);  // calculate DPR
-PROC_SayDPR(_Character, _Lifetime);
-//END_REGION
+/*
 
 //REGION PROC_DivideHandleZeroAsZero - divide and store result in DB_PPMeter_TEMP
 PROC
