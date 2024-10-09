@@ -6,7 +6,6 @@
              xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="2160" d:DesignWidth="3840"
@@ -14,15 +13,11 @@
 
     <Grid x:Name="PPMeterBar" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-35,-180,0,180"
           Visibility="Visible">
-        <Rectangle x:Name="Gradient" Margin="10,0,10,36" IsHitTestVisible="False">
-            <Rectangle.Fill>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                    <GradientStop Color="#FF000000"/>
-                    <GradientStop Color="#00000000" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                   Content="Damage: " Margin="0,0,0,-8" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                   FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4"
+                   Visibility="Visible"/>
             <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
                           AlternationCount="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
