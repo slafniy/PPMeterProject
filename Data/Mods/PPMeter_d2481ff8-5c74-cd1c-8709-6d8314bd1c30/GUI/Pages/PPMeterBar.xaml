@@ -99,7 +99,7 @@
                                 <ScaleTransform ScaleX="-1" ScaleY="-1"/>
                             </Setter.Value>
                         </Setter>
-                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
                             <!-- Always allow showing up to at least the limit -->
                             <DataTrigger
