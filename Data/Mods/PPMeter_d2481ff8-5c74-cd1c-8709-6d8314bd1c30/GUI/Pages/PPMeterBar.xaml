@@ -12,8 +12,16 @@
              d:DesignHeight="2160" d:DesignWidth="3840"
              ls:TooltipExtender.Owner="{Binding CurrentPlayer.SelectedCharacter}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,50,0" Background="Magenta" MinWidth="100" MinHeight="100">
-
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,50,0"
+                Background="Magenta" MinWidth="100" MinHeight="100">
+        <ls:LSTextBox x:Name="AmountInputBox" Text="DAMAGE SHOULD BE HERE: " Mask="Integer"
+                      TextImmediateSourceUpdate="True" Foreground="{StaticResource LS_extraspecialTxtColor}"
+                      VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Center"
+                      BorderThickness="0" MaxLines="1" TextAlignment="Center" Focusable="True"/>
+        <ls:LSTextBox x:Name="AmountInputBox" Text="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}" Mask="Integer"
+                      TextImmediateSourceUpdate="True" Foreground="{StaticResource LS_extraspecialTxtColor}"
+                      VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Center"
+                      BorderThickness="0" MaxLines="1" TextAlignment="Center" Focusable="True"/>
     </StackPanel>
 
 </ls:UIWidget>
