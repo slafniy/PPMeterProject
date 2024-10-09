@@ -3,12 +3,22 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ls:StateMachine.States>
 
-        <!--STATE: PlayerHUD-->
-        <ls:State Name = "PlayerHUD" Layout = "Player" Owner = "Player" ModType="Extend">
+        <!--STATE: PlayerUIs-->
+        <ls:State Name="PlayerUIs" Layout="Player" Owner="Player" ModType="Override">
+            <ls:State.InitialSubstates>
+                <ls:InitialSubstate Name="PlayerNotifications"/>
+                <ls:InitialSubstate Name="PlayerUIsHolder"/>
+                <ls:InitialSubstate Name="ScreenFadePlayer"/>
+                <ls:InitialSubstate Name="PPMeter"/>
+            </ls:State.InitialSubstates>
+        </ls:State>
+
+        <!--STATE: PPMeter-->
+        <ls:State Name="PPMeter" Layout="Player" Owner="Player">
             <ls:State.Widgets>
                 <ls:StateWidget Filename="PPMeterBar.xaml" Layer="HUD"/>
             </ls:State.Widgets>
         </ls:State>
     </ls:StateMachine.States>
-    
+
 </ls:StateMachine>
