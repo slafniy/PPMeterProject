@@ -15,17 +15,18 @@
                    FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4"
                    Visibility="Visible"/>
             <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
-                          AlternationCount="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="240" Margin="0,0,0,32">
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
-                               Content="{Binding Duration}" Margin="0,0,0,-8" Foreground="{StaticResource LS_tint100}"
-                               FontWeight="Bold"
-                               FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black"
-                               noesis:Text.StrokeThickness="4"
-                               Visibility="{Binding Duration, Converter={StaticResource CountToVisibilityConverter}}"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                                   Content="{Binding Duration}" Foreground="{StaticResource LS_tint100}"
+                                   FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
+                                   noesis:Text.Stroke="Black"
+                                   noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

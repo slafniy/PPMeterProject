@@ -11,7 +11,7 @@ data "StatusPropertyFlags" "FreezeDuration;MultiplyEffectsByDuration;ApplyToDead
 new entry "PPMeter_CombatDamageFirst"
 type "StatusData"
 data "StatusType" "BOOST"
-data "DisplayName" "h7622f4d5g006cg4633g9fc2gb7b49d13f3e1;1"
+data "DisplayName" "hed891737g04d7g4bdfg91eag6b2e841abecb;1"
 data "Description" "h1c5a75b2gc036g461cgae3cgc7e53f994df5;1"
 data "Icon" "Status_Hag_HagEyed"
 data "StackId" "PPMeter_CombatDamageFirst"
