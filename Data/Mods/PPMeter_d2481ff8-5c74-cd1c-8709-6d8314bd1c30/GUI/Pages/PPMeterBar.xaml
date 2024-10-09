@@ -6,13 +6,9 @@
              xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:System="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d"
-             d:DesignHeight="2160" d:DesignWidth="3840"
-             ls:TooltipExtender.Owner="{Binding CurrentPlayer.SelectedCharacter}">
+             xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <Grid x:Name="PPMeterBar" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-35,-180,0,180"
-          Visibility="Visible">
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-35,100,0,500" Visibility="Visible">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
                    Content="Damage: " Margin="0,0,0,-8" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
@@ -22,17 +18,14 @@
                           AlternationCount="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="240" Margin="0,0,0,32">
-
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid ToolTip="{StaticResource ManagedTooltip}" ToolTipService.Placement="Right">
-                            <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
-                                   Content="{Binding Duration}" Margin="0,0,0,-8"
-                                   Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
-                                   FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black"
-                                   noesis:Text.StrokeThickness="4"
-                                   Visibility="{Binding Duration, Converter={StaticResource CountToVisibilityConverter}}"/>
-                        </Grid>
+                        <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                               Content="{Binding Duration}" Margin="0,0,0,-8" Foreground="{StaticResource LS_tint100}"
+                               FontWeight="Bold"
+                               FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black"
+                               noesis:Text.StrokeThickness="4"
+                               Visibility="{Binding Duration, Converter={StaticResource CountToVisibilityConverter}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
