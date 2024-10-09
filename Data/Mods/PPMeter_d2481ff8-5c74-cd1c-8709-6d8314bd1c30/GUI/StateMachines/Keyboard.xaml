@@ -4,11 +4,8 @@
     <ls:StateMachine.States>
 
         <!--STATE: PlayerUIs-->
-        <ls:State Name="PlayerUIs" Layout="Player" Owner="Player" ModType="Override">
+        <ls:State Name="PlayerUIs" Layout="Player" Owner="Player" ModType="Extend">
             <ls:State.InitialSubstates>
-                <ls:InitialSubstate Name="PlayerNotifications"/>
-                <ls:InitialSubstate Name="PlayerUIsHolder"/>
-                <ls:InitialSubstate Name="ScreenFadePlayer"/>
                 <ls:InitialSubstate Name="PPMeter"/>
             </ls:State.InitialSubstates>
         </ls:State>
