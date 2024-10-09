@@ -79,40 +79,6 @@
                           AlternationCount="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="240" Margin="0,0,0,32">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                            <!-- Flip the list left/right and up/down. This also affects the items so we have to 'unflip' those individually as well -->
-                            <WrapPanel.LayoutTransform>
-                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                            </WrapPanel.LayoutTransform>
-                        </WrapPanel>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Margin" Value="-2"/>
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <!-- 'Negates' the flipping of the list -->
-                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Visibility" Value="Visible"/>
-                        <Style.Triggers>
-                            <!-- Always allow showing up to at least the limit -->
-                            <DataTrigger
-                                    Binding="{Binding (ItemsControl.AlternationIndex), RelativeSource={RelativeSource Self}, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource StatusLimitAmount}}"
-                                    Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=IsChecked, ElementName=ExpandToggle}" Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
