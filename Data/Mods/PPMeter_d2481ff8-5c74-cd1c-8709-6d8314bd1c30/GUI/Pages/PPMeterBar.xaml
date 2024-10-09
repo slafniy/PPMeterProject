@@ -13,7 +13,7 @@
              ls:TooltipExtender.Owner="{Binding CurrentPlayer.SelectedCharacter}">
 
     <Grid x:Name="PPMeterBar" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-35,-180,0,180"
-          Visibility="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, Converter={StaticResource CountToVisibilityConverter}}">
+          Visibility="Visible">
         <Rectangle x:Name="Gradient" Margin="10,0,10,36" IsHitTestVisible="False">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
@@ -22,59 +22,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Image x:Name="PaneConditionsBg" Source="{StaticResource PaneConditions}" Stretch="None"
-               VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"/>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Grid x:Name="Overflow" Margin="80,0,0,0"
-                  Visibility="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter={StaticResource StatusLimitAmount}}">
-                <Image Source="{StaticResource OverflowNumberBg}" Stretch="None"
-                       Visibility="{Binding Path=IsChecked, ElementName=ExpandToggle, Converter={StaticResource BoolToCollapsedConverter}}"
-                       Margin="0,-8"/>
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                           FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource LS_baseTxtColor}"
-                           ls:TextBlockFormatter.SourceText="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, StringFormat='{}+{0}', Converter={StaticResource AddConverter}, ConverterParameter={StaticResource StatusLimitAmountInverse}}"
-                           Visibility="{Binding Path=IsChecked, ElementName=ExpandToggle, Converter={StaticResource BoolToCollapsedConverter}}"/>
-                <ls:LSToggleButton x:Name="ExpandToggle" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="0,0,80,0">
-                    <ls:LSToggleButton.Template>
-                        <ControlTemplate TargetType="{x:Type ls:LSToggleButton}">
-                            <Grid>
-                                <Image x:Name="Background" Source="{StaticResource BtnSmallRound}" Stretch="None"/>
-                                <Image x:Name="Arrow" Margin="2,0,0,0" Source="{StaticResource IconDownArrow}"
-                                       Stretch="None" RenderTransformOrigin="0.5, 0.5"/>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <DataTrigger Binding="{Binding Path=IsChecked, ElementName=ExpandToggle}" Value="False">
-                                    <Setter Property="RenderTransform" TargetName="Arrow">
-                                        <Setter.Value>
-                                            <ScaleTransform ScaleY="-1"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Background" Property="Source"
-                                            Value="pack://application:,,,/GustavNoesisGUI;component/Assets/Buttons/btn_small_round_h.png"/>
-                                    <Setter TargetName="Arrow" Property="Source"
-                                            Value="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/ico_downArrow_h.png"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </ls:LSToggleButton.Template>
-
-                    <ls:LSToggleButton.Style>
-                        <Style TargetType="ls:LSToggleButton">
-                            <Style.Triggers>
-                                <!-- Auto collapse when # statuses goes below limit again -->
-                                <DataTrigger
-                                        Binding="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource StatusLimitAmount}}"
-                                        Value="False">
-                                    <Setter Property="IsChecked" Value="False"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ls:LSToggleButton.Style>
-                </ls:LSToggleButton>
-            </Grid>
             <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
                           AlternationCount="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
