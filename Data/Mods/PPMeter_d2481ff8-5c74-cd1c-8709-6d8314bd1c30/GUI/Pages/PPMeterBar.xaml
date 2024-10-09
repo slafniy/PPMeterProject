@@ -12,16 +12,130 @@
              d:DesignHeight="2160" d:DesignWidth="3840"
              ls:TooltipExtender.Owner="{Binding CurrentPlayer.SelectedCharacter}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,50,0"
-                Background="Magenta" MinWidth="100" MinHeight="100">
-        <ls:LSTextBox x:Name="AmountInputBox" Text="DAMAGE SHOULD BE HERE: " Mask="Integer"
-                      TextImmediateSourceUpdate="True" Foreground="{StaticResource LS_extraspecialTxtColor}"
-                      VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Center"
-                      BorderThickness="0" MaxLines="1" TextAlignment="Center" Focusable="True"/>
-        <ls:LSTextBox x:Name="AmountInputBox" Text="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}" Mask="Integer"
-                      TextImmediateSourceUpdate="True" Foreground="{StaticResource LS_extraspecialTxtColor}"
-                      VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Center"
-                      BorderThickness="0" MaxLines="1" TextAlignment="Center" Focusable="True"/>
-    </StackPanel>
+    <Grid x:Name="PPMeterBar" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-35,-180,0,180"
+          Visibility="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, Converter={StaticResource CountToVisibilityConverter}}">
+        <Rectangle x:Name="Gradient" Margin="10,0,10,36" IsHitTestVisible="False">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop Color="#FF000000"/>
+                    <GradientStop Color="#00000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Image x:Name="PaneConditionsBg" Source="{StaticResource PaneConditions}" Stretch="None"
+               VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Grid x:Name="Overflow" Margin="80,0,0,0"
+                  Visibility="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter={StaticResource StatusLimitAmount}}">
+                <Image Source="{StaticResource OverflowNumberBg}" Stretch="None"
+                       Visibility="{Binding Path=IsChecked, ElementName=ExpandToggle, Converter={StaticResource BoolToCollapsedConverter}}"
+                       Margin="0,-8"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource LS_baseTxtColor}"
+                           ls:TextBlockFormatter.SourceText="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, StringFormat='{}+{0}', Converter={StaticResource AddConverter}, ConverterParameter={StaticResource StatusLimitAmountInverse}}"
+                           Visibility="{Binding Path=IsChecked, ElementName=ExpandToggle, Converter={StaticResource BoolToCollapsedConverter}}"/>
+                <ls:LSToggleButton x:Name="ExpandToggle" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Margin="0,0,80,0">
+                    <ls:LSToggleButton.Template>
+                        <ControlTemplate TargetType="{x:Type ls:LSToggleButton}">
+                            <Grid>
+                                <Image x:Name="Background" Source="{StaticResource BtnSmallRound}" Stretch="None"/>
+                                <Image x:Name="Arrow" Margin="2,0,0,0" Source="{StaticResource IconDownArrow}"
+                                       Stretch="None" RenderTransformOrigin="0.5, 0.5"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsChecked, ElementName=ExpandToggle}" Value="False">
+                                    <Setter Property="RenderTransform" TargetName="Arrow">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleY="-1"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Background" Property="Source"
+                                            Value="pack://application:,,,/GustavNoesisGUI;component/Assets/Buttons/btn_small_round_h.png"/>
+                                    <Setter TargetName="Arrow" Property="Source"
+                                            Value="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/ico_downArrow_h.png"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ls:LSToggleButton.Template>
+
+                    <ls:LSToggleButton.Style>
+                        <Style TargetType="ls:LSToggleButton">
+                            <Style.Triggers>
+                                <!-- Auto collapse when # statuses goes below limit again -->
+                                <DataTrigger
+                                        Binding="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource StatusLimitAmount}}"
+                                        Value="False">
+                                    <Setter Property="IsChecked" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ls:LSToggleButton.Style>
+                </ls:LSToggleButton>
+            </Grid>
+            <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
+                          AlternationCount="{Binding CurrentPlayer.SelectedCharacter.StatusEffects.Count}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="240" Margin="0,0,0,32">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                            <!-- Flip the list left/right and up/down. This also affects the items so we have to 'unflip' those individually as well -->
+                            <WrapPanel.LayoutTransform>
+                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                            </WrapPanel.LayoutTransform>
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Margin" Value="-2"/>
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <!-- 'Negates' the flipping of the list -->
+                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <!-- Always allow showing up to at least the limit -->
+                            <DataTrigger
+                                    Binding="{Binding (ItemsControl.AlternationIndex), RelativeSource={RelativeSource Self}, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource StatusLimitAmount}}"
+                                    Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsChecked, ElementName=ExpandToggle}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ToolTip="{StaticResource ManagedTooltip}" ToolTipService.Placement="Right">
+                            <Image Source="{StaticResource StatusBg}" Stretch="None"/>
+                            <Ellipse Width="48" Height="48" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Fill="{Binding Icon}"/>
+                            <ls:LSPie x:Name="Progression" Value="{Binding RemainingPercentage}"
+                                      SweepDirection="Clockwise" RenderTransformOrigin="0.5 0.5">
+                                <Image Source="{StaticResource StatusBgFill}" Stretch="UniformToFill" Width="60"
+                                       Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </ls:LSPie>
+                            <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                                   Content="{Binding Duration}" Margin="0,0,0,-8"
+                                   Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                   FontSize="{StaticResource SmallFontSize}" noesis:Text.Stroke="Black"
+                                   noesis:Text.StrokeThickness="4"
+                                   Visibility="{Binding Duration, Converter={StaticResource CountToVisibilityConverter}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
 
 </ls:UIWidget>
