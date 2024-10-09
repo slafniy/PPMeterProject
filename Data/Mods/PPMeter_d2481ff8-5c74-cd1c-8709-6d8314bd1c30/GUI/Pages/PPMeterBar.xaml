@@ -1,0 +1,17 @@
+<ls:UIWidget x:Name="PPMeterBar"
+             xmlns="https://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="https://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="https://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ls="clr-namespace:ls;assembly=Code"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+             xmlns:b="https://schemas.microsoft.com/xaml/behaviors"
+             xmlns:d="https://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance {x:Type ls:DCWidget}, IsDesignTimeCreatable=True}">
+
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,50,0" Background="Magenta" MinWidth="100" MinHeight="100">
+
+    </StackPanel>
+
+</ls:UIWidget>
