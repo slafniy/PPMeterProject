@@ -10,10 +10,6 @@
 
     <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-35,100,0,500" Visibility="Visible">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
-                   Content="Damage: " Margin="0,0,0,-8" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
-                   FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4"
-                   Visibility="Visible"/>
             <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">
@@ -34,18 +30,24 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid ToolTip="{StaticResource ManagedTooltip}" ToolTipService.Placement="Right">
-                            <Label x:Name="FuckinLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                            <Label x:Name="FuckinLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                   IsHitTestVisible="False"
                                    Content="{Binding Duration}" Margin="0,0,0,-8"
                                    Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
-                                   FontSize="{StaticResource SmallFontSize}" noesis:Text.Stroke="Black"
+                                   FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black"
                                    noesis:Text.StrokeThickness="4"
                                    Visibility="Hidden"/>
                         </Grid>
 
                         <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Duration}" Value="234">
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition
+                                            Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter=-100}"
+                                            Value="True"/>
+                                </MultiDataTrigger.Conditions>
                                 <Setter TargetName="FuckinLabel" Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
+                            </MultiDataTrigger>
                         </DataTemplate.Triggers>
 
                     </DataTemplate>
