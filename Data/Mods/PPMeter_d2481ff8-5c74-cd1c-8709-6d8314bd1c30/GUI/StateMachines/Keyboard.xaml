@@ -3,23 +3,6 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ls:StateMachine.States>
 
-        <!--STATE: PlayerUIs-->
-        <!--Extending this, should not affect anything existing-->
-        <ls:State Name="PlayerUIs" Layout="Player" Owner="Player" ModType="Extend">
-            <ls:State.InitialSubstates>
-                <ls:InitialSubstate Name="PPMeter"/>
-            </ls:State.InitialSubstates>
-        </ls:State>
-
-        <!--STATE: PPMeter-->
-        <!--New state to hold PPMeter widget-->
-        <ls:State Name="PPMeter" Layout="Player" Owner="Player">
-            <ls:State.Widgets>
-
-            </ls:State.Widgets>
-        </ls:State>
-
-
         <!--STATE: PlayerHUD-->
         <!--OVERRIDING this to hide my "technical" hack-statuses in HotBar-->
         <ls:State Name="PlayerHUD" Layout="Player" Owner="Player" ModType="Override">
