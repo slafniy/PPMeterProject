@@ -9,7 +9,11 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-35,100,0,500" Visibility="Visible">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+        <StackPanel x:Name="DamageCombat" Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock Text="Damage in Combat: "
+                       TextAlignment="Left" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                       FontSize="50" noesis:Text.Stroke="Black"
+                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
             <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">
