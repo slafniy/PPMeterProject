@@ -29,25 +29,20 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid ToolTip="{StaticResource ManagedTooltip}" ToolTipService.Placement="Right">
-                            <Label x:Name="FuckinLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                                   IsHitTestVisible="False"
-                                   Content="{Binding Duration}" Margin="0,0,0,-8"
-                                   Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
-                                   FontSize="{StaticResource LargeFontSize}" noesis:Text.Stroke="Black"
-                                   noesis:Text.StrokeThickness="4"
-                                   Visibility="Hidden"/>
+                        <Grid>
+                            <TextBlock x:Name="FuckinTextBlock" Text=""
+                                       TextAlignment="Right" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                       FontSize="50" noesis:Text.Stroke="Black"
+                                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                         </Grid>
 
                         <DataTemplate.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition
-                                            Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter=-100}"
-                                            Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter TargetName="FuckinLabel" Property="Visibility" Value="Visible"/>
-                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Duration}" Value="-100">
+                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Duration}" Value="-101">
+                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="1"/>
+                            </DataTrigger>
                         </DataTemplate.Triggers>
 
                     </DataTemplate>

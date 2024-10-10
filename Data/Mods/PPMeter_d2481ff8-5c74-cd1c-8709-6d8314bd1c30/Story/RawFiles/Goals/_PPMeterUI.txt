@@ -9,8 +9,8 @@ CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 THEN
 RemoveStatus(_Character, "PPMeter_CombatDamageFirst", _Character);
 RemoveStatus(_Character, "PPMeter_CombatDamageSecond", _Character);
-ApplyStatus(_Character, "PPMeter_CombatDamageFirst", -1404.0, 1, _Character); // 234 * 6
-ApplyStatus(_Character, "PPMeter_CombatDamageSecond", 4068.0, 1, _Character);  // 678 * 6
+ApplyStatus(_Character, "PPMeter_CombatDamageFirst", -600.0, 1, _Character); // 234 * 6
+ApplyStatus(_Character, "PPMeter_CombatDamageSecond", -606.0, 1, _Character);  // 678 * 6
 
 
 
