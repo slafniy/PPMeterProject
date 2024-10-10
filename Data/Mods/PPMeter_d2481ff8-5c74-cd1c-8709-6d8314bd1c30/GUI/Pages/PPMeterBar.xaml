@@ -20,13 +20,19 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                            <Label x:Name="DamageLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
                                    Content="{Binding Duration}" Foreground="{StaticResource LS_tint100}"
                                    FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
                                    noesis:Text.Stroke="Black"
                                    noesis:Text.StrokeThickness="4" Visibility="Visible"/>
-
                         </StackPanel>
+
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Name,ElementName=DamageLabel}" Value="PPMeter1">
+                                <Setter TargetName="DamageLabel" Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
