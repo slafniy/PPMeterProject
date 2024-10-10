@@ -1303,7 +1303,7 @@
                                             </Grid>
                                             <DataTemplate.Triggers>
                                                 <DataTrigger Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource MinimalDurationToShow}}" Value="True">
-                                                    <Setter  TargetName="HotBarStatusEffect" Property="Visibility" Value="Hidden"/>
+                                                    <Setter  TargetName="HotBarStatusEffect" Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </DataTemplate.Triggers>
                                             <!-- PPMeter mod end here -->
