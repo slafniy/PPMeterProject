@@ -30,7 +30,7 @@
                 <ls:StateWidget Filename="/MainUI;component/Pages/HudIndicator.xaml" Layer="HUD" IgnoreHitTest="True"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/OverheadInfo.xaml" Layer="HUD" IgnoreHitTest="True"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/Minimap.xaml" Layer="HUD"/>
-                <ls:StateWidget Filename="/MainUI;component/Pages/TargetInfo.xaml" Layer="HUD" IgnoreHitTest="True"/>
+                <ls:StateWidget Filename="PPMeter_TargetInfo.xaml" Layer="HUD" IgnoreHitTest="True"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/PlayerPortraits.xaml" Layer="PopupPanels"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/TurnModeInfo.xaml" Layer="HUD"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/CombatLog.xaml" Layer="HUD"/>
