@@ -34,41 +34,41 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <TextBlock x:Name="FuckinTextBlock" Text=""
+                            <TextBlock x:Name="StatusTextBlock" Text=""
                                        TextAlignment="Right" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
                                        FontSize="50" noesis:Text.Stroke="Black"
                                        noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                         </Grid>
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Duration}" Value="-100">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="0"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-101">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="1"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-102">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="2"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-103">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="3"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-104">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="4"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-105">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="5"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-106">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="6"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-107">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="7"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-108">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="8"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Duration}" Value="-109">
-                                <Setter TargetName="FuckinTextBlock" Property="Text" Value="9"/>
+                                <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
 

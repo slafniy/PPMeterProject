@@ -21,6 +21,8 @@
                 <BitmapImage x:Key="DeltasPlus" UriSource="pack://application:,,,/Core;component/Assets/TargetInfo/targetInfo_deltas_plus.png"/>
                 <BitmapImage x:Key="DeltasMinus" UriSource="pack://application:,,,/Core;component/Assets/TargetInfo/targetInfo_deltas_minus.png"/>
 
+                <System:Double x:Key="MinimalDurationToShow">-2</System:Double>
+
                 <Storyboard x:Key="CastBarAppearAnim" FillBehavior="Stop">
                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
                         <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0"/>
@@ -165,7 +167,7 @@
                         <BitmapImage x:Key="statusBG_fill" UriSource="pack://application:,,,/Core;component/Assets/TargetInfo/statusBG_fill.png"/>
                         <System:Double x:Key="Minus1260">-1260</System:Double>
                     </DataTemplate.Resources>
-                    <StackPanel Orientation="Horizontal" Margin="8,0,8,0">
+                    <StackPanel  x:Name="TargetStatusEffect" Orientation="Horizontal" Margin="8,0,8,0">
                         <Grid Width="72" Height="72">
                             <Image Source="{StaticResource statusBG}" Stretch="None" VerticalAlignment="Center" Margin="-8,0"/>
                             <ls:LSPie Value="{Binding RemainingPercentage}" SweepDirection="Clockwise">
@@ -188,6 +190,9 @@
                                 </MultiBinding>
                             </DataTrigger.Binding>
                             <Setter TargetName="statusLabel" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource MinimalDurationToShow}}" Value="True">
+                            <Setter TargetName="TargetStatusEffect" Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>
