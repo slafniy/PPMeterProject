@@ -71,6 +71,7 @@ AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
 PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
+PROC_UpdateCombatDamageInUI(_AttackerOwner);
 //END_REGION
 
 
@@ -86,43 +87,14 @@ PROC_ClearDB(_Character, "Day", _StatsName);
 //END_REGION
 
 
-
-/*
-
-//REGION PROC_DivideHandleZeroAsZero - divide and store result in DB_PPMeter_TEMP
-PROC
-PROC_DivideHandleZeroAsZero((INTEGER)_Val1, (INTEGER)_Val2)
+//REGION PROC_UpdateCombatDamageInUI
+PROC 
+PROC_UpdateCombatDamageInUI((CHARACTER)_Character)
 AND
-_Val2 == 0
+DB_PPMeter_DataInteger(_Character, "Combat", "Damage", _Value)
 THEN
-SysClear("DB_PPMeter_TEMP", 1);
-DB_PPMeter_TEMP(0);
-
-PROC
-PROC_DivideHandleZeroAsZero((INTEGER)_Val1, (INTEGER)_Val2)
-AND
-_Val2 != 0
-AND
-IntegerDivide(_Val1, _Val2, _Res)
-THEN
-SysClear("DB_PPMeter_TEMP", 1);
-DB_PPMeter_TEMP(_Res);
+PROC_WriteNumberInUI(_Character, _Value);
 //END_REGION
-
-
-//REGION
-PROC
-PROC_SayDPR((CHARACTER)_Character, (STRING)_Lifetime)
-AND
-DB_PPMeter_TEMP(_DPR)
-AND
-Concatenate(_Lifetime, " DPR: ", _msg1)
-AND
-ConcatenateInteger(_msg1, _DPR, _msg)
-THEN
-DebugText(_Character, _msg);
-//END_REGION
-*/
 EXITSECTION
 
 ENDEXITSECTION
