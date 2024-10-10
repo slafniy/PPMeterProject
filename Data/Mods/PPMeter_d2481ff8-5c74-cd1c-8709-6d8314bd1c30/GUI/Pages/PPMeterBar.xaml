@@ -17,23 +17,51 @@
             <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Margin" Value="-2"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
-                                   noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Name}" Value="PPMeter1">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                        <Grid ToolTip="{StaticResource ManagedTooltip}" ToolTipService.Placement="Right">
+                            <Image Source="{StaticResource StatusBg}" Stretch="None"/>
+                            <Ellipse Width="48" Height="48" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Fill="{Binding Icon}"/>
+                            <ls:LSPie x:Name="Progression" Value="{Binding RemainingPercentage}"
+                                      SweepDirection="Clockwise" RenderTransformOrigin="0.5 0.5">
+                                <Image Source="{StaticResource StatusBgFill}" Stretch="UniformToFill" Width="60"
+                                       Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </ls:LSPie>
+                            <Label x:Name="FuckinLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
+                                   Content="{Binding Duration}" Margin="0,0,0,-8"
+                                   Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                   FontSize="{StaticResource SmallFontSize}" noesis:Text.Stroke="Black"
+                                   noesis:Text.StrokeThickness="4"
+                                   Visibility="Hidden"/>
+                        </Grid>
+
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Duration}" Value="234">
+                                <Setter TargetName="FuckinLabel" Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+
+
             </ItemsControl>
+
         </StackPanel>
     </Grid>
 
