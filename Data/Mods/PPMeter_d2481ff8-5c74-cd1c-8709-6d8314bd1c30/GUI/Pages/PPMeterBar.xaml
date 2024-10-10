@@ -19,20 +19,18 @@
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Label x:Name="DamageLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False"
-                                   Content="{Binding Duration}" Foreground="{StaticResource LS_tint100}"
-                                   FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
-                                   noesis:Text.Stroke="Black"
-                                   noesis:Text.StrokeThickness="4" Visibility="Visible"/>
-                        </StackPanel>
-
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Name,ElementName=DamageLabel}" Value="PPMeter1">
-                                <Setter TargetName="DamageLabel" Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
+                                   noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Name}" Value="PPMeter1">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
