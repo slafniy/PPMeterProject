@@ -21,12 +21,6 @@ DB_PPMeter_DigitStrToDuration("7", -642.0);
 DB_PPMeter_DigitStrToDuration("8", -648.0);
 DB_PPMeter_DigitStrToDuration("9", -654.0);
 KBSECTION
-/*// For debugging TODO: remove
-IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
-THEN
-PROC_WriteNumberInUI((CHARACTER)_Character, 4973);*/
-
 PROC
 PROC_WriteNumberInUI((CHARACTER)_Character, (INTEGER)_Number)
 AND

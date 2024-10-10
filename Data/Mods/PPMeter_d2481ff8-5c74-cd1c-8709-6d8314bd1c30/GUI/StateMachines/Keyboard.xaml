@@ -15,15 +15,16 @@
         <!--New state to hold PPMeter widget-->
         <ls:State Name="PPMeter" Layout="Player" Owner="Player">
             <ls:State.Widgets>
-                <ls:StateWidget Filename="PPMeterBar.xaml" Layer="HUD"/>
+
             </ls:State.Widgets>
         </ls:State>
-    </ls:StateMachine.States>
 
-    <!--STATE: PlayerHUD-->
-    <!--OVERRIDING this to hide my "technical" hack-statuses in HotBar-->
-        <ls:State Name = "PlayerHUD" Layout = "Player" Owner="Player" ModType="Override">
+
+        <!--STATE: PlayerHUD-->
+        <!--OVERRIDING this to hide my "technical" hack-statuses in HotBar-->
+        <ls:State Name="PlayerHUD" Layout="Player" Owner="Player" ModType="Override">
             <ls:State.Widgets>
+                <ls:StateWidget Filename="PPMeterBar.xaml" Layer="HUD"/>
                 <ls:StateWidget Filename="PPMeter_HotBar.xaml" Layer="HUDTop"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/Overlay.xaml" Layer="Notifications"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/HudIndicator.xaml" Layer="HUD" IgnoreHitTest="True"/>
@@ -35,7 +36,8 @@
                 <ls:StateWidget Filename="/MainUI;component/Pages/CombatLog.xaml" Layer="HUD"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/CombatantsOverlay.xaml" Layer="HUD"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/CursorText.xaml" Layer="PopupPanels"/>
-                <ls:StateWidget Filename="/MainUI;component/Pages/DragAndDropPreview.xaml" Layer="DragAndDrop" IgnoreHitTest="True"/>
+                <ls:StateWidget Filename="/MainUI;component/Pages/DragAndDropPreview.xaml" Layer="DragAndDrop"
+                                IgnoreHitTest="True"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/PassiveRoll.xaml" Layer="PopupPanels"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/AlwaysOnTopOverlay.xaml" Layer="PopupPanels"/>
             </ls:State.Widgets>
@@ -45,7 +47,7 @@
             </ls:State.InitialSubstates>
 
             <ls:State.Events>
-                <ls:StateEvent Name = "OpenSelectionFlyOut">
+                <ls:StateEvent Name="OpenSelectionFlyOut">
                     <ls:StateEvent.Actions>
                         <ls:AddSubstate Name="SelectionFlyOut"/>
                     </ls:StateEvent.Actions>
@@ -54,4 +56,5 @@
 
         </ls:State>
 
+    </ls:StateMachine.States>
 </ls:StateMachine>
