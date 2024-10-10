@@ -20,6 +20,7 @@
             <ImageSource x:Key="ListenBgBot">pack://application:,,,/Core;component/Assets/ListenIn/listenBg_bottom.png</ImageSource>
             <BitmapImage x:Key="StatusBg" UriSource="pack://application:,,,/Core;component/Assets/BottomBar/statusBG.png" />
             <BitmapImage x:Key="StatusBgFill" UriSource="pack://application:,,,/Core;component/Assets/BottomBar/statusBG_fill.png" />
+            <System:Double x:Key="MinimalDurationToShow">-2</System:Double>
         </DataTemplate.Resources>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
@@ -533,7 +534,6 @@
                         </Control>
 
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="PIZDA" FontSize="50"/>
                             <ItemsControl x:Name="StatusHolder" ls:TooltipExtender.Owner="{Binding Path=DataContext, ElementName=ParentControl}"
                                           ItemsSource="{Binding StatusEffects}" MinHeight="55"
                                           BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Left">
@@ -544,7 +544,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid ToolTip="{StaticResource ManagedTooltip}" ToolTipService.IsEnabled="True" ToolTipService.Placement="Right" Width="55" Height="55">
+                                        <Grid x:Name="PortraitStatusEffect" ToolTip="{StaticResource ManagedTooltip}" ToolTipService.IsEnabled="True" ToolTipService.Placement="Right" Width="55" Height="55">
                                             <Image Source="{StaticResource StatusBg}" Stretch="UniformToFill" Width="55" Height="55"/>
                                             <Ellipse Width="42" Height="42" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{Binding Icon}"/>
                                             <ls:LSPie x:Name="Progression" Value="{Binding RemainingPercentage}" SweepDirection="Clockwise" RenderTransformOrigin="0.5 0.5">
@@ -555,6 +555,11 @@
                                                Foreground="{StaticResource LS_tint100}" FontWeight="Bold" FontSize="{StaticResource TinyFontSize}"
                                                noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4" Visibility="{Binding Duration, Converter={StaticResource CountToVisibilityConverter}}"/>
                                         </Grid>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource MinimalDurationToShow}}" Value="True">
+                                                <Setter  TargetName="PortraitStatusEffect" Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

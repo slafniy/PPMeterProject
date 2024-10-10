@@ -17,7 +17,7 @@
     <ls:UIWidget.Template>
         <ControlTemplate>
             <ControlTemplate.Resources>
-                <System:Double x:Key="MinimalDurationToShow">-1</System:Double>
+                <System:Double x:Key="MinimalDurationToShow">-2</System:Double>
 
                 <System:Int16 x:Key="MaxDeckColumns">16</System:Int16>
                 <System:Double x:Key="HotbarSlotSize">88</System:Double>
