@@ -7,19 +7,7 @@ KBSECTION
 IF
 CastedSpell(_Character, "PPMeterShowOff", _, _, _)
 THEN
-RemoveStatus(_Character, "PPMeter_CombatDamageFirst", _Character);
-RemoveStatus(_Character, "PPMeter_CombatDamageSecond", _Character);
-// Try to write 34540
-ApplyStatus(_Character, "PPMeter_DamageCombat_d5", -618.0, 1, _Character); // 3
-ApplyStatus(_Character, "PPMeter_DamageCombat_d4", -624.0, 1, _Character); // 4
-ApplyStatus(_Character, "PPMeter_DamageCombat_d3", -630.0, 1, _Character); // 5
-ApplyStatus(_Character, "PPMeter_DamageCombat_d2", -624.0, 1, _Character); // 4
-ApplyStatus(_Character, "PPMeter_DamageCombat_d1", -600.0, 1, _Character); // 0
-
-
-
-
-
+PROC_WriteNumberInUI((CHARACTER)_Character, 4973);
 
 
 //REGION Add Show Off spell to each party member if it does not have it
