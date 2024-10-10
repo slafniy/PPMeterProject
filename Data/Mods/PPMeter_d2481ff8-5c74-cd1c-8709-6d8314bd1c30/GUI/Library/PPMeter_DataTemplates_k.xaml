@@ -9,6 +9,7 @@
                     xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
 					mc:Ignorable="d">
 
+    <!-- CharacterPortrait Template -->
     <DataTemplate x:Key="PPMeter_CharacterPortrait">
         <DataTemplate.Resources>
             <ImageSource x:Key="SuccessActive">pack://application:,,,/Core;component/Assets/PlayerPortraits/portrait_tallyUp_active.png</ImageSource>
@@ -909,63 +910,5 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <DataTemplate x:Key="PPMeter_ObjectStatusTemplate" DataType="{x:Type ls:VMStatus}">
-        <DataTemplate.Resources>
-            <System:Double x:Key="MinimalDurationToShow">-2</System:Double>
-        </DataTemplate.Resources>
-
-        <Grid x:Name="Root" Margin="0,2" ToolTip="{StaticResource ManagedTooltip}" ToolTipService.IsEnabled="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0" Margin="0,0,16,0">
-                <Ellipse Width="{StaticResource IconStatusSize}" Height="{StaticResource IconStatusSize}" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{Binding Icon}" />
-                <ls:LSPie x:Name="Progression" Value="{Binding RemainingPercentage, Converter={StaticResource MultiplierConverter}, ConverterParameter='0.8'}" SweepDirection="Clockwise" Width="{StaticResource IconStatusSurroundSize}" Height="{StaticResource IconStatusSurroundSize}" RenderTransformOrigin="0.5 0.5">
-                    <Grid.RenderTransform>
-                        <RotateTransform Angle="-126"/>
-                    </Grid.RenderTransform>
-                    <Image Source="pack://application:,,,/Core;component/Assets/Tooltips/status_progressAround.png" Stretch="UniformToFill" Width="{StaticResource IconStatusSurroundSize}" Height="{StaticResource IconStatusSurroundSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </ls:LSPie>
-
-                <Image x:Name="DurationIcon" Source="pack://application:,,,/Core;component/Assets/Tooltips/ico_statusTimer.png" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center" Width="{StaticResource IconStatusSize}" Margin="-26,0,0,0" Visibility="Collapsed"/>
-            </Grid>
-            <WrapPanel x:Name="Texts" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1">
-                <TextBlock ls:TextBlockFormatter.SourceText="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource DamageValueTextStyle}" Foreground="{StaticResource TooltipColor.Secondary}" Margin="0,0,16,0"/>
-
-                <StackPanel Orientation="Horizontal" x:Name="DurationText">
-                    <TextBlock ls:TextBlockFormatter.SourceText="(" VerticalAlignment="Center" Style="{StaticResource DamageValueTextStyle}" Foreground="{StaticResource TooltipColor.Secondary}"/>
-                    <TextBlock  Style="{DynamicResource StatusDurationTextStyle}" FontSize="{StaticResource MediumFontSize}" Foreground="{StaticResource TooltipColor.Secondary}" VerticalAlignment="Center"/>
-                    <TextBlock ls:TextBlockFormatter.SourceText=")" VerticalAlignment="Center" Style="{StaticResource DamageValueTextStyle}" Foreground="{StaticResource TooltipColor.Secondary}"/>
-                </StackPanel>
-            </WrapPanel>
-        </Grid>
-
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding DurationType}" Value="Timer">
-                <Setter TargetName="DurationIcon" Property="Visibility" Value="Visible" />
-            </DataTrigger>
-
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Duration}" Value="0"/>
-                    <Condition Binding="{Binding DurationType}" Value="Timer"/>
-                </MultiDataTrigger.Conditions>
-                <MultiDataTrigger.Setters>
-                    <Setter TargetName="DurationText" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="DurationIcon" Property="Visibility" Value="Collapsed" />
-                </MultiDataTrigger.Setters>
-            </MultiDataTrigger>
-
-            <DataTrigger Binding="{Binding Duration}" Value="-1">
-                <Setter TargetName="Progression" Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-
-            <DataTrigger Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource MinimalDurationToShow}}" Value="True">
-                <Setter  TargetName="Root" Property="Visibility" Value="Collapsed"/>
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
 
 </ResourceDictionary>
