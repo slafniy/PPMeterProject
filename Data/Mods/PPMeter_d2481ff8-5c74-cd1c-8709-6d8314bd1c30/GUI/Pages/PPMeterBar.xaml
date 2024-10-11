@@ -18,7 +18,7 @@
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
                     </b:Interaction.Behaviors>
                     <ls:LSNineSliceImage x:Name="BGpanel" Style="{StaticResource Generic9SliceBG}">
-                        <StackPanel MaxWidth="600">
+                        <StackPanel MaxWidth="400">
                             <!--DRAG AREA-->
                             <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                                   Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
@@ -97,6 +97,122 @@
                                                     <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Duration}" Value="-109">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <StackPanel x:Name="DamageDay" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock Text="Damage this day: " HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right"
+                                                           Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                                           FontSize="{StaticResource MediumFontSize}"
+                                                           noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4"
+                                                           Visibility="Visible"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-130">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-131">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-132">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-133">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-134">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-135">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-136">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-137">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-138">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-139">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <StackPanel x:Name="DamageLevel" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock Text="Damage on level: " HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right"
+                                                           Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
+                                                           FontSize="{StaticResource MediumFontSize}"
+                                                           noesis:Text.Stroke="Black" noesis:Text.StrokeThickness="4"
+                                                           Visibility="Visible"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-120">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-121">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-122">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-123">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-124">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-125">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-126">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-127">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-128">
+                                                    <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Duration}" Value="-129">
                                                     <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
                                                 </DataTrigger>
                                             </DataTemplate.Triggers>

@@ -41,7 +41,7 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_ClearDB((CHARACTER)_Character, "Level", (STRING)_StatsName);
+PROC_PPMeter_WriteToDB((CHARACTER)_Character, "Level", _StatsName, 0);
 //END_REGION
 
 
@@ -82,7 +82,7 @@ DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle c
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_ClearDB(_Character, "Day", _StatsName);
+PROC_PPMeter_WriteToDB(_Character, "Day", _StatsName, 0);
 //END_REGION
 EXITSECTION
 

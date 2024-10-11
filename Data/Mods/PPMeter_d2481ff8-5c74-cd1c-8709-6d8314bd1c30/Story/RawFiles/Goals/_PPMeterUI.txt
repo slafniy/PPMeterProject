@@ -63,7 +63,7 @@ DB_PPMeter_DigitStrToDuration("7", -702.0, "Overall");
 DB_PPMeter_DigitStrToDuration("8", -708.0, "Overall");
 DB_PPMeter_DigitStrToDuration("9", -714.0, "Overall");
 
-/ -130 -139
+// -130 -139
 DB_PPMeter_DigitStrToDuration("0", -780.0, "Day");
 DB_PPMeter_DigitStrToDuration("1", -786.0, "Day");
 DB_PPMeter_DigitStrToDuration("2", -792.0, "Day");
@@ -86,8 +86,6 @@ DB_PPMeter_DigitStrToDuration("6", -756.0, "Level");
 DB_PPMeter_DigitStrToDuration("7", -762.0, "Level");
 DB_PPMeter_DigitStrToDuration("8", -768.0, "Level");
 DB_PPMeter_DigitStrToDuration("9", -774.0, "Level");
-
-
 KBSECTION
 //REGION Write  damage to statuses
 PROC
