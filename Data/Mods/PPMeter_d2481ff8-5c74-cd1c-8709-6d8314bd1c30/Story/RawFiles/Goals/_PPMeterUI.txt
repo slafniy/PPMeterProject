@@ -67,6 +67,7 @@ THEN
 ApplyStatus(_Character, _Status, _Duration, 1, _Character);
 //END_REGION
 
+
 //REGION clear statuses for given lifetime
 PROC
 PROC_ClearDamageStatuses((CHARACTER)_Character, (STRING)_Lifetime)
@@ -79,21 +80,21 @@ RemoveStatus(_Character, _Status, _Character);
 //END_REGION
 
 
-//REGION Add Show Off spell to each party member if it does not have it
+//REGION Update UI damage(set statuses)
 IF
-CastedSpell(_Character, _, _, _, _)
+DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsName, _Value)
 AND
-DB_PartyMembers((CHARACTER)_Character)
-AND
-HasSpell(_Character, "PPMeterShowOff", 0)
+_StatsName == "Damage"
 THEN
-AddSpell(_Character, "PPMeterShowOff", 1);
-DebugText(_Character, "I can Show Off now!");
+PROC_WriteDamageStatuses(_Character, _LifeTime, _Value);
 //END_REGION
 
-//REGION ShowOff spell casted TODO: remove/comment in release
+
+//REGION // DEBUG: on "oe pp" command - say all stats
 IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+TextEvent("pp")
+AND
+DB_PartyMembers(_Character)
 AND
 DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "Damage", _Val1)
 AND
@@ -113,47 +114,23 @@ DebugText(_Character, _msg);
 
 
 IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+TextEvent("pp")
+AND
+DB_PartyMembers(_Character)
 AND
 NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "Damage", _)
 THEN
 DebugText(_Character, "I need to hit someone first!");
 
 IF
-CastedSpell(_Character, "PPMeterShowOff", _, _, _)
+TextEvent("pp")
+AND
+DB_PartyMembers(_Character)
 AND
 NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "RoundsCount", _)
 THEN
 DebugText(_Character, "I need to end turn first!");
 //END_REGION
-
-
-//REGION Update UI damage(set statuses)
-IF
-DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsName, _Value)
-AND
-_StatsName == "Damage"
-/*AND
-ConcatenateGUID("Updating damage ", _Character, _msg1)
-AND
-Concatenate(_msg1, " ", _msg2)
-AND
-Concatenate(_msg2, _Lifetime, _msg3)
-AND
-Concatenate(_msg3, " ", _msg4)
-AND
-ConcatenateInteger(_msg4, _Value, _msg) */
-THEN
-PROC_WriteDamageStatuses(_Character, _LifeTime, _Value);
-//DebugText(_Character, _msg);
-//END_REGION
-
-
-
-
-
-
-
 EXITSECTION
 
 ENDEXITSECTION
