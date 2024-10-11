@@ -16,14 +16,20 @@
                       DataContext="{Binding CurrentPlayer.UIData.ExamineTarget}" RenderTransformOrigin="0.5,0.5"
                       Margin="0,220,0,0">
                     <b:Interaction.Behaviors>
-                        <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=DragHit,Mode=OneWay}"/>
+                        <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
+                        <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
                     </b:Interaction.Behaviors>
                     <ls:LSNineSliceImage x:Name="BGpanel" Style="{StaticResource Generic9SliceBG}"
                                          Width="600" Height="460">
                         <StackPanel>
                             <!--DRAG AREA-->
-                            <Grid x:Name="DragHit" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                                  Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="140">
+                            <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                                  Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="80">
+                                <TextBlock x:Name="HeaderName" Text="Personal Performance Meter"
+                                           TextAlignment="Center" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold" FontSize="{StaticResource ScaledTitleFontSize}"
+                                           noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                                 <b:Interaction.Triggers>
                                     <b:EventTrigger EventName="MouseEnter">
                                         <b:InvokeCommandAction
@@ -43,17 +49,17 @@
                             <TextBlock Text="Damage in combat: "
                                        TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
                                        FontWeight="Bold"
-                                       FontSize="50" noesis:Text.Stroke="Black"
+                                       FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
                                        noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                             <TextBlock Text="Damage this day: "
                                        TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
                                        FontWeight="Bold"
-                                       FontSize="50" noesis:Text.Stroke="Black"
+                                       FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
                                        noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                             <TextBlock Text="Damage overall: "
                                        TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
                                        FontWeight="Bold"
-                                       FontSize="50" noesis:Text.Stroke="Black"
+                                       FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
                                        noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                         </StackPanel>
                     </ls:LSNineSliceImage>
