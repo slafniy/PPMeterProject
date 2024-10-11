@@ -30,42 +30,6 @@
                                          Width="{StaticResource ExaminePanelWidth}"
                                          Height="{StaticResource CSContentHeight}">
                         <Grid>
-                            <!--PAPERDOLL-->
-                            <Grid HorizontalAlignment="Left" Margin="8,0,32,0">
-                                <ls:LSPaperdoll x:Name="ExaminePaperdoll" EntityRef="{Binding EntityHandle}"
-                                                Width="{StaticResource EXDollWidth}"
-                                                Height="{StaticResource CSDollHeight}" UseCombatPose="True"
-                                                MouseRotate="True" MouseRotateMultiplier="10"
-                                                RenderScale="{Binding DataContext.Data.RenderScale, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"/>
-                                <!--CONTROLS-->
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                            VerticalAlignment="Bottom" Margin="0,0,0,60">
-                                    <ls:LSButton x:Name="rotateRightBtn" Template="{StaticResource RotateRightButton}">
-                                        <b:Interaction.Triggers>
-                                            <b:EventTrigger EventName="LSButtonPressed">
-                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="1.2"
-                                                                        TargetName="ExaminePaperdoll"/>
-                                            </b:EventTrigger>
-                                            <b:EventTrigger EventName="LSButtonReleased">
-                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="0"
-                                                                        TargetName="ExaminePaperdoll"/>
-                                            </b:EventTrigger>
-                                        </b:Interaction.Triggers>
-                                    </ls:LSButton>
-                                    <ls:LSButton x:Name="rotateLeftBtn" Template="{StaticResource RotateLeftButton}">
-                                        <b:Interaction.Triggers>
-                                            <b:EventTrigger EventName="LSButtonPressed">
-                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="-1.2"
-                                                                        TargetName="ExaminePaperdoll"/>
-                                            </b:EventTrigger>
-                                            <b:EventTrigger EventName="LSButtonReleased">
-                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="0"
-                                                                        TargetName="ExaminePaperdoll"/>
-                                            </b:EventTrigger>
-                                        </b:Interaction.Triggers>
-                                    </ls:LSButton>
-                                </StackPanel>
-                            </Grid>
                             <!--FOR ITEMS-->
                             <ls:LSNineSliceImage x:Name="ItemInfoPanel" Style="{StaticResource WorldTooltip9Slice}"
                                                  VerticalAlignment="Stretch" HorizontalAlignment="Right">
