@@ -37,6 +37,9 @@
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
                             </Grid>
+                            <Image x:Name="TopBorder"
+                                   Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
+                                   Stretch="None" VerticalAlignment="Top" IsHitTestVisible="False" Panel.ZIndex="1"/>
                             <TextBlock Text="Damage in combat: "
                                        TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
                                        FontWeight="Bold"
