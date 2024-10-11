@@ -18,10 +18,28 @@ DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d5", 5, "Overall");
 DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d6", 6, "Overall");
 DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d7", 7, "Overall");
 
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d1", 1, "Day");
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d2", 2, "Day");
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d3", 3, "Day");
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d4", 4, "Day");
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d5", 5, "Day");
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d6", 6, "Day");
+DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d7", 7, "Day");
+
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d1", 1, "Level");
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d2", 2, "Level");
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d3", 3, "Level");
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d4", 4, "Level");
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d5", 5, "Level");
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d6", 6, "Level");
+DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d7", 7, "Level");
+
 // Converter from digit we want in UI to Duration
 // In XAML "Duration" binding values are integers calculated as Duration / 6 sec (one game turn time)
 // So e.g. -600 will be -100 in GUI, -648 translates into -108
 // For each lifetime using its own duration range
+
+// -100 -109
 DB_PPMeter_DigitStrToDuration("0", -600.0, "Combat");
 DB_PPMeter_DigitStrToDuration("1", -606.0, "Combat");
 DB_PPMeter_DigitStrToDuration("2", -612.0, "Combat");
@@ -33,6 +51,7 @@ DB_PPMeter_DigitStrToDuration("7", -642.0, "Combat");
 DB_PPMeter_DigitStrToDuration("8", -648.0, "Combat");
 DB_PPMeter_DigitStrToDuration("9", -654.0, "Combat");
 
+// -110 -119
 DB_PPMeter_DigitStrToDuration("0", -660.0, "Overall");
 DB_PPMeter_DigitStrToDuration("1", -666.0, "Overall");
 DB_PPMeter_DigitStrToDuration("2", -672.0, "Overall");
@@ -43,6 +62,32 @@ DB_PPMeter_DigitStrToDuration("6", -696.0, "Overall");
 DB_PPMeter_DigitStrToDuration("7", -702.0, "Overall");
 DB_PPMeter_DigitStrToDuration("8", -708.0, "Overall");
 DB_PPMeter_DigitStrToDuration("9", -714.0, "Overall");
+
+/ -130 -139
+DB_PPMeter_DigitStrToDuration("0", -780.0, "Day");
+DB_PPMeter_DigitStrToDuration("1", -786.0, "Day");
+DB_PPMeter_DigitStrToDuration("2", -792.0, "Day");
+DB_PPMeter_DigitStrToDuration("3", -798.0, "Day");
+DB_PPMeter_DigitStrToDuration("4", -804.0, "Day");
+DB_PPMeter_DigitStrToDuration("5", -810.0, "Day");
+DB_PPMeter_DigitStrToDuration("6", -816.0, "Day");
+DB_PPMeter_DigitStrToDuration("7", -822.0, "Day");
+DB_PPMeter_DigitStrToDuration("8", -828.0, "Day");
+DB_PPMeter_DigitStrToDuration("9", -834.0, "Day");
+
+// -120 -129
+DB_PPMeter_DigitStrToDuration("0", -720.0, "Level");
+DB_PPMeter_DigitStrToDuration("1", -726.0, "Level");
+DB_PPMeter_DigitStrToDuration("2", -732.0, "Level");
+DB_PPMeter_DigitStrToDuration("3", -738.0, "Level");
+DB_PPMeter_DigitStrToDuration("4", -744.0, "Level");
+DB_PPMeter_DigitStrToDuration("5", -750.0, "Level");
+DB_PPMeter_DigitStrToDuration("6", -756.0, "Level");
+DB_PPMeter_DigitStrToDuration("7", -762.0, "Level");
+DB_PPMeter_DigitStrToDuration("8", -768.0, "Level");
+DB_PPMeter_DigitStrToDuration("9", -774.0, "Level");
+
+
 KBSECTION
 //REGION Write  damage to statuses
 PROC
