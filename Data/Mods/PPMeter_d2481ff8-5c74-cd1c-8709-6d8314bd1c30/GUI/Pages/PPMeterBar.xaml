@@ -8,77 +8,258 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-35,100,0,500" Visibility="Visible">
-        <StackPanel x:Name="DamageCombat" Orientation="Horizontal" HorizontalAlignment="Left">
-            <TextBlock Text="Damage in Combat: "
-                       TextAlignment="Left" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
-                       FontSize="50" noesis:Text.Stroke="Black"
-                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
-            <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Margin" Value="-2"/>
-                        <Setter Property="Visibility" Value="Visible"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+    <ls:UIWidget.Template>
+        <ControlTemplate>
+            <Grid x:Name="bgFade" Margin="-1400,0,-1400,-1000">
+                <Grid x:Name="Panel" HorizontalAlignment="Center" VerticalAlignment="Top"
+                      DataContext="{Binding CurrentPlayer.UIData.ExamineTarget}" RenderTransformOrigin="0.5,0.5"
+                      Margin="0,220,0,0">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <b:Interaction.Behaviors>
+                        <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=DragHit,Mode=OneWay}"/>
+                    </b:Interaction.Behaviors>
+                    <ls:LSNineSliceImage x:Name="BGpanel" Style="{StaticResource Generic9SliceBG}"
+                                         Width="{StaticResource ExaminePanelWidth}"
+                                         Height="{StaticResource CSContentHeight}">
                         <Grid>
-                            <TextBlock x:Name="StatusTextBlock" Text=""
-                                       TextAlignment="Right" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"
-                                       FontSize="50" noesis:Text.Stroke="Black"
-                                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                            <!--PAPERDOLL-->
+                            <Grid HorizontalAlignment="Left" Margin="8,0,32,0">
+                                <ls:LSPaperdoll x:Name="ExaminePaperdoll" EntityRef="{Binding EntityHandle}"
+                                                Width="{StaticResource EXDollWidth}"
+                                                Height="{StaticResource CSDollHeight}" UseCombatPose="True"
+                                                MouseRotate="True" MouseRotateMultiplier="10"
+                                                RenderScale="{Binding DataContext.Data.RenderScale, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"/>
+                                <!--CONTROLS-->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom" Margin="0,0,0,60">
+                                    <ls:LSButton x:Name="rotateRightBtn" Template="{StaticResource RotateRightButton}">
+                                        <b:Interaction.Triggers>
+                                            <b:EventTrigger EventName="LSButtonPressed">
+                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="1.2"
+                                                                        TargetName="ExaminePaperdoll"/>
+                                            </b:EventTrigger>
+                                            <b:EventTrigger EventName="LSButtonReleased">
+                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="0"
+                                                                        TargetName="ExaminePaperdoll"/>
+                                            </b:EventTrigger>
+                                        </b:Interaction.Triggers>
+                                    </ls:LSButton>
+                                    <ls:LSButton x:Name="rotateLeftBtn" Template="{StaticResource RotateLeftButton}">
+                                        <b:Interaction.Triggers>
+                                            <b:EventTrigger EventName="LSButtonPressed">
+                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="-1.2"
+                                                                        TargetName="ExaminePaperdoll"/>
+                                            </b:EventTrigger>
+                                            <b:EventTrigger EventName="LSButtonReleased">
+                                                <b:ChangePropertyAction PropertyName="RotationSpeed" Value="0"
+                                                                        TargetName="ExaminePaperdoll"/>
+                                            </b:EventTrigger>
+                                        </b:Interaction.Triggers>
+                                    </ls:LSButton>
+                                </StackPanel>
+                            </Grid>
+                            <!--FOR ITEMS-->
+                            <ls:LSNineSliceImage x:Name="ItemInfoPanel" Style="{StaticResource WorldTooltip9Slice}"
+                                                 VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                                <StackPanel>
+                                    <!--Hit Points-->
+                                    <Control x:Name="HPBarContainer" HorizontalAlignment="Center"
+                                             VerticalAlignment="Top" Margin="0,-28,0,-10"
+                                             Template="{StaticResource TargetHealthBarTemplate}"
+                                             Visibility="{Binding Stats.Health.Value, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=-1}"/>
+
+                                    <ScrollViewer Style="{StaticResource NoForcedScrollViewerStyle}"
+                                                  Padding="{StaticResource ScrollOffset}" VerticalAlignment="Stretch"
+                                                  ClipToBounds="False" Margin="12,0">
+                                        <StackPanel>
+                                            <StackPanel.Resources>
+                                                <ControlTemplate x:Key="DetailedEntry">
+                                                    <ControlTemplate.Resources>
+                                                        <Style TargetType="DockPanel">
+                                                            <Setter Property="Margin" Value="8,0"/>
+                                                        </Style>
+                                                    </ControlTemplate.Resources>
+                                                    <Border x:Name="entry" Style="{StaticResource RowBG_d}"
+                                                            MinHeight="48">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="entry" Property="Background"
+                                                                    Value="{StaticResource RowBG_h}"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </StackPanel.Resources>
+
+                                            <ContentPresenter
+                                                    ls:TooltipExtender.Owner="{Binding DataContext.CurrentPlayer.SelectedCharacter, ElementName=Examine}"
+                                                    Content="{Binding .}" DataContext="{Binding .}"
+                                                    ContentTemplate="{StaticResource ItemsTooltip}"
+                                                    ls:TooltipExtender.IsOpen="True"
+                                                    ls:TooltipExtender.Content="{Binding .}" Margin="20"/>
+
+                                            <!--Resistances-->
+                                            <StackPanel Name="ResistancesSection"
+                                                        Visibility="{Binding Stats.NumActiveResistances, Converter={StaticResource CountToVisibilityConverter}}">
+                                                <ContentControl Style="{StaticResource BaseTitleStyle}">
+                                                    <TextBlock
+                                                            Text="{Binding Source='h98a4ccfbg20f4g4294g9bf7g624c95711539', Converter={StaticResource TranslatedStringConverter}}"/>
+                                                </ContentControl>
+                                                <Control x:Name="ResistanceContainer" HorizontalAlignment="Center"
+                                                         Template="{StaticResource ResistancesGridTemplate}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </StackPanel>
+
+                            </ls:LSNineSliceImage>
+
+                            <!--DRAG AREA-->
+                            <Grid x:Name="DragHit" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                                  Background="Transparent" Height="140">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseEnter">
+                                        <b:InvokeCommandAction
+                                                Command="{Binding DataContext.SetCursorCommand, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"
+                                                CommandParameter="Resize"/>
+                                    </b:EventTrigger>
+                                    <b:EventTrigger EventName="MouseLeave">
+                                        <b:InvokeCommandAction
+                                                Command="{Binding DataContext.SetCursorCommand, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"
+                                                CommandParameter=""/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Grid>
+                            <!--CLOSE BUTTON-->
+                            <ls:LSButton x:Name="CloseExamine" Style="{DynamicResource SmallCloseButton}"
+                                         SoundID="UI_Shared_Cancel" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                         BoundEvent="UICancel" Margin="0,0,0,0">
+                                <ls:LSButton.Triggers>
+                                    <EventTrigger RoutedEvent="Button.Click">
+                                        <BeginStoryboard x:Name="CloseAnimation">
+                                            <Storyboard Children="{StaticResource ClosePanelAnim}"/>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </ls:LSButton.Triggers>
+                            </ls:LSButton>
+                            <!-- ===== INFO PANEL ===== -->
+                            <!--FOR CHARACTERS-->
+                            <Control Name="CharacterInfoPanel" Template="{StaticResource CharSheetTabController}"
+                                     Width="{StaticResource CSColumnWidth}" HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom" Margin="0,8,8,8"/>
+
                         </Grid>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Duration}" Value="-100">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-101">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-102">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-103">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-104">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-105">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-106">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-107">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-108">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Duration}" Value="-109">
-                                <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
+                    </ls:LSNineSliceImage>
+                </Grid>
 
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                <!--===== TRIGGERS & ANIMATIONS =====-->
+                <b:Interaction.Triggers>
+                    <b:StoryboardCompletedTrigger Storyboard="{Binding ElementName=CloseAnimation,Path=Storyboard}">
+                        <b:InvokeCommandAction Command="{Binding CustomEvent}" CommandParameter="CloseWidget"/>
+                    </b:StoryboardCompletedTrigger>
+                </b:Interaction.Triggers>
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard Storyboard="{StaticResource OpenPanelAnim}"/>
+                    </EventTrigger>
+                </Grid.Triggers>
+            </Grid>
+
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding CurrentPlayer.UIData.ExamineTarget.Type}" Value="Item">
+                    <Setter TargetName="CharacterInfoPanel" Property="Visibility" Value="Collapsed"/>
+                    <Setter TargetName="BGpanel" Property="Width" Value="2000"/>
+
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CurrentPlayer.UIData.ExamineTarget.Type}" Value="Character">
+                    <Setter TargetName="ItemInfoPanel" Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+    </ls:UIWidget.Template>
 
 
-            </ItemsControl>
+    <!--    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-35,100,0,500" Visibility="Visible">-->
+    <!--        <StackPanel x:Name="DamageCombat" Orientation="Horizontal" HorizontalAlignment="Left">-->
+    <!--            <TextBlock Text="Damage in Combat: "-->
+    <!--                       TextAlignment="Left" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"-->
+    <!--                       FontSize="50" noesis:Text.Stroke="Black"-->
+    <!--                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>-->
+    <!--            <ItemsControl ItemsSource="{Binding CurrentPlayer.SelectedCharacter.StatusEffects}"-->
+    <!--                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"-->
+    <!--                          ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="500" Margin="0,0,0,32">-->
 
-        </StackPanel>
-    </Grid>
+    <!--                <ItemsControl.ItemsPanel>-->
+    <!--                    <ItemsPanelTemplate>-->
+    <!--                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>-->
+    <!--                    </ItemsPanelTemplate>-->
+    <!--                </ItemsControl.ItemsPanel>-->
+
+    <!--                <ItemsControl.ItemContainerStyle>-->
+    <!--                    <Style TargetType="ContentPresenter">-->
+    <!--                        <Setter Property="Margin" Value="-2"/>-->
+    <!--                        <Setter Property="Visibility" Value="Visible"/>-->
+    <!--                    </Style>-->
+    <!--                </ItemsControl.ItemContainerStyle>-->
+
+    <!--                <ItemsControl.ItemTemplate>-->
+    <!--                    <DataTemplate>-->
+    <!--                        <Grid>-->
+    <!--                            <TextBlock x:Name="StatusTextBlock" Text=""-->
+    <!--                                       TextAlignment="Right" Foreground="{StaticResource LS_tint100}" FontWeight="Bold"-->
+    <!--                                       FontSize="50" noesis:Text.Stroke="Black"-->
+    <!--                                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>-->
+    <!--                        </Grid>-->
+    <!--                        <DataTemplate.Triggers>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-100">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-101">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-102">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-103">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-104">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-105">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-106">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-107">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-108">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                            <DataTrigger Binding="{Binding Duration}" Value="-109">-->
+    <!--                                <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>-->
+    <!--                            </DataTrigger>-->
+    <!--                        </DataTemplate.Triggers>-->
+
+    <!--                    </DataTemplate>-->
+    <!--                </ItemsControl.ItemTemplate>-->
+
+
+    <!--            </ItemsControl>-->
+
+    <!--        </StackPanel>-->
+    <!--    </Grid>-->
 
 </ls:UIWidget>
