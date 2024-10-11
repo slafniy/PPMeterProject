@@ -45,22 +45,27 @@
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
                             </Grid>
+                            <StackPanel>
+                                <TextBlock Text="Damage in combat: "
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="50" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <TextBlock Text="Damage this day: "
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="50" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <TextBlock Text="Damage overall: "
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="50" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                            </StackPanel>
                         </Grid>
                     </ls:LSNineSliceImage>
                 </Grid>
             </Grid>
-
-            <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding CurrentPlayer.UIData.ExamineTarget.Type}" Value="Item">
-                    <Setter TargetName="CharacterInfoPanel" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="BGpanel" Property="Width" Value="2000"/>
-
-                </DataTrigger>
-                <DataTrigger Binding="{Binding CurrentPlayer.UIData.ExamineTarget.Type}" Value="Character">
-                    <Setter TargetName="ItemInfoPanel" Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </ControlTemplate.Triggers>
-
         </ControlTemplate>
     </ls:UIWidget.Template>
 
