@@ -19,15 +19,14 @@
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
                     </b:Interaction.Behaviors>
-                    <ls:LSNineSliceImage x:Name="BGpanel" Style="{StaticResource Generic9SliceBG}"
-                                         Width="600" Height="460">
-                        <StackPanel>
+                    <ls:LSNineSliceImage x:Name="BGpanel" Style="{StaticResource Generic9SliceBG}">
+                        <StackPanel MaxWidth="460">
                             <!--DRAG AREA-->
                             <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                                  Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="80">
-                                <TextBlock x:Name="HeaderName" Text="Personal Performance Meter"
+                                  Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
+                                <TextBlock x:Name="HeaderName" Text="PPMeter"
                                            TextAlignment="Center" Foreground="{StaticResource LS_tint100}"
-                                           FontWeight="Bold" FontSize="{StaticResource ScaledTitleFontSize}"
+                                           FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
                                            noesis:Text.Stroke="Black"
                                            noesis:Text.StrokeThickness="4" Visibility="Visible"/>
                                 <b:Interaction.Triggers>
@@ -43,24 +42,45 @@
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
                             </Grid>
-                            <Image x:Name="TopBorder"
-                                   Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
-                                   Stretch="None" VerticalAlignment="Top" IsHitTestVisible="False" Panel.ZIndex="1"/>
-                            <TextBlock Text="Damage in combat: "
-                                       TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
-                                       FontWeight="Bold"
-                                       FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
-                                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
-                            <TextBlock Text="Damage this day: "
-                                       TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
-                                       FontWeight="Bold"
-                                       FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
-                                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
-                            <TextBlock Text="Damage overall: "
-                                       TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
-                                       FontWeight="Bold"
-                                       FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
-                                       noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                            <Image x:Name="TopBorder" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
+                                   Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                   IsHitTestVisible="False" Panel.ZIndex="1"/>
+                            <StackPanel x:Name="CombatDamage" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock Text="Damage in combat: "
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <TextBlock Text="666"
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                            </StackPanel>
+                            <StackPanel x:Name="DailyDamage" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock Text="Damage in combat: "
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <TextBlock Text="6666"
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                            </StackPanel>
+                            <StackPanel x:Name="OverallDamage" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock Text="Damage in combat: "
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                                <TextBlock Text="66666"
+                                           TextAlignment="Left" Foreground="{StaticResource LS_tint100}"
+                                           FontWeight="Bold"
+                                           FontSize="{StaticResource MediumFontSize}" noesis:Text.Stroke="Black"
+                                           noesis:Text.StrokeThickness="4" Visibility="Visible"/>
+                            </StackPanel>
                         </StackPanel>
                     </ls:LSNineSliceImage>
                 </Grid>
