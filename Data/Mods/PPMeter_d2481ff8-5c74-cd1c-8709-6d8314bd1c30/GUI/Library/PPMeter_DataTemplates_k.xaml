@@ -9,6 +9,8 @@
                     xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
 					mc:Ignorable="d">
 
+
+
     <!-- CharacterPortrait Template -->
     <DataTemplate x:Key="PPMeter_CharacterPortrait">
         <DataTemplate.Resources>
@@ -77,7 +79,7 @@
                             <Grid Style="{StaticResource PortraitGridStyle}" MaxHeight="{Binding ActualHeight, ElementName=FrameHighlight}">
                                 <ls:LSEntityObject EntityRef="{Binding EntityHandle}" Background="Transparent" Margin="0,-3,0,-3" Opacity="1">
                                     <ls:LSEntityObject.ToolTip>
-                                        <ls:LSTooltip Content="{TemplateBinding DataContext}" ContentTemplate="{StaticResource PartyLineTooltipTemplate}" ls:TooltipExtender.Owner="{Binding Path=DataContext, ElementName=ParentControl}" Placement="Right" VerticalOffset="-18" CanBePinned="True"/>
+                                        <ls:LSTooltip Content="{TemplateBinding DataContext}" ContentTemplate="{StaticResource PPMeter_PartyLineTooltipTemplate}" ls:TooltipExtender.Owner="{Binding Path=DataContext, ElementName=ParentControl}" Placement="Right" VerticalOffset="-18" CanBePinned="True"/>
                                     </ls:LSEntityObject.ToolTip>
                                     <Grid IsHitTestVisible="False">
                                         <!--PORTRAITS-->
