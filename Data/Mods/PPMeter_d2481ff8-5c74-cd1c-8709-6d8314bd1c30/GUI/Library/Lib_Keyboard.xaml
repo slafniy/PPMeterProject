@@ -3,5 +3,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="PPMeter_DataTemplates_k.xaml"/>
+        <ResourceDictionary Source="PPMeter_CharacterSheetTemplates_k.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
