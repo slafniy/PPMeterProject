@@ -77,5 +77,24 @@
             </ls:State.Events>
         </ls:State>
 
+        <!--STATE: Examine-->
+        <ls:State Name = "Examine" DisableStatesBelow = "False" HideStatesBelow = "False" Layout = "Player" Owner = "Player" ModType="Override">
+            <ls:State.Widgets>
+                <ls:StateWidget Filename="PPMeter_Examine.xaml" Layer="PopupPanels" SoundLayer="NonHUDWidget"/>
+            </ls:State.Widgets>
+            <ls:State.Events>
+                <ls:StateEvent Name = "CloseWidget">
+                    <ls:StateEvent.Actions>
+                        <ls:RemoveState/>
+                    </ls:StateEvent.Actions>
+                </ls:StateEvent>
+                <ls:StateEvent Name = "IE.ToggleInGameMenu">
+                    <ls:StateEvent.Actions>
+                        <ls:RemoveState/>
+                    </ls:StateEvent.Actions>
+                </ls:StateEvent>
+            </ls:State.Events>
+        </ls:State>
+
     </ls:StateMachine.States>
 </ls:StateMachine>
