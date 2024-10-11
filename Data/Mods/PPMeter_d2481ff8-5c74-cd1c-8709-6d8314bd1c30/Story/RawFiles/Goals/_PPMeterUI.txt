@@ -33,6 +33,8 @@ PROC
 PROC_ClearNumberInUI((CHARACTER)_Character)
 AND
 DB_PPMeter_DamageCombat_Statuses(_Status, _)
+AND
+HasAppliedStatus(_Character, _Status, 1)
 THEN
 RemoveStatus(_Character, _Status, _Character);
 
@@ -98,6 +100,26 @@ NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "RoundsCount", _)
 THEN
 DebugText(_Character, "I need to end turn first!");
 //END_REGION
+
+
+
+IF
+DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsName, _Value)
+AND
+_LifeTime == "Combat"
+AND
+_StatsName == "Damage"
+THEN
+PROC_WriteNumberInUI(_Character, _Value);
+
+
+
+
+
+
+
+
+
 EXITSECTION
 
 ENDEXITSECTION
