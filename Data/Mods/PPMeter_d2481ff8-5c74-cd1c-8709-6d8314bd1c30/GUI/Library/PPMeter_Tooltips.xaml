@@ -8,6 +8,27 @@
                     xmlns:ls="clr-namespace:ls;assembly=Code"
                     mc:Ignorable="d">
 
+    <System:Double x:Key="MinimalDurationToShow">-2</System:Double>
+    
+    <DataTemplate x:Key="PPMeter_ActiveConditionCompleteTemplate" DataType="{x:Type ls:VMStatus}">
+        <Grid x:Name="Root" Margin="0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter Grid.Column="0" Margin="0,0,16,0" Content="{Binding .}" ContentTemplate="{StaticResource SingleIconStatusTemplate}"/>
+
+            <TextBlock Grid.Column="1" ls:TextBlockFormatter.SourceText="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource DamageValueTextStyle}" Foreground="{StaticResource TooltipColor.Secondary}"
+                       TextTrimming="CharacterEllipsis"/>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource MinimalDurationToShow}}" Value="True">
+                <Setter  TargetName="Root" Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
     <DataTemplate x:Key="PPMeter_PartyLineTooltipTemplate" DataType="{x:Type ls:Character}">
         <StackPanel x:Name="root" ls:TooltipExtender.Owner="{Binding }" MinWidth="{StaticResource MinNarrowTooltipContentWidth}" MaxWidth="{StaticResource MaxNarrowTooltipContentWidth}">
             <Grid x:Name="mainStatsGrid">
@@ -65,7 +86,7 @@
                 <!--Statuses-->
                 <TextBlock Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource DefaultFontSize}" Text="{Binding Source='h71f6c964g24c2g49e5ga3fbg65bf2fd92790',Converter={StaticResource TranslatedStringConverter}}"
                            Visibility="{Binding StatusEffects.Count, Converter={StaticResource CountToVisibilityConverter}}"/>
-                <ItemsControl x:Name="StatusList" Style="{StaticResource ActiveConditionsSection}" ItemTemplate="{StaticResource ActiveConditionCompleteTemplate}" ItemsSource="{Binding StatusEffects}">
+                <ItemsControl x:Name="StatusList" Style="{StaticResource ActiveConditionsSection}" ItemTemplate="{StaticResource PPMeter_ActiveConditionCompleteTemplate}" ItemsSource="{Binding StatusEffects}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical"/>
@@ -201,7 +222,7 @@
                         </MultiBinding>
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="StatusList" Property="ItemTemplate" Value="{StaticResource ActiveConditionCompleteTemplate}"/>
+                <Setter TargetName="StatusList" Property="ItemTemplate" Value="{StaticResource PPMeter_ActiveConditionCompleteTemplate}"/>
                 <Setter TargetName="StatusList" Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
