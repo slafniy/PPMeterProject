@@ -8,7 +8,6 @@ KBSECTION
 PROC
 PROC_PPMeter_WriteToDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_NewValue)
 THEN
-//PROC_EnsureDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName);  // create if needed
 PROC_ClearDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName);  // clean if needed 
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _NewValue); // write value
 //END_REGION
