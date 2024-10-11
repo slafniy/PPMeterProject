@@ -13,6 +13,7 @@
         <DataTemplate.Resources>
             <BitmapImage x:Key="statusBG" UriSource="pack://application:,,,/Core;component/Assets/TargetInfo/statusBG.png"/>
             <BitmapImage x:Key="statusBG_fill" UriSource="pack://application:,,,/Core;component/Assets/TargetInfo/statusBG_fill.png"/>
+            <System:Double x:Key="MinimalDurationToShow">-2</System:Double>
         </DataTemplate.Resources>
         <Border Name="root" Style="{StaticResource RowBG_d}" ToolTip="{StaticResource ManagedTooltip}">
             <Grid Height="56">
@@ -41,6 +42,9 @@
                 <Setter TargetName="root" Property="Background" Value="{StaticResource RowBG_h}"/>
                 <Setter TargetName="NameLabel" Property="Foreground" Value="{StaticResource LS_tint100}"/>
             </Trigger>
+            <DataTrigger Binding="{Binding Duration, Converter={StaticResource LessThanConverter}, ConverterParameter={StaticResource MinimalDurationToShow}}" Value="True">
+                <Setter  TargetName="root" Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
         </DataTemplate.Triggers>
 
     </DataTemplate>
