@@ -71,7 +71,6 @@ AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
 PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
-//PROC_UpdateCombatDamageInUI(_AttackerOwner);
 //END_REGION
 
 
@@ -85,16 +84,6 @@ DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_ClearDB(_Character, "Day", _StatsName);
 //END_REGION
-
-
-/*//REGION PROC_UpdateCombatDamageInUI
-PROC 
-PROC_UpdateCombatDamageInUI((CHARACTER)_Character)
-AND
-DB_PPMeter_DataInteger(_Character, "Combat", "Damage", _Value)
-THEN
-PROC_WriteNumberInUI(_Character, _Value);
-//END_REGION*/
 EXITSECTION
 
 ENDEXITSECTION
