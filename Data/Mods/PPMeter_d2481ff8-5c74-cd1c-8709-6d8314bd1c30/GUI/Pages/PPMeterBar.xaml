@@ -11,7 +11,7 @@
 
     <ls:UIWidget.Template>
         <ControlTemplate>
-            <Grid x:Name="bgFade" Margin="-1400,0,-1400,-1000">
+            <Grid x:Name="bgFade" Margin="-400,0,-400,-200">
                 <Grid x:Name="Panel" HorizontalAlignment="Center" VerticalAlignment="Top"
                       DataContext="{Binding CurrentPlayer.UIData.ExamineTarget}" RenderTransformOrigin="0.5,0.5"
                       Margin="0,220,0,0">
@@ -30,62 +30,6 @@
                                          Width="{StaticResource ExaminePanelWidth}"
                                          Height="{StaticResource CSContentHeight}">
                         <Grid>
-                            <!--FOR ITEMS-->
-                            <ls:LSNineSliceImage x:Name="ItemInfoPanel" Style="{StaticResource WorldTooltip9Slice}"
-                                                 VerticalAlignment="Stretch" HorizontalAlignment="Right">
-                                <StackPanel>
-                                    <!--Hit Points-->
-                                    <Control x:Name="HPBarContainer" HorizontalAlignment="Center"
-                                             VerticalAlignment="Top" Margin="0,-28,0,-10"
-                                             Template="{StaticResource TargetHealthBarTemplate}"
-                                             Visibility="{Binding Stats.Health.Value, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=-1}"/>
-
-                                    <ScrollViewer Style="{StaticResource NoForcedScrollViewerStyle}"
-                                                  Padding="{StaticResource ScrollOffset}" VerticalAlignment="Stretch"
-                                                  ClipToBounds="False" Margin="12,0">
-                                        <StackPanel>
-                                            <StackPanel.Resources>
-                                                <ControlTemplate x:Key="DetailedEntry">
-                                                    <ControlTemplate.Resources>
-                                                        <Style TargetType="DockPanel">
-                                                            <Setter Property="Margin" Value="8,0"/>
-                                                        </Style>
-                                                    </ControlTemplate.Resources>
-                                                    <Border x:Name="entry" Style="{StaticResource RowBG_d}"
-                                                            MinHeight="48">
-                                                        <ContentPresenter/>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="entry" Property="Background"
-                                                                    Value="{StaticResource RowBG_h}"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </StackPanel.Resources>
-
-                                            <ContentPresenter
-                                                    ls:TooltipExtender.Owner="{Binding DataContext.CurrentPlayer.SelectedCharacter, ElementName=Examine}"
-                                                    Content="{Binding .}" DataContext="{Binding .}"
-                                                    ContentTemplate="{StaticResource ItemsTooltip}"
-                                                    ls:TooltipExtender.IsOpen="True"
-                                                    ls:TooltipExtender.Content="{Binding .}" Margin="20"/>
-
-                                            <!--Resistances-->
-                                            <StackPanel Name="ResistancesSection"
-                                                        Visibility="{Binding Stats.NumActiveResistances, Converter={StaticResource CountToVisibilityConverter}}">
-                                                <ContentControl Style="{StaticResource BaseTitleStyle}">
-                                                    <TextBlock
-                                                            Text="{Binding Source='h98a4ccfbg20f4g4294g9bf7g624c95711539', Converter={StaticResource TranslatedStringConverter}}"/>
-                                                </ContentControl>
-                                                <Control x:Name="ResistanceContainer" HorizontalAlignment="Center"
-                                                         Template="{StaticResource ResistancesGridTemplate}"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </ScrollViewer>
-                                </StackPanel>
-
-                            </ls:LSNineSliceImage>
 
                             <!--DRAG AREA-->
                             <Grid x:Name="DragHit" VerticalAlignment="Top" HorizontalAlignment="Stretch"
@@ -103,39 +47,9 @@
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
                             </Grid>
-                            <!--CLOSE BUTTON-->
-                            <ls:LSButton x:Name="CloseExamine" Style="{DynamicResource SmallCloseButton}"
-                                         SoundID="UI_Shared_Cancel" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                         BoundEvent="UICancel" Margin="0,0,0,0">
-                                <ls:LSButton.Triggers>
-                                    <EventTrigger RoutedEvent="Button.Click">
-                                        <BeginStoryboard x:Name="CloseAnimation">
-                                            <Storyboard Children="{StaticResource ClosePanelAnim}"/>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </ls:LSButton.Triggers>
-                            </ls:LSButton>
-                            <!-- ===== INFO PANEL ===== -->
-                            <!--FOR CHARACTERS-->
-                            <Control Name="CharacterInfoPanel" Template="{StaticResource CharSheetTabController}"
-                                     Width="{StaticResource CSColumnWidth}" HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom" Margin="0,8,8,8"/>
-
                         </Grid>
                     </ls:LSNineSliceImage>
                 </Grid>
-
-                <!--===== TRIGGERS & ANIMATIONS =====-->
-                <b:Interaction.Triggers>
-                    <b:StoryboardCompletedTrigger Storyboard="{Binding ElementName=CloseAnimation,Path=Storyboard}">
-                        <b:InvokeCommandAction Command="{Binding CustomEvent}" CommandParameter="CloseWidget"/>
-                    </b:StoryboardCompletedTrigger>
-                </b:Interaction.Triggers>
-                <Grid.Triggers>
-                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                        <BeginStoryboard Storyboard="{StaticResource OpenPanelAnim}"/>
-                    </EventTrigger>
-                </Grid.Triggers>
             </Grid>
 
             <ControlTemplate.Triggers>
