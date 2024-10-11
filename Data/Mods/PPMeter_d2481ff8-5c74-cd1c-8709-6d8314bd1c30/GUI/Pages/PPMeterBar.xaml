@@ -27,13 +27,11 @@
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=DragHit,Mode=OneWay}"/>
                     </b:Interaction.Behaviors>
                     <ls:LSNineSliceImage x:Name="BGpanel" Style="{StaticResource Generic9SliceBG}"
-                                         Width="{StaticResource ExaminePanelWidth}"
-                                         Height="{StaticResource CSContentHeight}">
+                                         Width="600" Height="460">
                         <Grid>
-
                             <!--DRAG AREA-->
                             <Grid x:Name="DragHit" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                                  Background="Transparent" Height="140">
+                                  Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="140">
                                 <b:Interaction.Triggers>
                                     <b:EventTrigger EventName="MouseEnter">
                                         <b:InvokeCommandAction
