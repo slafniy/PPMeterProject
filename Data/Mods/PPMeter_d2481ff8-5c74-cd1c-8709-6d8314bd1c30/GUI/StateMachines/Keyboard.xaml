@@ -8,6 +8,7 @@
         <ls:State Name="PlayerHUD" Layout="Player" Owner="Player" ModType="Override">
             <ls:State.Widgets>
                 <ls:StateWidget Filename="PPMeterBar.xaml" Layer="PopupPanels"/>
+                <ls:StateWidget Filename="PPMeterPartyStats.xaml" Layer="PopupPanels"/>
                 <ls:StateWidget Filename="PPMeter_HotBar.xaml" Layer="HUDTop"/>
                 <ls:StateWidget Filename="PPMeter_PlayerPortraits.xaml" Layer="PopupPanels"/>
                 <ls:StateWidget Filename="/MainUI;component/Pages/Overlay.xaml" Layer="Notifications"/>
