@@ -286,8 +286,8 @@
                     </ls:LSNineSliceImage>
                 </Grid>
 
-                <!-- SHOW/HIDE BUTTON -->
-                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,30" Panel.ZIndex="10">
+                <!-- SHOW / HIDE BUTTON -->
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,0" Panel.ZIndex="10">
 
                     <Image x:Name="bg" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_gizmo_bg.png" Stretch="None"/>
 
@@ -313,6 +313,11 @@
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </ls:LSButton.Template>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="LSButtonReleased">
+                                <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Visible"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
                     </ls:LSButton>
                 </Grid>
 
