@@ -8,19 +8,21 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <Grid x:Name="Root">
-        <StackPanel x:Name="PartyMembers" Orientation="Vertical">
-            <TextBlock Text="PPMeter by Slafniy" />
-            <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                    <Grid x:Name="Character">
-                        <TextBlock Text="{Binding Name}" />
-                    </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+    <Grid x:Name="Root" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <ls:LSNineSliceImage x:Name="Contour" Style="{StaticResource Generic9SliceBGFaded}">
+            <StackPanel x:Name="PartyMembers" Orientation="Vertical">
+                <TextBlock Text="PPMeter by Slafniy" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="Character">
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ls:LSNineSliceImage>
     </Grid>
 
 </ls:UIWidget>
