@@ -35,7 +35,7 @@
                 <!-- HEADER SPLITTER -->
                 <Image x:Name="TopBorder" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
                        Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
-                       IsHitTestVisible="False" Panel.ZIndex="1"/>
+                       IsHitTestVisible="False" Panel.ZIndex="1" Width="{Binding ActualWidth, ElementName=PartyMembers}"/>
 
                 <!-- COLUMNS HOLDER -->
                 <StackPanel x:Name="ColumnsHolder" Orientation="Horizontal">
@@ -50,7 +50,7 @@
                         </ItemsControl>
                     </StackPanel>
                     <StackPanel x:Name="ColumCombat" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeader" Text="Combat" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                        <TextBlock x:Name="ColHeaderCombat" Text="Combat" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -107,7 +107,7 @@
                         </ItemsControl>
                     </StackPanel>
                     <StackPanel x:Name="ColumnDay" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeader" Text="Day" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                        <TextBlock x:Name="ColHeaderDay" Text="Day" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -164,7 +164,7 @@
                         </ItemsControl>
                     </StackPanel>
                     <StackPanel x:Name="ColumnLevel" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeader" Text="Level" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                        <TextBlock x:Name="ColHeaderLevel" Text="Level" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -221,7 +221,7 @@
                         </ItemsControl>
                     </StackPanel>
                     <StackPanel x:Name="ColumnOverall" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeader" Text="Overall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                        <TextBlock x:Name="ColHeaderOverall" Text="Overall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
