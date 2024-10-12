@@ -8,7 +8,7 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <Grid x:Name="Root" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Left">
         <b:Interaction.Behaviors>
             <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
             <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
@@ -18,7 +18,7 @@
                 <!-- HEADER - DRAG AREA-->
                 <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                       Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
-                    <TextBlock x:Name="HeaderName" Text="PPMeter by Slafniy" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" Margin="20,0,20,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="HeaderName" Text="PPMeter by Slafniy" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" Margin="20,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="MouseEnter">
                             <b:InvokeCommandAction
