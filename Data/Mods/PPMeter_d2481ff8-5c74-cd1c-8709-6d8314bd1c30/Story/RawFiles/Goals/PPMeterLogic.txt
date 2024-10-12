@@ -34,6 +34,7 @@ THEN
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
+
 //REGION On new combat - reset per-combat stats for each StatsType
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -80,6 +81,8 @@ AND
 DB_PartyMembers(_AttackerOwner)
 AND
 _DamageAmount > 0
+AND
+IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
 AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
