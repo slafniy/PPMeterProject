@@ -125,6 +125,8 @@ RemoveStatus(_Character, _Status, _Character);
 
 //REGION Update UI damage(set statuses)
 IF
+DB_PartyMembers(_Character)
+AND
 DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsName, _Value)
 AND
 _StatsName == "Damage"

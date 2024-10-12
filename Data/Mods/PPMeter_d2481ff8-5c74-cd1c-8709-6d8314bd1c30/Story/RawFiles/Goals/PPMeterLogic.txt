@@ -84,6 +84,20 @@ DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_PPMeter_WriteToDB(_Character, "Day", _StatsName, 0);
 //END_REGION
+
+
+//REGION Fill zeros
+IF
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsType)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+NOT DB_PPMeter_DataInteger (_Character, _Lifetime, _StatsType, _)
+THEN
+DB_PPMeter_DataInteger (_Character, _Lifetime, _StatsType, 0);
+//END_REGION
 EXITSECTION
 
 ENDEXITSECTION
