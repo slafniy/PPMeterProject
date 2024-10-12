@@ -291,7 +291,7 @@
 
                     <Image x:Name="bg" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_gizmo_bg.png" Stretch="None"/>
 
-                    <ls:LSButton x:Name="TogglePPMeterButton" Command="{Binding ToggleCombatLogCommand}" VerticalAlignment="Center">
+                    <ls:LSButton x:Name="ShowPPMeterButton" VerticalAlignment="Center">
                         <ls:LSButton.Template>
                             <ControlTemplate TargetType="ls:LSButton">
                                 <Grid Height="114" Width="80" Background="Transparent">
@@ -316,6 +316,39 @@
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="LSButtonReleased">
                                 <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Visible"/>
+                                <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
+                                <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Visible"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </ls:LSButton>
+
+                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center">
+                        <ls:LSButton.Template>
+                            <ControlTemplate TargetType="ls:LSButton">
+                                <Grid Height="114" Width="80" Background="Transparent">
+                                    <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>
+                                    <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>
+                                    <Grid.ToolTip>
+                                        <ls:LSTooltip Placement="Left" Content="Open/hide PPMeter"/>
+                                    </Grid.ToolTip>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_h.png"/>
+                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_h.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_p.png"/>
+                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_p.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </ls:LSButton.Template>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="LSButtonReleased">
+                                <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Collapsed"/>
+                                <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
+                                <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                     </ls:LSButton>
