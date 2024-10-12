@@ -10,9 +10,9 @@
 
     <ls:UIWidget.Template>
         <ControlTemplate>
-            <Grid x:Name="bgFade" Margin="0,0,0,0">  <!-- Needed for normal drag -->
+            <Grid x:Name="bgFade" Margin="0,0,0,0">  <!-- This Grid is needed for normal drag -->
                 <!-- Widget itself-->
-                <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <b:Interaction.Behaviors>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
