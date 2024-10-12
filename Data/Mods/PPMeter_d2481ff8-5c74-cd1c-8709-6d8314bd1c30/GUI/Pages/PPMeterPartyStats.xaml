@@ -11,7 +11,7 @@
     <ls:UIWidget.Template>
         <ControlTemplate>
             <Grid x:Name="bgFade" Margin="0,0,0,0">  <!-- This Grid is needed for normal drag -->
-                <!-- Widget itself-->
+                <!-- WIDGET ITSELF -->
                 <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <b:Interaction.Behaviors>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
@@ -284,6 +284,36 @@
                             </StackPanel>
                         </StackPanel>
                     </ls:LSNineSliceImage>
+                </Grid>
+
+                <!-- SHOW/HIDE BUTTON -->
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,30" Panel.ZIndex="10">
+
+                    <Image x:Name="bg" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_gizmo_bg.png" Stretch="None"/>
+
+                    <ls:LSButton x:Name="TogglePPMeterButton" Command="{Binding ToggleCombatLogCommand}" VerticalAlignment="Center">
+                        <ls:LSButton.Template>
+                            <ControlTemplate TargetType="ls:LSButton">
+                                <Grid Height="114" Width="80" Background="Transparent">
+                                    <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>
+                                    <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>
+                                    <Grid.ToolTip>
+                                        <ls:LSTooltip Placement="Left" Content="Open/hide PPMeter"/>
+                                    </Grid.ToolTip>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_h.png"/>
+                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_h.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_p.png"/>
+                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_p.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </ls:LSButton.Template>
+                    </ls:LSButton>
                 </Grid>
 
                 <ControlTemplate.Triggers>
