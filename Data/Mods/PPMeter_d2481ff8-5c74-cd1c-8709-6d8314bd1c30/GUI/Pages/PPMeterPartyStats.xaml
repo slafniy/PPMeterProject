@@ -9,12 +9,12 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <Grid x:Name="Root" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <b:Interaction.Behaviors>
+            <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
+            <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
+        </b:Interaction.Behaviors>
         <ls:LSNineSliceImage x:Name="Contour" Style="{StaticResource Generic9SliceBGFaded}">
             <StackPanel x:Name="PartyMembers" Orientation="Vertical">
-                <b:Interaction.Behaviors>
-                    <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
-                    <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
-                </b:Interaction.Behaviors>
                 <!-- HEADER - DRAG AREA-->
                 <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                       Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
