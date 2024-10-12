@@ -10,7 +10,16 @@
 
     <Grid x:Name="Root">
         <StackPanel x:Name="PartyMembers" Orientation="Vertical">
-
+            <TextBlock Text="PPMeter by Slafniy" />
+            <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                    <Grid x:Name="Character">
+                        <TextBlock Text="{Binding Name}" />
+                    </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </Grid>
 
