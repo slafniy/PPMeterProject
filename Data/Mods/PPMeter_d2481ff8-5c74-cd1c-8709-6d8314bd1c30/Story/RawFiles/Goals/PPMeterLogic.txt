@@ -21,6 +21,19 @@ DB_PPMeter_StatsType("RoundsCount");
 
 
 KBSECTION
+//REGION Fill zeros - in any situalion we have no record
+IF
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsType)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+NOT DB_PPMeter_DataInteger (_Character, _Lifetime, _StatsType, _)
+THEN
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
+//END_REGION
+
 //REGION On new combat - reset per-combat stats for each StatsType
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -29,7 +42,7 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_PPMeter_WriteToDB(_Character, "Combat", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0);
 //END_REGION
 
 
@@ -41,7 +54,7 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_PPMeter_WriteToDB((CHARACTER)_Character, "Level", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, "Level", _StatsName, 0);
 //END_REGION
 
 
@@ -82,22 +95,11 @@ DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle c
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_PPMeter_WriteToDB(_Character, "Day", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0);
+PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses
 //END_REGION
 
 
-//REGION Fill zeros
-IF
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_StatsType(_StatsType)
-AND
-DB_PPMeter_Lifetime(_Lifetime)
-AND
-NOT DB_PPMeter_DataInteger (_Character, _Lifetime, _StatsType, _)
-THEN
-DB_PPMeter_DataInteger (_Character, _Lifetime, _StatsType, 0);
-//END_REGION
 EXITSECTION
 
 ENDEXITSECTION
