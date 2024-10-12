@@ -8,278 +8,294 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Left">
-        <b:Interaction.Behaviors>
-            <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
-            <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
-        </b:Interaction.Behaviors>
-        <ls:LSNineSliceImage x:Name="Contour" Style="{StaticResource Generic9SliceBGFaded}">
-            <StackPanel x:Name="PartyMembers" Orientation="Vertical">
-                <!-- HEADER - DRAG AREA-->
-                <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                      Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
-                    <TextBlock x:Name="HeaderName" Text="PPMeter by Slafniy" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" Margin="20,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="MouseEnter">
-                            <b:InvokeCommandAction
-                                    Command="{Binding DataContext.SetCursorCommand, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"
-                                    CommandParameter="Resize"/>
-                        </b:EventTrigger>
-                        <b:EventTrigger EventName="MouseLeave">
-                            <b:InvokeCommandAction
-                                    Command="{Binding DataContext.SetCursorCommand, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"
-                                    CommandParameter=""/>
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
-                </Grid>
-                <!-- HEADER SPLITTER -->
-                <Image x:Name="TopBorder" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
-                       Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
-                       IsHitTestVisible="False" Panel.ZIndex="1" Width="{Binding ActualWidth, ElementName=PartyMembers}"/>
+    <ls:UIWidget.Template>
+        <ControlTemplate>
+            <Grid x:Name="bgFade" Margin="0,0,0,0">  <!-- Needed for normal drag -->
+                <!-- Widget itself-->
+                <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <b:Interaction.Behaviors>
+                        <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
+                        <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
+                    </b:Interaction.Behaviors>
+                    <ls:LSNineSliceImage x:Name="Contour" Style="{StaticResource Generic9SliceBGFaded}">
+                        <StackPanel x:Name="PartyMembers" Orientation="Vertical">
+                            <!-- HEADER - DRAG AREA-->
+                            <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                                  Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
+                                <TextBlock x:Name="HeaderName" Text="PPMeter by Slafniy" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" Margin="20,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseEnter">
+                                        <b:InvokeCommandAction
+                                                Command="{Binding DataContext.SetCursorCommand, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"
+                                                CommandParameter="Resize"/>
+                                    </b:EventTrigger>
+                                    <b:EventTrigger EventName="MouseLeave">
+                                        <b:InvokeCommandAction
+                                                Command="{Binding DataContext.SetCursorCommand, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}"
+                                                CommandParameter=""/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Grid>
+                            <!-- HEADER SPLITTER -->
+                            <Image x:Name="TopBorder" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
+                                   Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                   IsHitTestVisible="False" Panel.ZIndex="1" Width="{Binding ActualWidth, ElementName=PartyMembers}"/>
 
-                <!-- COLUMNS HOLDER -->
-                <StackPanel x:Name="ColumnsHolder" Orientation="Horizontal">
-                    <StackPanel x:Name="ColumnNames" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="Spacer" Text=""/>
-                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" HorizontalAlignment="Left"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel x:Name="ColumCombat" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeaderCombat" Text="Combat" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel x:Name="DamageCombatText" Orientation="Horizontal" HorizontalAlignment="Left">
-                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                                    </Grid>
-                                                    <DataTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-100">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-101">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-102">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-103">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-104">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-105">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-106">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-107">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-108">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-109">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                                                        </DataTrigger>
-                                                    </DataTemplate.Triggers>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel x:Name="ColumnDay" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeaderDay" Text="Day" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel x:Name="DamageDay" Orientation="Horizontal" HorizontalAlignment="Left">
-                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                                    </Grid>
-                                                    <DataTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-130">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-131">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-132">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-133">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-134">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-135">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-136">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-137">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-138">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-139">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                                                        </DataTrigger>
-                                                    </DataTemplate.Triggers>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel x:Name="ColumnLevel" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeaderLevel" Text="Level" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel x:Name="DamageLevel" Orientation="Horizontal" HorizontalAlignment="Left">
-                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                                    </Grid>
-                                                    <DataTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-120">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-121">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-122">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-123">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-124">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-125">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-126">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-127">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-128">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-129">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                                                        </DataTrigger>
-                                                    </DataTemplate.Triggers>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel x:Name="ColumnOverall" Orientation="Vertical" Margin="20,0,20,0">
-                        <TextBlock x:Name="ColHeaderOverall" Text="Overall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel x:Name="DamageOverall" Orientation="Horizontal" HorizontalAlignment="Left">
-                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                                    </Grid>
-                                                    <DataTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-110">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-111">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-112">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-113">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-114">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-115">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-116">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-117">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-118">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Duration}" Value="-119">
-                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                                                        </DataTrigger>
-                                                    </DataTemplate.Triggers>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </ls:LSNineSliceImage>
-    </Grid>
+                            <!-- COLUMNS HOLDER -->
+                            <StackPanel x:Name="ColumnsHolder" Orientation="Horizontal">
+                                <StackPanel x:Name="ColumnNames" Orientation="Vertical" Margin="20,0,20,0">
+                                    <TextBlock x:Name="Spacer" Text=""/>
+                                    <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" HorizontalAlignment="Left"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel x:Name="ColumCombat" Orientation="Vertical" Margin="20,0,20,0">
+                                    <TextBlock x:Name="ColHeaderCombat" Text="Combat" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel x:Name="DamageCombatText" Orientation="Horizontal" HorizontalAlignment="Left">
+                                                    <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                                                </Grid>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-100">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-101">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-102">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-103">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-104">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-105">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-106">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-107">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-108">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-109">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                                    </DataTrigger>
+                                                                </DataTemplate.Triggers>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel x:Name="ColumnDay" Orientation="Vertical" Margin="20,0,20,0">
+                                    <TextBlock x:Name="ColHeaderDay" Text="Day" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel x:Name="DamageDay" Orientation="Horizontal" HorizontalAlignment="Left">
+                                                    <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                                                </Grid>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-130">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-131">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-132">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-133">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-134">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-135">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-136">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-137">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-138">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-139">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                                    </DataTrigger>
+                                                                </DataTemplate.Triggers>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel x:Name="ColumnLevel" Orientation="Vertical" Margin="20,0,20,0">
+                                    <TextBlock x:Name="ColHeaderLevel" Text="Level" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel x:Name="DamageLevel" Orientation="Horizontal" HorizontalAlignment="Left">
+                                                    <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                                                </Grid>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-120">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-121">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-122">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-123">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-124">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-125">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-126">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-127">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-128">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-129">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                                    </DataTrigger>
+                                                                </DataTemplate.Triggers>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel x:Name="ColumnOverall" Orientation="Vertical" Margin="20,0,20,0">
+                                    <TextBlock x:Name="ColHeaderOverall" Text="Overall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel x:Name="DamageOverall" Orientation="Horizontal" HorizontalAlignment="Left">
+                                                    <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                                                </Grid>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-110">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-111">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-112">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-113">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-114">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-115">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-116">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-117">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-118">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-119">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                                    </DataTrigger>
+                                                                </DataTemplate.Triggers>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </ls:LSNineSliceImage>
+                </Grid>
+
+                <ControlTemplate.Triggers>
+
+                    <!--                <DataTrigger Binding="{Binding CurrentPlayer.SelectedCharacter.Stats.Health.Value}" Value="-1">-->
+                    <!--                    <Setter TargetName="HealthBar" Property="Visibility" Value="Hidden"/>-->
+                    <!--                </DataTrigger>-->
+
+                </ControlTemplate.Triggers>
+            </Grid>
+        </ControlTemplate>
+    </ls:UIWidget.Template>
+
 
 </ls:UIWidget>
