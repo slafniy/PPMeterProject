@@ -22,7 +22,7 @@
                             <!-- HEADER - DRAG AREA-->
                             <Grid x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                                   Background="{StaticResource LS_PopUpBackgroundColorMedium}" Height="60">
-                                <TextBlock x:Name="HeaderName" Text="PPMeter by Slafniy" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" Margin="20,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                <TextBlock x:Name="HeaderName" Text="{Binding Source='h5e4a29f6g1329g49d6g80acg72fa24371d86', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}" Margin="20,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                                 <b:Interaction.Triggers>
                                     <b:EventTrigger EventName="MouseEnter">
                                         <b:InvokeCommandAction
@@ -54,7 +54,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumCombat" Orientation="Vertical" Margin="20,0,20,0">
-                                    <TextBlock x:Name="ColHeaderCombat" Text="Combat" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <TextBlock x:Name="ColHeaderCombat" Text="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                     <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -111,7 +111,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumnDay" Orientation="Vertical" Margin="20,0,20,0">
-                                    <TextBlock x:Name="ColHeaderDay" Text="Day" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <TextBlock x:Name="ColHeaderDay" Text="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                     <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -168,7 +168,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumnLevel" Orientation="Vertical" Margin="20,0,20,0">
-                                    <TextBlock x:Name="ColHeaderLevel" Text="Level" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <TextBlock x:Name="ColHeaderLevel" Text="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                     <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -225,7 +225,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumnOverall" Orientation="Vertical" Margin="20,0,20,0">
-                                    <TextBlock x:Name="ColHeaderOverall" Text="Overall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <TextBlock x:Name="ColHeaderOverall" Text="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                     <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -298,7 +298,7 @@
                                     <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>
                                     <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>
                                     <Grid.ToolTip>
-                                        <ls:LSTooltip Placement="Left" Content="Open/hide PPMeter"/>
+                                        <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>
                                     </Grid.ToolTip>
                                 </Grid>
                                 <ControlTemplate.Triggers>
@@ -329,7 +329,7 @@
                                     <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>
                                     <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>
                                     <Grid.ToolTip>
-                                        <ls:LSTooltip Placement="Left" Content="Open/hide PPMeter"/>
+                                        <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>
                                     </Grid.ToolTip>
                                 </Grid>
                                 <ControlTemplate.Triggers>
@@ -353,14 +353,6 @@
                         </b:Interaction.Triggers>
                     </ls:LSButton>
                 </Grid>
-
-                <ControlTemplate.Triggers>
-
-                    <!--                <DataTrigger Binding="{Binding CurrentPlayer.SelectedCharacter.Stats.Health.Value}" Value="-1">-->
-                    <!--                    <Setter TargetName="HealthBar" Property="Visibility" Value="Hidden"/>-->
-                    <!--                </DataTrigger>-->
-
-                </ControlTemplate.Triggers>
             </Grid>
         </ControlTemplate>
     </ls:UIWidget.Template>
