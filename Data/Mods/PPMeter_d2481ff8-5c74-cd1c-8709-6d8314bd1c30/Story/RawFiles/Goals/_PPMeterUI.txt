@@ -106,13 +106,13 @@ PROC_WriteOneByOne(_Character, _Lifetime, _NumberStr);
 PROC
 PROC_WriteOneByOne((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_NumberStr)
 AND
-DB_PPMeter_StatusEffects(_Status, _Start, _Lifetime)
+DB_PPMeter_StatusEffects(_Status, _Start, _StatsType, _Lifetime)
 AND
 Substring(_NumberStr, _Start, 1, _DigitStr)
 AND
 _DigitStr != ""
 AND
-DB_PPMeter_DigitStrToDuration(_DigitStr, _Duration, _Lifetime)
+DB_PPMeter_DigitStrToDuration(_DigitStr, _Duration, _StatsType, _Lifetime)
 THEN
 ApplyStatus(_Character, _Status, _Duration, 1, _Character);
 //END_REGION
@@ -122,7 +122,7 @@ ApplyStatus(_Character, _Status, _Duration, 1, _Character);
 PROC
 PROC_ClearDamageStatuses((CHARACTER)_Character, (STRING)_Lifetime)
 AND
-DB_PPMeter_StatusEffects(_Status, _, _Lifetime)
+DB_PPMeter_StatusEffects(_Status, _, _, _Lifetime)
 AND
 HasAppliedStatus(_Character, _Status, 1)
 THEN
