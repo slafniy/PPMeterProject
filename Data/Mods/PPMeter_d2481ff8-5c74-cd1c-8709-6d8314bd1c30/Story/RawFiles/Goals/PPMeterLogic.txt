@@ -36,6 +36,22 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
 
+//REGION // Re-calculate DPRs in DB if data updated
+IF
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
+AND
+_Rounds > 0
+AND
+IntegerDivide(_Damage, _Rounds, _DPR)
+THEN
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", _DPR);
+//END_REGION
+
+
 //REGION On new combat - reset per-combat stats for each StatsType
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -60,7 +76,7 @@ PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, "Level", _StatsName, 0);
 //END_REGION
 
 
-//REGION Handle turn end - count rounds and calculate DPR
+//REGION Handle turn end - count rounds
 // Note: cannot count on round start because it races with EnteredCombat event in case if player joined to existing fight
 IF
 TurnEnded((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
@@ -72,7 +88,6 @@ AND
 _Lifetime != "Round"  // Its always 1 round in each round
 THEN
 PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
-PROC_PPMeterUpdateDPR((CHARACTER)_Character);
 //END_REGION
 
 
@@ -102,22 +117,6 @@ DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0);
 PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses
-//END_REGION
-
-
-//REGION // PROC_PPMeterUpdateDPR - re-calculate DPRs in DB
-PROC
-PROC_PPMeterUpdateDPR((CHARACTER)_Character)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
-AND
-_Rounds > 0
-AND
-IntegerDivide(_Damage, _Rounds, _DPR)
-THEN
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", _DPR);
 //END_REGION
 EXITSECTION
 
