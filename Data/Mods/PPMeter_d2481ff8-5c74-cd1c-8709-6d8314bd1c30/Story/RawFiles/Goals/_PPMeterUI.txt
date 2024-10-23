@@ -171,17 +171,17 @@ DB_PPMeter_DigitStrToDuration("8", -1068.0, "RoundsCount", "Overall");
 DB_PPMeter_DigitStrToDuration("9", -1074.0, "RoundsCount", "Overall");
 
 KBSECTION
-//REGION Write  damage to statuses
+//REGION Write data to statuses
 PROC
-PROC_WriteDamageStatuses((CHARACTER)_Character, (STRING)_Lifetime, (INTEGER)_Number)
+PROC_WriteStatuses((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (INTEGER)_Number)
 AND
 IntegerToString(_Number, _NumberStr)
 THEN
-PROC_ClearDamageStatuses(_Character, _Lifetime);
-PROC_WriteOneByOne(_Character, _Lifetime, _NumberStr);
+PROC_ClearDamageStatuses(_Character, _StatsType, _Lifetime);
+PROC_WriteOneByOne(_Character, _StatsType, _Lifetime, _NumberStr);
 
 PROC
-PROC_WriteOneByOne((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_NumberStr)
+PROC_WriteOneByOne((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (STRING)_NumberStr)
 AND
 DB_PPMeter_StatusEffects(_Status, _Start, _StatsType, _Lifetime)
 AND
@@ -197,9 +197,9 @@ ApplyStatus(_Character, _Status, _Duration, 1, _Character);
 
 //REGION clear statuses for given lifetime
 PROC
-PROC_ClearDamageStatuses((CHARACTER)_Character, (STRING)_Lifetime)
+PROC_ClearDamageStatuses((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime)
 AND
-DB_PPMeter_StatusEffects(_Status, _, _, _Lifetime)
+DB_PPMeter_StatusEffects(_Status, _, _StatsType, _Lifetime)
 AND
 HasAppliedStatus(_Character, _Status, 1)
 THEN
@@ -211,23 +211,19 @@ RemoveStatus(_Character, _Status, _Character);
 IF
 DB_PartyMembers(_Character)
 AND
-DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsName, _Value)
-AND
-_StatsName == "Damage"
+DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsType, _Value)
 THEN
-PROC_WriteDamageStatuses(_Character, _LifeTime, _Value);
+PROC_WriteStatuses(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
 
 //REGION // PROC Force apply damage UI statuses
 PROC
 PROC_PPMeter_ForseUpdateStatuses((CHARACTER)_Character)
 AND
-DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsName, _Value)
-AND
-_StatsName == "Damage"
+DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsType, _Value)
 THEN
 DebugText(_Character, "forced update");
-PROC_WriteDamageStatuses(_Character, _LifeTime, _Value);
+PROC_WriteStatuses(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
 
 
