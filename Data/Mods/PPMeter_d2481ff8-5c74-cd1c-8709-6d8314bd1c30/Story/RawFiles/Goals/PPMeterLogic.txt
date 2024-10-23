@@ -49,6 +49,15 @@ AND
 IntegerDivide(_Damage, _Rounds, _DPR)
 THEN
 PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", _DPR);
+
+IF
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+_Rounds == 0
+THEN
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", 0);
 //END_REGION
 
 

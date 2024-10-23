@@ -338,6 +338,63 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
+                                <StackPanel x:Name="ColumnDPROverall" Orientation="Vertical" Margin="20,0,20,0">
+                                    <TextBlock x:Name="ColHeaderDPROverall" Text="DPROverall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                    <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel x:Name="RoundsOverall" Orientation="Horizontal" HorizontalAlignment="Left">
+                                                    <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                                                </Grid>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-180">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-181">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-182">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-183">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-184">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-185">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-186">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-187">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-188">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Duration}" Value="-189">
+                                                                        <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                                                                    </DataTrigger>
+                                                                </DataTemplate.Triggers>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </ls:LSNineSliceImage>
