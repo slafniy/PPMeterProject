@@ -54,3 +54,16 @@
 /Data/Localization/Voice.pak
 /Data/Localization/VoiceMeta.pak
 /Data/_dbcache_/loca.db
+
+# BG3 story generated files which are safe to remove to decrease mod pak size
+# SAFETOREMOVE_START
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/goals.raw
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/log.txt
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story.div
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story.div.osi
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_ac.dat
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/RawFiles/story_definitions.div
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/RawFiles/story_header.div
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_orphanqueries_found.txt
+/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_orphanqueries_ignore.txt
+# SAFETOREMOVE_END
