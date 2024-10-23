@@ -28,13 +28,13 @@ DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d5", 5, "Damage", "Level");
 DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d6", 6, "Damage", "Level");
 DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d7", 7, "Damage", "Level");
 
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d1", 1, "RoundsCount", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d2", 2, "RoundsCount", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d3", 3, "RoundsCount", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d4", 4, "RoundsCount", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d5", 5, "RoundsCount", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d6", 6, "RoundsCount", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d7", 7, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d1", 1, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d2", 2, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d3", 3, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d4", 4, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d5", 5, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d6", 6, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d7", 7, "Damage", "Overall");
 
 DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d1", 1, "RoundsCount", "Combat");
 DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d2", 2, "RoundsCount", "Combat");
