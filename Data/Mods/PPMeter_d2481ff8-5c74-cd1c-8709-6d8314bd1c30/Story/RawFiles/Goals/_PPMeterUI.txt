@@ -28,15 +28,45 @@ DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d5", 5, "Damage", "Level");
 DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d6", 6, "Damage", "Level");
 DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d7", 7, "Damage", "Level");
 
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d1", 1, "Damage", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d2", 2, "Damage", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d3", 3, "Damage", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d4", 4, "Damage", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d5", 5, "Damage", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d6", 6, "Damage", "Overall");
-DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d7", 7, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d1", 1, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d2", 2, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d3", 3, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d4", 4, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d5", 5, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d6", 6, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d7", 7, "RoundsCount", "Overall");
 
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d1", 1, "RoundsCount", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d2", 2, "RoundsCount", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d3", 3, "RoundsCount", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d4", 4, "RoundsCount", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d5", 5, "RoundsCount", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d6", 6, "RoundsCount", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_RoundsCombat_d7", 7, "RoundsCount", "Combat");
 
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d1", 1, "RoundsCount", "Day");
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d2", 2, "RoundsCount", "Day");
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d3", 3, "RoundsCount", "Day");
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d4", 4, "RoundsCount", "Day");
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d5", 5, "RoundsCount", "Day");
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d6", 6, "RoundsCount", "Day");
+DB_PPMeter_StatusEffects("PPMeter_RoundsDay_d7", 7, "RoundsCount", "Day");
+
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d1", 1, "RoundsCount", "Level");
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d2", 2, "RoundsCount", "Level");
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d3", 3, "RoundsCount", "Level");
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d4", 4, "RoundsCount", "Level");
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d5", 5, "RoundsCount", "Level");
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d6", 6, "RoundsCount", "Level");
+DB_PPMeter_StatusEffects("PPMeter_RoundsLevel_d7", 7, "RoundsCount", "Level");
+
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d1", 1, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d2", 2, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d3", 3, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d4", 4, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d5", 5, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d6", 6, "RoundsCount", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_RoundsOverall_d7", 7, "RoundsCount", "Overall");
 
 // Converter from digit we want in UI to Duration
 // In XAML "Duration" binding values are integers calculated as Duration / 6 sec (one game turn time)
@@ -92,6 +122,53 @@ DB_PPMeter_DigitStrToDuration("7", -822.0, "Damage", "Day");
 DB_PPMeter_DigitStrToDuration("8", -828.0, "Damage", "Day");
 DB_PPMeter_DigitStrToDuration("9", -834.0, "Damage", "Day");
 
+// -140 -149
+DB_PPMeter_DigitStrToDuration("0", -840.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("1", -846.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("2", -852.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("3", -858.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("4", -864.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("5", -870.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("6", -876.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("7", -882.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("8", -888.0, "RoundsCount", "Combat");
+DB_PPMeter_DigitStrToDuration("9", -894.0, "RoundsCount", "Combat");
+
+// -150 -159
+DB_PPMeter_DigitStrToDuration("0", -900.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("1", -906.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("2", -912.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("3", -918.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("4", -924.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("5", -930.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("6", -936.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("7", -942.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("8", -948.0, "RoundsCount", "Day");
+DB_PPMeter_DigitStrToDuration("9", -954.0, "RoundsCount", "Day");
+
+// -160 -169
+DB_PPMeter_DigitStrToDuration("0", -960.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("1", -966.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("2", -972.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("3", -978.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("4", -984.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("5", -990.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("6", -996.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("7", -1002.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("8", -1008.0, "RoundsCount", "Level");
+DB_PPMeter_DigitStrToDuration("9", -1014.0, "RoundsCount", "Level");
+
+// -170 -179
+DB_PPMeter_DigitStrToDuration("0", -1020.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("1", -1026.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("2", -1032.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("3", -1038.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("4", -1044.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("5", -1050.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("6", -1056.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("7", -1062.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("8", -1068.0, "RoundsCount", "Overall");
+DB_PPMeter_DigitStrToDuration("9", -1074.0, "RoundsCount", "Overall");
 
 KBSECTION
 //REGION Write  damage to statuses
