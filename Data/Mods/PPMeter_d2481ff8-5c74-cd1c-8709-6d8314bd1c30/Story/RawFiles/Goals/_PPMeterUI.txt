@@ -1,91 +1,98 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-// Status - PositionInString - Lifetime
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d1", 1, "Combat");
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d2", 2, "Combat");
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d3", 3, "Combat");
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d4", 4, "Combat");
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d5", 5, "Combat");
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d6", 6, "Combat");
-DB_PPMeter_DamageStatuses("PPMeter_DamageCombat_d7", 7, "Combat");
+// Mapping to Status Effects
+// "Status" should be declared as "StatusType" "BOOST" in game "Stats" txt file
+// Status - PositionInString - StatsType - Lifetime
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d1", 1, "Damage", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d2", 2, "Damage", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d3", 3, "Damage", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d4", 4, "Damage", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d5", 5, "Damage", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d6", 6, "Damage", "Combat");
+DB_PPMeter_StatusEffects("PPMeter_DamageCombat_d7", 7, "Damage", "Combat");
 
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d1", 1, "Overall");
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d2", 2, "Overall");
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d3", 3, "Overall");
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d4", 4, "Overall");
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d5", 5, "Overall");
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d6", 6, "Overall");
-DB_PPMeter_DamageStatuses("PPMeter_DamageOverall_d7", 7, "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d1", 1, "Damage", "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d2", 2, "Damage", "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d3", 3, "Damage", "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d4", 4, "Damage", "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d5", 5, "Damage", "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d6", 6, "Damage", "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageDay_d7", 7, "Damage", "Day");
 
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d1", 1, "Day");
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d2", 2, "Day");
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d3", 3, "Day");
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d4", 4, "Day");
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d5", 5, "Day");
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d6", 6, "Day");
-DB_PPMeter_DamageStatuses("PPMeter_DamageDay_d7", 7, "Day");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d1", 1, "Damage", "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d2", 2, "Damage", "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d3", 3, "Damage", "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d4", 4, "Damage", "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d5", 5, "Damage", "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d6", 6, "Damage", "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageLevel_d7", 7, "Damage", "Level");
 
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d1", 1, "Level");
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d2", 2, "Level");
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d3", 3, "Level");
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d4", 4, "Level");
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d5", 5, "Level");
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d6", 6, "Level");
-DB_PPMeter_DamageStatuses("PPMeter_DamageLevel_d7", 7, "Level");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d1", 1, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d2", 2, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d3", 3, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d4", 4, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d5", 5, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d6", 6, "Damage", "Overall");
+DB_PPMeter_StatusEffects("PPMeter_DamageOverall_d7", 7, "Damage", "Overall");
+
+
 
 // Converter from digit we want in UI to Duration
 // In XAML "Duration" binding values are integers calculated as Duration / 6 sec (one game turn time)
 // So e.g. -600 will be -100 in GUI, -648 translates into -108
-// For each lifetime using its own duration range
+// For each Lifetime and StatType using its own duration range
+// Digit - Converted - StatsType - Lifetime
 
 // -100 -109
-DB_PPMeter_DigitStrToDuration("0", -600.0, "Combat");
-DB_PPMeter_DigitStrToDuration("1", -606.0, "Combat");
-DB_PPMeter_DigitStrToDuration("2", -612.0, "Combat");
-DB_PPMeter_DigitStrToDuration("3", -618.0, "Combat");
-DB_PPMeter_DigitStrToDuration("4", -624.0, "Combat");
-DB_PPMeter_DigitStrToDuration("5", -630.0, "Combat");
-DB_PPMeter_DigitStrToDuration("6", -636.0, "Combat");
-DB_PPMeter_DigitStrToDuration("7", -642.0, "Combat");
-DB_PPMeter_DigitStrToDuration("8", -648.0, "Combat");
-DB_PPMeter_DigitStrToDuration("9", -654.0, "Combat");
+DB_PPMeter_DigitStrToDuration("0", -600.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("1", -606.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("2", -612.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("3", -618.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("4", -624.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("5", -630.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("6", -636.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("7", -642.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("8", -648.0, "Damage", "Combat");
+DB_PPMeter_DigitStrToDuration("9", -654.0, "Damage", "Combat");
 
 // -110 -119
-DB_PPMeter_DigitStrToDuration("0", -660.0, "Overall");
-DB_PPMeter_DigitStrToDuration("1", -666.0, "Overall");
-DB_PPMeter_DigitStrToDuration("2", -672.0, "Overall");
-DB_PPMeter_DigitStrToDuration("3", -678.0, "Overall");
-DB_PPMeter_DigitStrToDuration("4", -684.0, "Overall");
-DB_PPMeter_DigitStrToDuration("5", -690.0, "Overall");
-DB_PPMeter_DigitStrToDuration("6", -696.0, "Overall");
-DB_PPMeter_DigitStrToDuration("7", -702.0, "Overall");
-DB_PPMeter_DigitStrToDuration("8", -708.0, "Overall");
-DB_PPMeter_DigitStrToDuration("9", -714.0, "Overall");
-
-// -130 -139
-DB_PPMeter_DigitStrToDuration("0", -780.0, "Day");
-DB_PPMeter_DigitStrToDuration("1", -786.0, "Day");
-DB_PPMeter_DigitStrToDuration("2", -792.0, "Day");
-DB_PPMeter_DigitStrToDuration("3", -798.0, "Day");
-DB_PPMeter_DigitStrToDuration("4", -804.0, "Day");
-DB_PPMeter_DigitStrToDuration("5", -810.0, "Day");
-DB_PPMeter_DigitStrToDuration("6", -816.0, "Day");
-DB_PPMeter_DigitStrToDuration("7", -822.0, "Day");
-DB_PPMeter_DigitStrToDuration("8", -828.0, "Day");
-DB_PPMeter_DigitStrToDuration("9", -834.0, "Day");
+DB_PPMeter_DigitStrToDuration("0", -660.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("1", -666.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("2", -672.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("3", -678.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("4", -684.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("5", -690.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("6", -696.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("7", -702.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("8", -708.0, "Damage", "Overall");
+DB_PPMeter_DigitStrToDuration("9", -714.0, "Damage", "Overall");
 
 // -120 -129
-DB_PPMeter_DigitStrToDuration("0", -720.0, "Level");
-DB_PPMeter_DigitStrToDuration("1", -726.0, "Level");
-DB_PPMeter_DigitStrToDuration("2", -732.0, "Level");
-DB_PPMeter_DigitStrToDuration("3", -738.0, "Level");
-DB_PPMeter_DigitStrToDuration("4", -744.0, "Level");
-DB_PPMeter_DigitStrToDuration("5", -750.0, "Level");
-DB_PPMeter_DigitStrToDuration("6", -756.0, "Level");
-DB_PPMeter_DigitStrToDuration("7", -762.0, "Level");
-DB_PPMeter_DigitStrToDuration("8", -768.0, "Level");
-DB_PPMeter_DigitStrToDuration("9", -774.0, "Level");
+DB_PPMeter_DigitStrToDuration("0", -720.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("1", -726.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("2", -732.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("3", -738.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("4", -744.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("5", -750.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("6", -756.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("7", -762.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("8", -768.0, "Damage", "Level");
+DB_PPMeter_DigitStrToDuration("9", -774.0, "Damage", "Level");
+
+// -130 -139
+DB_PPMeter_DigitStrToDuration("0", -780.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("1", -786.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("2", -792.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("3", -798.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("4", -804.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("5", -810.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("6", -816.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("7", -822.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("8", -828.0, "Damage", "Day");
+DB_PPMeter_DigitStrToDuration("9", -834.0, "Damage", "Day");
+
+
 KBSECTION
 //REGION Write  damage to statuses
 PROC
@@ -99,7 +106,7 @@ PROC_WriteOneByOne(_Character, _Lifetime, _NumberStr);
 PROC
 PROC_WriteOneByOne((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_NumberStr)
 AND
-DB_PPMeter_DamageStatuses(_Status, _Start, _Lifetime)
+DB_PPMeter_StatusEffects(_Status, _Start, _Lifetime)
 AND
 Substring(_NumberStr, _Start, 1, _DigitStr)
 AND
@@ -115,7 +122,7 @@ ApplyStatus(_Character, _Status, _Duration, 1, _Character);
 PROC
 PROC_ClearDamageStatuses((CHARACTER)_Character, (STRING)_Lifetime)
 AND
-DB_PPMeter_DamageStatuses(_Status, _, _Lifetime)
+DB_PPMeter_StatusEffects(_Status, _, _Lifetime)
 AND
 HasAppliedStatus(_Character, _Status, 1)
 THEN
