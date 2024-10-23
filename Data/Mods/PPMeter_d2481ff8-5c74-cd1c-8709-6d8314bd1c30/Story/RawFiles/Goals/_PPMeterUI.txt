@@ -237,6 +237,8 @@ DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "Damage", _Val1)
 AND
 DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "RoundsCount", _Val2)
 AND
+DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "DPR", _Val3)
+AND
 ConcatenateGUID("", _Character, _msg1)
 AND
 Concatenate(_msg1, _Lifetime, _msg2)
@@ -247,9 +249,11 @@ ConcatenateInteger(_msg3, _Val2, _msg4)
 AND
 Concatenate(_msg4, " Damage: " , _msg5)
 AND
-ConcatenateInteger(_msg5, _Val1, _msg)
+ConcatenateInteger(_msg5, _Val1, _msg6)
 AND
-IntegerToReal(_Val1, _Val1Real)
+Concatenate(_msg6, " DPR: " , _msg7)
+AND
+ConcatenateInteger(_msg7, _Val3 , _msg)
 THEN
 DebugText(_Character, _msg);
 
@@ -272,6 +276,18 @@ NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "RoundsCount", _)
 THEN
 DebugText(_Character, "I need to end turn first!");
 //END_REGION
+
+
+IF
+TextEvent("dpr")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataInteger((CHARACTER)_Character, "Overall", "DPR", _DPR)
+AND
+ConcatenateInteger("Overall DPR: ", _DPR, _msg)
+THEN
+DebugText(_Character, _msg);
 EXITSECTION
 
 ENDEXITSECTION

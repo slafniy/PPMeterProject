@@ -16,6 +16,7 @@ DB_PPMeter_Lifetime("Overall");
 // Data stats type enum
 DB_PPMeter_StatsType("Damage");
 DB_PPMeter_StatsType("RoundsCount");
+DB_PPMeter_StatsType("DPR");
 
 // INTEGER Tables DB_PPMeter_DataInteger (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
 
@@ -29,7 +30,7 @@ DB_PPMeter_StatsType(_StatsType)
 AND
 DB_PPMeter_Lifetime(_Lifetime)
 AND
-NOT DB_PPMeter_DataInteger (_Character, _Lifetime, _StatsType, _)
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _)
 THEN
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
@@ -59,7 +60,7 @@ PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, "Level", _StatsName, 0);
 //END_REGION
 
 
-//REGION Handle turn end - count rounds 
+//REGION Handle turn end - count rounds and calculate DPR
 // Note: cannot count on round start because it races with EnteredCombat event in case if player joined to existing fight
 IF
 TurnEnded((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
@@ -71,6 +72,7 @@ AND
 _Lifetime != "Round"  // Its always 1 round in each round
 THEN
 PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
+PROC_PPMeterUpdateDPR((CHARACTER)_Character);
 //END_REGION
 
 
@@ -103,6 +105,20 @@ PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets status
 //END_REGION
 
 
+//REGION // PROC_PPMeterUpdateDPR - re-calculate DPRs in DB
+PROC
+PROC_PPMeterUpdateDPR((CHARACTER)_Character)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
+AND
+_Rounds > 0
+AND
+IntegerDivide(_Damage, _Rounds, _DPR)
+THEN
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", _DPR);
+//END_REGION
 EXITSECTION
 
 ENDEXITSECTION
