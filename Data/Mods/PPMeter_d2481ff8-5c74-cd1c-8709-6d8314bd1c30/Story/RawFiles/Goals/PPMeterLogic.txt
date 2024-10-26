@@ -36,7 +36,7 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
 
-//REGION // Re-calculate DPRs in DB if data updated
+//REGION Re-calculate DPRs in DB if data updated
 IF
 DB_PartyMembers(_Character)
 AND
@@ -46,10 +46,17 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
 AND
 _Rounds > 0
 AND
-IntegerDivide(_Damage, _Rounds, _DPR)
+IntegerToReal(_Damage, _DamageReal)
+AND
+IntegerToReal(_Rounds, _RoundsReal)
+AND
+RealDivide(_DamageReal, _RoundsReal, _DPRReal)
+AND
+RealToInteger(_DPRReal, _DPR)
 THEN
 PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", _DPR);
 
+// if we have zero rounds we consider zero DPR
 IF
 DB_PartyMembers(_Character)
 AND

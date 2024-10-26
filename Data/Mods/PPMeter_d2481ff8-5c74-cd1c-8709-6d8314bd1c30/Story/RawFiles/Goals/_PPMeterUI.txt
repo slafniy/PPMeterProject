@@ -221,7 +221,7 @@ PROC_WriteStatuses((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime,
 AND
 IntegerToString(_Number, _NumberStr)
 THEN
-PROC_ClearDamageStatuses(_Character, _StatsType, _Lifetime);
+PROC_ClearStatuses(_Character, _StatsType, _Lifetime);
 PROC_WriteOneByOne(_Character, _StatsType, _Lifetime, _NumberStr);
 
 PROC
@@ -241,7 +241,7 @@ ApplyStatus(_Character, _Status, _Duration, 1, _Character);
 
 //REGION clear statuses for given lifetime
 PROC
-PROC_ClearDamageStatuses((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime)
+PROC_ClearStatuses((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime)
 AND
 DB_PPMeter_StatusEffects(_Status, _, _StatsType, _Lifetime)
 AND
