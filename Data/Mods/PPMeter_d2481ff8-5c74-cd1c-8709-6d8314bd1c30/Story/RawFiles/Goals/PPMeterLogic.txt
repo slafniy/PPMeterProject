@@ -20,9 +20,13 @@ DB_PPMeter_StatsType("DPR");
 
 
 KBSECTION
-//REGION Fill zeros - in any situalion we have no record
+//REGION // Fill zeros for new character
 IF
 DB_PartyMembers(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+QRY_OnlyOnce(_CharacterStr)
 AND
 DB_PPMeter_StatsType(_StatsType)
 AND
@@ -31,6 +35,7 @@ AND
 NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _)
 THEN
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
+DebugText(_Character, "Filling zeroes!");
 //END_REGION
 
 
@@ -86,7 +91,6 @@ AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
 PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
-PROC_RefreshDPR(_AttackerOwner, _Lifetime);
 //END_REGION
 
 
@@ -104,9 +108,7 @@ PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets status
 
 
 //REGION // Refresh DPR
-PROC
-PROC_RefreshDPR((CHARACTER)_Character, (STRING)_Lifetime)
-AND
+IF
 DB_PartyMembers(_Character)
 AND
 DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
@@ -118,7 +120,7 @@ AND
 IntegerDivide(_Damage, _Rounds, _DPR)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DPR", _DPR);
-DebugText(_Character, "REFRESHING DPR");
+//DebugText(_Character, "REFRESHING DPR");
 //END_REGION
 EXITSECTION
 
