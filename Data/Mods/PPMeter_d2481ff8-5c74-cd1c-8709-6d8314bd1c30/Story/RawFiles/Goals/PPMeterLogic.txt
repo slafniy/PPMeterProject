@@ -6,11 +6,9 @@ INITSECTION
 
 
 // Data Lifetime enum
-//DB_PPMeter_Lifetime("Round");
 DB_PPMeter_Lifetime("Combat");
 DB_PPMeter_Lifetime("Day");
 DB_PPMeter_Lifetime("Level");
-//DB_PPMeter_Lifetime("Act");
 DB_PPMeter_Lifetime("Overall");
 
 // Data stats type enum
@@ -36,9 +34,9 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
 
-//REGION Re-calculate DPRs in DB if data updated
-IF
-DB_PartyMembers(_Character)
+//REGION // PROC_RefreshDPR
+PROC
+PROC_RefreshDPR((CHARACTER)_Character)
 AND
 DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
 AND
@@ -46,25 +44,9 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
 AND
 _Rounds > 0
 AND
-IntegerToReal(_Damage, _DamageReal)
-AND
-IntegerToReal(_Rounds, _RoundsReal)
-AND
-RealDivide(_DamageReal, _RoundsReal, _DPRReal)
-AND
-RealToInteger(_DPRReal, _DPR)
+IntegerDivide(_Damage, _Rounds, _DPR)
 THEN
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", _DPR);
-
-// if we have zero rounds we consider zero DPR
-IF
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
-AND
-_Rounds == 0
-THEN
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, _Lifetime, "DPR", 0);
+PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DPR", _DPR);
 //END_REGION
 
 
@@ -75,6 +57,8 @@ AND
 DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
+AND
+Concatenate("Reset ", _StatsName, _msg)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0);
 //END_REGION
@@ -88,7 +72,7 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, "Level", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0);
 //END_REGION
 
 
@@ -100,10 +84,19 @@ AND
 DB_PartyMembers(_Character)
 AND
 DB_PPMeter_Lifetime(_Lifetime)
-AND
-_Lifetime != "Round"  // Its always 1 round in each round
 THEN
-PROC_PPMeterIncrement((CHARACTER)_Character, _Lifetime, "RoundsCount");
+PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1);
+PROC_RefreshDPR(_Character);
+//END_REGION
+
+
+//REGION handle combat end - calc DPR
+IF
+CombatEnded(_)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_RefreshDPR(_Character);
 //END_REGION
 
 

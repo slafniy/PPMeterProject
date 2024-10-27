@@ -277,11 +277,11 @@ TextEvent("pp")
 AND
 DB_PartyMembers(_Character)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "Damage", _Val1)
+DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Val1)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "RoundsCount", _Val2)
+DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Val2)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, _Lifetime, "DPR", _Val3)
+DB_PPMeter_DataInteger(_Character, _Lifetime, "DPR", _Val3)
 AND
 ConcatenateGUID("", _Character, _msg1)
 AND
@@ -307,7 +307,7 @@ TextEvent("pp")
 AND
 DB_PartyMembers(_Character)
 AND
-NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "Damage", _)
+NOT DB_PPMeter_DataInteger(_Character, _, "Damage", _)
 THEN
 DebugText(_Character, "I need to hit someone first!");
 
@@ -316,7 +316,7 @@ TextEvent("pp")
 AND
 DB_PartyMembers(_Character)
 AND
-NOT DB_PPMeter_DataInteger((CHARACTER)_Character, _, "RoundsCount", _)
+NOT DB_PPMeter_DataInteger(_Character, _, "RoundsCount", _)
 THEN
 DebugText(_Character, "I need to end turn first!");
 //END_REGION
@@ -327,7 +327,7 @@ TextEvent("dpr")
 AND
 DB_PartyMembers(_Character)
 AND
-DB_PPMeter_DataInteger((CHARACTER)_Character, "Overall", "DPR", _DPR)
+DB_PPMeter_DataInteger(_Character, "Overall", "DPR", _DPR)
 AND
 ConcatenateInteger("Overall DPR: ", _DPR, _msg)
 THEN
