@@ -34,22 +34,6 @@ DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
 
-//REGION // PROC_RefreshDPR
-PROC
-PROC_RefreshDPR((CHARACTER)_Character)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
-AND
-_Rounds > 0
-AND
-IntegerDivide(_Damage, _Rounds, _DPR)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DPR", _DPR);
-//END_REGION
-
-
 //REGION On new combat - reset per-combat stats for each StatsType
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -86,17 +70,6 @@ AND
 DB_PPMeter_Lifetime(_Lifetime)
 THEN
 PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1);
-PROC_RefreshDPR(_Character);
-//END_REGION
-
-
-//REGION handle combat end - calc DPR
-IF
-CombatEnded(_)
-AND
-DB_PartyMembers(_Character)
-THEN
-PROC_RefreshDPR(_Character);
 //END_REGION
 
 
@@ -113,6 +86,7 @@ AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
 THEN
 PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
+PROC_RefreshDPR(_AttackerOwner, _Lifetime);
 //END_REGION
 
 
@@ -126,6 +100,25 @@ DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0);
 PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses
+//END_REGION
+
+
+//REGION // Refresh DPR
+PROC
+PROC_RefreshDPR((CHARACTER)_Character, (STRING)_Lifetime)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
+AND
+_Rounds > 0
+AND
+IntegerDivide(_Damage, _Rounds, _DPR)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DPR", _DPR);
+DebugText(_Character, "REFRESHING DPR");
 //END_REGION
 EXITSECTION
 

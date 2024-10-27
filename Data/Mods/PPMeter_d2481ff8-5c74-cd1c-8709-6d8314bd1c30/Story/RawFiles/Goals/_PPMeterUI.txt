@@ -214,6 +214,18 @@ DB_PPMeter_DigitStrToDuration("7", -1122.0, "DPR", "Overall");
 DB_PPMeter_DigitStrToDuration("8", -1128.0, "DPR", "Overall");
 DB_PPMeter_DigitStrToDuration("9", -1134.0, "DPR", "Overall");
 
+// -190 -199
+DB_PPMeter_DigitStrToDuration("0", -1140.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("1", -1146.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("2", -1152.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("3", -1158.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("4", -1164.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("5", -1170.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("6", -1176.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("7", -1182.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("8", -1188.0, "DPR", "Combat");
+DB_PPMeter_DigitStrToDuration("9", -1194.0, "DPR", "Combat");
+
 KBSECTION
 //REGION Write data to statuses
 PROC
