@@ -13,12 +13,12 @@
             <ControlTemplate.Resources>
                 <!-- Lifetime radio buttons template -->
                 <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
-                    <Grid>
-                        <Ellipse x:Name="Circle" Stroke="Black" Fill="Silver" Width="100" Height="30"/>
-                    </Grid>
+                    <Border x:Name="RBBorder" Background="Black">
+                        <TextBlock Text="PIZDA"/>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Circle" Property="Stroke" Value="Red"/>
+                            <Setter TargetName="RBBorder" Property="Background" Value="Silver"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
