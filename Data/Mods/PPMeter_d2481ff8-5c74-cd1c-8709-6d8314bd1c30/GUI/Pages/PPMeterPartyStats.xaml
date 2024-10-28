@@ -10,6 +10,20 @@
 
     <ls:UIWidget.Template>
         <ControlTemplate>
+            <ControlTemplate.Resources>
+                <!-- Lifetime radio buttons template -->
+                <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
+                    <Grid>
+                        <Ellipse x:Name="Circle" Stroke="Black" Fill="Silver" Width="100" Height="30"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Circle" Property="Stroke" Value="Red"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </ControlTemplate.Resources>
+
             <Grid x:Name="bgFade" Margin="0,0,0,0">  <!-- This Grid is needed for normal drag -->
                 <!-- WIDGET ITSELF -->
                 <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -45,14 +59,8 @@
 
                                 <!-- Toggle buttons panel -->
                                 <StackPanel Orientation="Vertical">
-                                    <!-- TOGGLE 1 -->
-                                    <ls:LSRadioButton x:Name="ToggleCombat" IsChecked="True">
-                                        <TextBlock Text="Combat"/>
-                                    </ls:LSRadioButton>
-                                    <!-- TOGGLE 2 -->
-                                    <ls:LSRadioButton x:Name="ToggleOverall">
-                                        <TextBlock Text="Overall"/>
-                                    </ls:LSRadioButton>
+                                    <ls:LSRadioButton x:Name="ToggleCombat" Content="Combat" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    <ls:LSRadioButton x:Name="ToggleOverall" Content="Overall"/>
                                 </StackPanel>
 
                                 <!-- TABLES -->
