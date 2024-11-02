@@ -31,7 +31,30 @@ AND
 NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _)
 THEN
 DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
-DebugText(_Character, "Filling zeroes!");
+//END_REGION
+
+
+//REGION // Fill zeros for player - only once
+IF
+DB_PartyMembers(_Character)
+AND
+IsPlayer(_Character, 1)
+AND
+GUIDToString(_Character, _onlyOnceStr1)
+AND
+DB_PPMeter_StatsType(_StatsType)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+Concatenate(_onlyOnceStr1, _StatsType, _onlyOnceStr2)
+AND
+Concatenate(_onlyOnceStr2, _Lifetime, _onlyOnceStr)
+AND
+QRY_OnlyOnce(_onlyOnceStr)
+AND
+NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _)
+THEN
+DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
 //END_REGION
 
 
