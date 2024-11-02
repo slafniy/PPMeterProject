@@ -226,6 +226,30 @@ DB_PPMeter_DigitStrToDuration("7", -1182.0, "DPR", "Combat");
 DB_PPMeter_DigitStrToDuration("8", -1188.0, "DPR", "Combat");
 DB_PPMeter_DigitStrToDuration("9", -1194.0, "DPR", "Combat");
 
+// -200 -209
+DB_PPMeter_DigitStrToDuration("0", -1200.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("1", -1206.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("2", -1212.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("3", -1218.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("4", -1224.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("5", -1230.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("6", -1236.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("7", -1242.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("8", -1248.0, "DPR", "Day");
+DB_PPMeter_DigitStrToDuration("9", -1254.0, "DPR", "Day");
+
+// -210 -219
+DB_PPMeter_DigitStrToDuration("0", -1260.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("1", -1266.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("2", -1272.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("3", -1278.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("4", -1284.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("5", -1290.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("6", -1296.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("7", -1302.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("8", -1308.0, "DPR", "Level");
+DB_PPMeter_DigitStrToDuration("9", -1314.0, "DPR", "Level");
+
 KBSECTION
 //REGION Write data to statuses
 PROC
