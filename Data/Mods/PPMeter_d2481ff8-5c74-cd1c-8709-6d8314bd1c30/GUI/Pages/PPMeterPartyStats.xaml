@@ -511,7 +511,7 @@
                             <StackPanel Orientation="Horizontal">
 
                                 <!-- Toggle buttons panel -->
-                                <StackPanel Orientation="Vertical" Margin="0,0,20,0">
+                                <StackPanel x:Name="LifetimeToggleButtons" Orientation="Vertical" Margin="0,0,20,0">
                                     <ls:LSRadioButton x:Name="ToggleCombat" Content="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
                                     <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                     <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
@@ -519,9 +519,10 @@
                                 </StackPanel>
 
                                 <!-- TABLES -->
+                                <!-- In each moment only one table is Visible, depending on LifetimeToggleButtons -->
                                 <StackPanel x:Name="ColumnsHolder_Combat" Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=ToggleCombat, Converter={StaticResource BoolToVisibleConverter}}">
-                                    <StackPanel Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text=""/>
+                                    <StackPanel x:Name="ColumnCombatCharacters" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -595,8 +596,8 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumnsHolder_Day" Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=ToggleDay, Converter={StaticResource BoolToVisibleConverter}}">
-                                    <StackPanel Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text=""/>
+                                    <StackPanel x:Name="ColumnDayCharacters" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -670,8 +671,8 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumnsHolder_Level" Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=ToggleLevel, Converter={StaticResource BoolToVisibleConverter}}">
-                                    <StackPanel Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text=""/>
+                                    <StackPanel x:Name="ColumnLevelCharacters" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -745,8 +746,8 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel x:Name="ColumnsHolder_Overall" Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=ToggleOverall, Converter={StaticResource BoolToVisibleConverter}}">
-                                    <StackPanel Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text=""/>
+                                    <StackPanel x:Name="ColumnOverallCharacters" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
