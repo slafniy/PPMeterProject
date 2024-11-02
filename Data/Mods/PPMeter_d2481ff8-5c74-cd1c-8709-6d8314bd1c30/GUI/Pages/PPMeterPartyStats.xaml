@@ -14,7 +14,7 @@
                 <!-- Lifetime radio buttons template -->
                 <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
                     <Border x:Name="RBBorder" Background="Black">
-                        <TextBlock Text="PIZDA"/>
+                        <TextBlock Text="{TemplateBinding Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -60,7 +60,7 @@
                                 <!-- Toggle buttons panel -->
                                 <StackPanel Orientation="Vertical">
                                     <ls:LSRadioButton x:Name="ToggleCombat" Content="Combat" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleOverall" Content="Overall"/>
+                                    <ls:LSRadioButton x:Name="ToggleOverall" Content="Overall" Template="{StaticResource RBLifetimeTemplate}"/>
                                 </StackPanel>
 
                                 <!-- TABLES -->
