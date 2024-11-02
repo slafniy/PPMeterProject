@@ -511,10 +511,10 @@
 
                                 <!-- Toggle buttons panel -->
                                 <StackPanel Orientation="Vertical">
-                                    <ls:LSRadioButton x:Name="ToggleCombat" Content="Combat" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleDay" Content="Day" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleLevel" Content="Level" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleOverall" Content="Overall" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    <ls:LSRadioButton x:Name="ToggleCombat" Content="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    <ls:LSRadioButton x:Name="ToggleOverall" Content="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                 </StackPanel>
 
                                 <!-- TABLES -->
@@ -529,29 +529,8 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
-                                    <StackPanel x:Name="ColumnCombatRounds" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Combat Rounds" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                            <ItemsControl.ItemTemplate>
-                                                                <StaticResource ResourceKey="StatusTextTemplate_CombatRounds"/>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
                                     <StackPanel x:Name="ColumnCombatDamage" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -571,8 +550,29 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
+                                    <StackPanel x:Name="ColumnCombatRounds" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <StaticResource ResourceKey="StatusTextTemplate_CombatRounds"/>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                     <StackPanel x:Name="ColumnCombatDPR" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Combat DPR" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -604,29 +604,8 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
-                                    <StackPanel x:Name="ColumnDayRounds" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Rounds Day" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                            <ItemsControl.ItemTemplate>
-                                                                <StaticResource ResourceKey="StatusTextTemplate_DayRounds"/>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
                                     <StackPanel x:Name="ColumnDayDamage" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Day Damage" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -646,8 +625,29 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
+                                    <StackPanel x:Name="ColumnDayRounds" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <StaticResource ResourceKey="StatusTextTemplate_DayRounds"/>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                     <StackPanel x:Name="ColumnDayDPR" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Day DPR" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -679,29 +679,8 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
-                                    <StackPanel x:Name="ColumnLevelRounds" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Rounds Level" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                            <ItemsControl.ItemTemplate>
-                                                                <StaticResource ResourceKey="StatusTextTemplate_LevelRounds"/>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
                                     <StackPanel x:Name="ColumnLevelDamage" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Level Damage" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -721,8 +700,29 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
+                                    <StackPanel x:Name="ColumnLevelRounds" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <StaticResource ResourceKey="StatusTextTemplate_LevelRounds"/>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                     <StackPanel x:Name="ColumnLevelDPR" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Level DPR" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -754,29 +754,8 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
-                                    <StackPanel x:Name="ColumnOverallRounds" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Rounds Overall" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                            <ItemsControl.ItemTemplate>
-                                                                <StaticResource ResourceKey="StatusTextTemplate_OverallRounds"/>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
                                     <StackPanel x:Name="ColumnOverallDamage" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Overall Damage" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -796,8 +775,29 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
+                                    <StackPanel x:Name="ColumnOverallRounds" Orientation="Vertical" Margin="20,0,20,0">
+                                        <TextBlock Text="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                        <ItemsControl ItemsSource="{Binding StatusEffects}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,0">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <StaticResource ResourceKey="StatusTextTemplate_OverallRounds"/>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                     <StackPanel x:Name="ColumnOverallDPR" Orientation="Vertical" Margin="20,0,20,0">
-                                        <TextBlock Text="Overall DPR" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                                        <TextBlock Text="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                                         <ItemsControl ItemsSource="{Binding Data.PartyCharacters}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
