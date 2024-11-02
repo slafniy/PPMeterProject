@@ -16,7 +16,7 @@
                     <Border x:Name="RBBorder" Background="Black" BorderBrush="Gray" BorderThickness="1" Margin="4,4,4,4">
                         <TextBlock x:Name="ButtonTextBlock" Text="{TemplateBinding Content}"
                                    Foreground="WhiteSmoke" Style="{StaticResource TooltipTitleStyle}"
-                                   FontSize="{StaticResource MediumFontSize}" Margin="4,2,2,4"
+                                   FontSize="{StaticResource MediumFontSize}" Margin="8,4,4,8"
                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -506,7 +506,21 @@
                                                 CommandParameter=""/>
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
+                                <!-- Close button -->
+                                <ls:LSButton x:Name="CloseButton" Margin="0,8,8,0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                    <ls:LSButton.Style>
+                                        <Style TargetType="{x:Type ls:LSButton}" BasedOn="{StaticResource SmallCloseButton}"/>
+                                    </ls:LSButton.Style>
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="LSButtonReleased">
+                                            <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Collapsed"/>
+                                            <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
+                                            <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </ls:LSButton>
                             </Grid>
+
                             <!-- HEADER SPLITTER -->
                             <Image x:Name="TopBorder" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_top_rail.png"
                                    Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
