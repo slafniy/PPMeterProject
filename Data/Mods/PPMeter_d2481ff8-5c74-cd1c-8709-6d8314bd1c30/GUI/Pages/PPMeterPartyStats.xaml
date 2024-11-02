@@ -13,12 +13,13 @@
             <ControlTemplate.Resources>
                 <!-- Lifetime radio buttons template -->
                 <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
-                    <Border x:Name="RBBorder" Background="Black">
+                    <Border x:Name="RBBorder" Background="Black" BorderBrush="Gray" BorderThickness="1">
                         <TextBlock x:Name="ButtonTextBlock" Text="{TemplateBinding Content}" Foreground="WhiteSmoke" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="RBBorder" Property="Background" Value="#A2838383"/>
+                            <Setter TargetName="RBBorder" Property="BorderBrush" Value="White"/>
                             <Setter TargetName="ButtonTextBlock" Property="Foreground" Value="#FF26C826"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
