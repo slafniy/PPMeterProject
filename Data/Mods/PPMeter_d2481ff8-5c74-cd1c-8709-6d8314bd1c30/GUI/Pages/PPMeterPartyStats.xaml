@@ -518,6 +518,9 @@
                                     <ls:LSRadioButton x:Name="ToggleOverall" Content="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                 </StackPanel>
 
+                                <!-- Toggle buttons and tables vertical splitter -->
+                                <Rectangle Width="1" Fill="White" VerticalAlignment="Stretch" Height="{Binding ElementName=LifetimeToggleButtons, Path=ActualHeight}"/>
+
                                 <!-- TABLES -->
                                 <!-- In each moment only one table is Visible, depending on LifetimeToggleButtons -->
                                 <StackPanel x:Name="ColumnsHolder_Combat" Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=ToggleCombat, Converter={StaticResource BoolToVisibleConverter}}">
