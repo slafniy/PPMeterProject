@@ -14,11 +14,12 @@
                 <!-- Lifetime radio buttons template -->
                 <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
                     <Border x:Name="RBBorder" Background="Black">
-                        <TextBlock Text="{TemplateBinding Content}"/>
+                        <TextBlock x:Name="ButtonTextBlock" Text="{TemplateBinding Content}" Foreground="WhiteSmoke" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="RBBorder" Property="Background" Value="Silver"/>
+                            <Setter TargetName="RBBorder" Property="Background" Value="#A2838383"/>
+                            <Setter TargetName="ButtonTextBlock" Property="Foreground" Value="#FF26C826"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -510,7 +511,7 @@
                             <StackPanel Orientation="Horizontal">
 
                                 <!-- Toggle buttons panel -->
-                                <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Vertical" Margin="0,0,20,0">
                                     <ls:LSRadioButton x:Name="ToggleCombat" Content="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
                                     <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                     <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
