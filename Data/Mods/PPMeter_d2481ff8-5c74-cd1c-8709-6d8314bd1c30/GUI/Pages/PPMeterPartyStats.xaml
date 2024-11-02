@@ -23,7 +23,7 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
 
-                <DataTemplate x:Key="StatusTextCombatRoundsTemplate">
+                <DataTemplate x:Key="StatusTextCombatTemplate_Rounds">
                     <Grid>
                         <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
                     </Grid>
@@ -56,6 +56,80 @@
                             <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Duration}" Value="-149">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+                <DataTemplate x:Key="StatusTextCombatTemplate_Damage">
+                    <Grid>
+                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Duration}" Value="-100">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-101">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-102">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-103">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-104">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-105">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-106">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-107">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-108">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-109">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+                <DataTemplate x:Key="StatusTextCombatTemplate_DPR">
+                    <Grid>
+                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Duration}" Value="-190">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-191">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-192">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-193">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-194">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-195">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-196">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-197">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-198">
+                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Duration}" Value="-199">
                             <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
@@ -127,7 +201,7 @@
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <StaticResource ResourceKey="StatusTextCombatRoundsTemplate"/>
+                                                                <StaticResource ResourceKey="StatusTextCombatTemplate_Rounds"/>
                                                             </ItemsControl.ItemTemplate>
                                                         </ItemsControl>
                                                     </StackPanel>
@@ -148,43 +222,7 @@
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Grid>
-                                                                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                                                    </Grid>
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-100">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-101">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-102">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-103">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-104">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-105">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-106">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-107">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-108">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-109">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
+                                                                <StaticResource ResourceKey="StatusTextCombatTemplate_Damage"/>
                                                             </ItemsControl.ItemTemplate>
                                                         </ItemsControl>
                                                     </StackPanel>
@@ -205,43 +243,7 @@
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Grid>
-                                                                        <TextBlock x:Name="StatusTextBlock" Text="" TextAlignment="Right" Style="{StaticResource TooltipTitleStyle}" FontSize="{StaticResource MediumFontSize}"/>
-                                                                    </Grid>
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-190">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="0"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-191">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="1"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-192">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="2"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-193">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="3"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-194">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="4"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-195">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="5"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-196">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="6"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-197">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="7"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-198">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="8"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Duration}" Value="-199">
-                                                                            <Setter TargetName="StatusTextBlock" Property="Text" Value="9"/>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
+                                                                <StaticResource ResourceKey="StatusTextCombatTemplate_DPR"/>
                                                             </ItemsControl.ItemTemplate>
                                                         </ItemsControl>
                                                     </StackPanel>
