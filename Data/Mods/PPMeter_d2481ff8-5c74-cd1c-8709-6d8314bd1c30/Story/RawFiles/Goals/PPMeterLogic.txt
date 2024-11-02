@@ -20,13 +20,9 @@ DB_PPMeter_StatsType("DPR");
 
 
 KBSECTION
-//REGION // Fill zeros for new character
-IF
-DB_PartyMembers(_Character)
-AND
-GUIDToString(_Character, _CharacterStr)
-AND
-QRY_OnlyOnce(_CharacterStr)
+//REGION // PROC_FillZeroes - if no data in DB
+PROC
+PROC_FillZeroes((CHARACTER)_Character)
 AND
 DB_PPMeter_StatsType(_StatsType)
 AND
@@ -39,7 +35,20 @@ DebugText(_Character, "Filling zeroes!");
 //END_REGION
 
 
-//REGION On new combat - reset per-combat stats for each StatsType
+//REGION // handle joined party - fill zeros
+IF
+CharacterJoinedParty(_Character)
+THEN
+PROC_FillZeroes(_Character);
+//END_REGION
+
+
+//REGION On new combat - fill zeros if needed and reset per-combat stats for each StatsType
+IF
+EnteredCombat((CHARACTER)_Character, _)
+THEN
+PROC_FillZeroes(_Character);
+
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND

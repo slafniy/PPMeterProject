@@ -9,11 +9,11 @@
                     <children>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="GustavDev"/>
-                            <attribute id="MD5" type="LSString" value="7c92c0121cfd5b3c981b0ec42a50f60c"/>
+                            <attribute id="MD5" type="LSString" value="33c1655f7ae3559b579ff3b9d2c45413"/>
                             <attribute id="Name" type="LSString" value="GustavDev"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="28ac9ce2-2aba-8cda-b3b5-6e922f71b6b8"/>
-                            <attribute id="Version64" type="int64" value="145100779997005473"/>
+                            <attribute id="Version64" type="int64" value="145100779997082619"/>
                         </node>
                     </children>
                 </node>
@@ -24,7 +24,7 @@
                     <attribute id="FileSize" type="uint64" value="0"/>
                     <attribute id="Folder" type="LSString" value="PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30"/>
                     <attribute id="LobbyLevelName" type="FixedString" value=""/>
-                    <attribute id="MD5" type="LSString" value="4cb001b35c8643831239c94c57da93fa"/>
+                    <attribute id="MD5" type="LSString" value="7148877634ecf43d71213928fd302848"/>
                     <attribute id="MenuLevelName" type="FixedString" value=""/>
                     <attribute id="Name" type="LSString" value="PPMeter damage statistics by slafniy BETA (WIP)"/>
                     <attribute id="NumPlayers" type="uint8" value="4"/>
@@ -32,7 +32,7 @@
                     <attribute id="PublishHandle" type="uint64" value="4407001"/>
                     <attribute id="StartupLevelName" type="FixedString" value=""/>
                     <attribute id="UUID" type="FixedString" value="d2481ff8-5c74-cd1c-8709-6d8314bd1c30"/>
-                    <attribute id="Version64" type="int64" value="36028797018963984"/>
+                    <attribute id="Version64" type="int64" value="36169534507319318"/>
                     <children>
                         <node id="PublishVersion">
                             <attribute id="Version64" type="int64" value="144255927717549775"/>
