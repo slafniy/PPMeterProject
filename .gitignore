@@ -1,69 +1,17 @@
 /.idea/
-/Data/.idea/
-
-# Another mod folders
-/Data/Public/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
-/Data/Mods/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
-/Data/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
-/Data/Projects/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
-/Data/Editor/Mods/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/
 
 # some strange auto-generated binary files
-/Data/Mods/DedTuned_de9f3db5-7ca9-a872-75d4-3cc4a09a90cd/GUI/metadata.lsf
 /Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/GUI/metadata.lsf
-
-# BG3 stock files
-/Data/*.pak
-
-# BG3 stock folders
-/Data/Video/
-/Data/Mods/Gustav/
-/Data/Mods/GustavDev/
-/Data/Mods/Shared/
-/Data/Mods/SharedDev/
-/Data/Editor/Mods/DiceSet_01/
-/Data/Editor/Mods/DiceSet_02/
-/Data/Editor/Mods/DiceSet_03/
-/Data/Editor/Mods/DiceSet_06/
-/Data/Editor/Mods/Engine/
-/Data/Editor/Mods/Gustav/
-/Data/Editor/Mods/GustavDev/
-/Data/Editor/Mods/MainUI/
-/Data/Editor/Mods/ModBrowser/
-/Data/Editor/Mods/Shared/
-/Data/Editor/Mods/SharedDev/
-/Data/Editor/MEIEditor/
-/Data/Editor/Hints/
-/Data/Editor/Help/
-/Data/Editor/Gizmos/
-/Data/Editor/Config/
-/Data/Editor/Preview/
-/Data/Editor/Shared/
-/Data/Editor/Temp/
-/Data/Editor/Textures/
-/Data/Editor/Triggers/
-/Data/Generated/Public/Engine/
-/Data/Public/Engine/
-/Data/Public/Shared/
-/Data/Public/UserTemp/
-/Data/Projects/GustavDev/
-/Data/Localization/Russian/
-/Data/Localization/English.pak
-/Data/Localization/English_Animations.pak
-/Data/Localization/language.lsx
-/Data/Localization/Voice.pak
-/Data/Localization/VoiceMeta.pak
-/Data/_dbcache_/loca.db
 
 # BG3 story generated files which are safe to remove to decrease mod pak size
 # SAFETOREMOVE_START
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/goals.raw
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/log.txt
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story.div
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story.div.osi
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_ac.dat
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/RawFiles/story_definitions.div
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/RawFiles/story_header.div
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_orphanqueries_found.txt
-/Data/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_orphanqueries_ignore.txt
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/goals.raw
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/log.txt
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story.div
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story.div.osi
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_ac.dat
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/RawFiles/story_definitions.div
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/RawFiles/story_header.div
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_orphanqueries_found.txt
+/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/story_orphanqueries_ignore.txt
 # SAFETOREMOVE_END
