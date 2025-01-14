@@ -6,4 +6,6 @@
     <content contentuid="h3f77388cg68d4g4ee3g9820g42e9b02da02b" version="1">PPMeterDayDamage</content>
     <content contentuid="heaf28dd3g06f4g4358gb06agf720f27e636e" version="1">PPMeterLevelDamage</content>
     <content contentuid="h473f95c7gbb69g4ec4gb500g099f880019d2" version="1">PPMeterOverallDamage</content>
+    <content contentuid="h843a7430g1253g4a57g95c5g5a1b5b8d85ba" version="1">PPMeterOverallRounds</content>
+    <content contentuid="hb2304068g4803g45aeg8e5cgcfedc7c82a09" version="1">PPMeterOverallDPR</content>
 </contentList>

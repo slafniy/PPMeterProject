@@ -6,15 +6,15 @@ INITSECTION
 DB_PPMeter_ResourceNames("PPMeterCombatDamage", "Damage", "Combat");
 DB_PPMeter_ResourceNames("PPMeterCombatRounds", "RoundsCount", "Combat");
 DB_PPMeter_ResourceNames("PPMeterCombatDPR", "DPR", "Combat");
-//DB_PPMeter_ResourceNames("PPMeter_DamageDay_d1", 1, "Damage", "Day");
-//DB_PPMeter_ResourceNames("PPMeter_DamageLevel_d1", 1, "Damage", "Level");
-//DB_PPMeter_ResourceNames("PPMeter_DamageOverall_d1", 1, "Damage", "Overall");
-//DB_PPMeter_ResourceNames("PPMeter_RoundsDay_d1", 1, "RoundsCount", "Day");
-//DB_PPMeter_ResourceNames("PPMeter_RoundsLevel_d1", 1, "RoundsCount", "Level");
-//DB_PPMeter_ResourceNames("PPMeter_RoundsOverall_d1", 1, "RoundsCount", "Overall");
-//DB_PPMeter_ResourceNames("PPMeter_DPRDay_d1", 1, "DPR", "Day");
-//DB_PPMeter_ResourceNames("PPMeter_DPRLevel_d1", 1, "DPR", "Level");
-//DB_PPMeter_ResourceNames("PPMeter_DPROverall_d1", 1, "DPR", "Overall");
+DB_PPMeter_ResourceNames("PPMeterDayDamage", "Damage", "Day");
+DB_PPMeter_ResourceNames("PPMeterDayRounds", "RoundsCount", "Day");
+DB_PPMeter_ResourceNames("PPMeterDayDPR", "DPR", "Day");
+DB_PPMeter_ResourceNames("PPMeterLevelDamage", "Damage", "Level");
+DB_PPMeter_ResourceNames("PPMeterLevelRounds", "RoundsCount", "Level");
+DB_PPMeter_ResourceNames("PPMeterLevelDPR", "DPR", "Level");
+DB_PPMeter_ResourceNames("PPMeterOverallDamage", "Damage", "Overall");
+DB_PPMeter_ResourceNames("PPMeterOverallRounds", "RoundsCount", "Overall");
+DB_PPMeter_ResourceNames("PPMeterOverallDPR", "DPR", "Overall");
 
 // Save current resource boost to be able to remove it
 // Character - ResourceName - BoostString

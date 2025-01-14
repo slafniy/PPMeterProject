@@ -36,6 +36,22 @@
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
                     <attribute id="UUID" type="guid" value="3b7b09b8-5710-4d83-a1fc-bec41b117bbf"/>
                 </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h843a7430g1253g4a57g95c5g5a1b5b8d85ba" version="1"/>
+                    <attribute id="MaxLevel" type="uint32" value="0"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterOverallRounds"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="a08c9187-ce4f-4c8a-b450-f571dfba2d29"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hb2304068g4803g45aeg8e5cgcfedc7c82a09" version="1"/>
+                    <attribute id="MaxLevel" type="uint32" value="0"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterOverallDPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="66ac6158-c1d3-4f3b-82cb-a3fc6382b610"/>
+                </node>
             </children>
         </node>
     </region>

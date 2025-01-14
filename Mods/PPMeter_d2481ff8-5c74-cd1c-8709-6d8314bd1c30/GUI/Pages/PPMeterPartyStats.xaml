@@ -28,6 +28,7 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
 
+                <!-- Resource value templates -->
                 <!-- TODO: create universal template if possible -->
                 <DataTemplate x:Key="PPMeterCombatDamageTemplate">
                     <StackPanel>
@@ -86,6 +87,75 @@
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterCombatDPR'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="PPMeterOverallDamageTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterOverallDamage'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="PPMeterOverallRoundsTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterOverallRounds'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="PPMeterOverallDPRTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterOverallDPR'}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -163,7 +233,16 @@
                                         <GridViewColumn Header="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatDamageTemplate}"/>
                                         <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatRoundsTemplate}"/>
                                         <GridViewColumn Header="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatDPRTemplate}"/>
-
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleOverall, Converter={StaticResource BoolToVisibleConverter}}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
+                                        <GridViewColumn Header="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallDamageTemplate}"/>
+                                        <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallRoundsTemplate}"/>
+                                        <GridViewColumn Header="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallDPRTemplate}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
