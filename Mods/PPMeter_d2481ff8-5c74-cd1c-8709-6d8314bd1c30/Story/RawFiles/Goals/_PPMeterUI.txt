@@ -24,7 +24,7 @@ KBSECTION
 //REGION Write data to resource
 // Clear old boost first!
 PROC
-PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (INTEGER)_Number)
+PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (REAL)_Number)
 AND
 DB_PPMeter_ResourceNames(_ResourceName, _StatsType, _Lifetime)
 AND
@@ -35,9 +35,9 @@ NOT DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _BoostString);
 
 // Construct new boost string and apply it
 PROC
-PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (INTEGER)_Number)
+PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (REAL)_Number)
 AND
-IntegerToString(_Number, _NumberStr)
+RealToString(_Number, _NumberStr)
 AND
 DB_PPMeter_ResourceNames(_ResourceName, _StatsType, _Lifetime)
 AND
@@ -58,7 +58,7 @@ AddBoosts(_Character, _BoostStr, "", _Character);
 IF
 DB_PartyMembers(_Character)
 AND
-DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsType, _Value)
+DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
 THEN
 PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
@@ -67,74 +67,11 @@ PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 PROC
 PROC_PPMeter_ForseUpdateStatuses((CHARACTER)_Character)
 AND
-DB_PPMeter_DataInteger(_Character, _LifeTime, _StatsType, _Value)
+DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
 THEN
 DebugText(_Character, "forced update");
 PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
-
-
-//REGION // DEBUG: on "oe pp" command - say all stats
-IF
-TextEvent("pp")
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Val1)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Val2)
-AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "DPR", _Val3)
-AND
-ConcatenateGUID("", _Character, _msg1)
-AND
-Concatenate(_msg1, _Lifetime, _msg2)
-AND
-Concatenate(_msg2, " Rounds: ", _msg3)
-AND
-ConcatenateInteger(_msg3, _Val2, _msg4)
-AND
-Concatenate(_msg4, " Damage: " , _msg5)
-AND
-ConcatenateInteger(_msg5, _Val1, _msg6)
-AND
-Concatenate(_msg6, " DPR: " , _msg7)
-AND
-ConcatenateInteger(_msg7, _Val3 , _msg)
-THEN
-DebugText(_Character, _msg);
-
-
-IF
-TextEvent("pp")
-AND
-DB_PartyMembers(_Character)
-AND
-NOT DB_PPMeter_DataInteger(_Character, _, "Damage", _)
-THEN
-DebugText(_Character, "I need to hit someone first!");
-
-IF
-TextEvent("pp")
-AND
-DB_PartyMembers(_Character)
-AND
-NOT DB_PPMeter_DataInteger(_Character, _, "RoundsCount", _)
-THEN
-DebugText(_Character, "I need to end turn first!");
-//END_REGION
-
-
-IF
-TextEvent("dpr")
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_DataInteger(_Character, "Overall", "DPR", _DPR)
-AND
-ConcatenateInteger("Overall DPR: ", _DPR, _msg)
-THEN
-DebugText(_Character, _msg);
 EXITSECTION
 
 ENDEXITSECTION

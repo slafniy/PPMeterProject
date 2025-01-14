@@ -1,31 +1,31 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-// INTEGER Tables format: (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
-NOT DB_PPMeter_DataInteger((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0);
+// INTEGER Tables format: (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
+NOT DB_PPMeter_DataReal((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0.0);
 KBSECTION
 //REGION PROC_PPMeter_ReplaceInDB // write a value to DB and remove old value.
 PROC
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_NewValue)
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
 AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _OldValue)
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue)
 THEN
-NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _OldValue); // remove old value
+NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue); // remove old value
 
 PROC
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_NewValue)
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
 THEN
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _NewValue); // write new value
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _NewValue); // write new value
 //END_REGION
 
 
 //REGION PROC_PPMeterAdd // _Value += _NewValue
 PROC
-PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (INTEGER)_Value)
+PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_Value)
 AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsName, _OldValue)
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue)
 AND
-IntegerSum(_OldValue, _Value, _NewValue)
+RealSum(_OldValue, _Value, _NewValue)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _StatsName, _NewValue);
 //END_REGION
