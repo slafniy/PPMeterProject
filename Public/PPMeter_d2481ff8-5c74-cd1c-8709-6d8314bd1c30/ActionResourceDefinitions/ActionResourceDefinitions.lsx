@@ -7,7 +7,6 @@
                 <!-- Combat -->
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="hc1c28ad8g6010g4e07g949dg5a61c469bd7d" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterCombatDamage"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -15,7 +14,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="h0a20c80eg7b8cg42e7gac24ga564565268d1" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterCombatRounds"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -23,7 +21,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="hec9ac46egb5c0g4a2dg816bga33a6424f66c" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterCombatDPR"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -32,7 +29,6 @@
                 <!-- Day -->
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="h3f77388cg68d4g4ee3g9820g42e9b02da02b" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterDayDamage"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -40,7 +36,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="ha0b2e1aeg40ebg4934gb9dbg4d77224d53e8" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterDayRounds"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -48,7 +43,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="hf69fa3e4gc1b0g40f6g8736g3d8a6d4dda84" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterDayDPR"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -57,7 +51,6 @@
                 <!-- Level -->
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="heaf28dd3g06f4g4358gb06agf720f27e636e" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterLevelDamage"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -65,7 +58,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="h81e1fae3g1098g4fa4g941ag616ec5351265" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterLevelRounds"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -73,7 +65,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="h2c3a6debge6cfg4525g9421g065c6ab35169" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterLevelDPR"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -82,7 +73,6 @@
                 <!-- Overall -->
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="h473f95c7gbb69g4ec4gb500g099f880019d2" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterOverallDamage"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -90,7 +80,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="h843a7430g1253g4a57g95c5g5a1b5b8d85ba" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterOverallRounds"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
@@ -98,7 +87,6 @@
                 </node>
                 <node id="ActionResourceDefinition">
                     <attribute id="DisplayName" type="TranslatedString" handle="hb2304068g4803g45aeg8e5cgcfedc7c82a09" version="1"/>
-                    <attribute id="MaxLevel" type="uint32" value="0"/>
                     <attribute id="Name" type="FixedString" value="PPMeterOverallDPR"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
