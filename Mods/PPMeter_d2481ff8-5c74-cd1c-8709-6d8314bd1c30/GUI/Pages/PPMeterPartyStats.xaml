@@ -11,7 +11,7 @@
     <ls:UIWidget.Template>
         <ControlTemplate>
             <ControlTemplate.Resources>
-                <!-- Lifetime radio buttons template -->
+                <!-- Radio buttons template -->
                 <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
                     <Border x:Name="RBBorder" Background="Black" BorderBrush="Gray" BorderThickness="1" Margin="4,4,4,4">
                         <TextBlock x:Name="ButtonTextBlock" Text="{TemplateBinding Content}"
@@ -147,9 +147,16 @@
                                    Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
                                    IsHitTestVisible="False" Panel.ZIndex="1" Width="{Binding ActualWidth, ElementName=PartyMembers}"/>
 
+                            <!-- TOGGLE BUTTONS -->
+                            <StackPanel x:Name="LifetimeToggleButtons" Orientation="Horizontal" Margin="0,10,0,10">
+                                <ls:LSRadioButton x:Name="ToggleCombat" Content="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
+                                <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                <ls:LSRadioButton x:Name="ToggleOverall" Content="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                            </StackPanel>
 
                             <!-- TABLES -->
-                            <ListView ItemsSource="{Binding Data.PartyCharacters}">
+                            <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleCombat, Converter={StaticResource BoolToVisibleConverter}}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
