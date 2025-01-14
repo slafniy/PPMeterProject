@@ -81,7 +81,7 @@
                         <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Value}">
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -150,7 +150,7 @@
                         <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Value}">
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -219,7 +219,7 @@
                         <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Value}">
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -288,7 +288,7 @@
                         <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Value}">
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
