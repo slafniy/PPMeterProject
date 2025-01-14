@@ -16,7 +16,7 @@ DB_PPMeter_StatsType("Damage");
 DB_PPMeter_StatsType("RoundsCount");
 DB_PPMeter_StatsType("DPR");
 
-// INTEGER Tables DB_PPMeter_DataInteger (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (INTEGER)_Value
+// INTEGER Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 
 
 KBSECTION
@@ -28,9 +28,9 @@ DB_PPMeter_StatsType(_StatsType)
 AND
 DB_PPMeter_Lifetime(_Lifetime)
 AND
-NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _)
+NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
 THEN
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
 //END_REGION
 
 
@@ -52,9 +52,9 @@ Concatenate(_onlyOnceStr2, _Lifetime, _onlyOnceStr)
 AND
 QRY_OnlyOnce(_onlyOnceStr)
 AND
-NOT DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, _)
+NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
 THEN
-DB_PPMeter_DataInteger(_Character, _Lifetime, _StatsType, 0);
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
 //END_REGION
 
 
@@ -81,7 +81,7 @@ DB_PPMeter_StatsType(_StatsName)
 AND
 Concatenate("Reset ", _StatsName, _msg)
 THEN
-PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
 //END_REGION
 
 
@@ -93,7 +93,7 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0.0);
 //END_REGION
 
 
@@ -106,7 +106,7 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_Lifetime(_Lifetime)
 THEN
-PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1);
+PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1.0);
 //END_REGION
 
 
@@ -116,13 +116,15 @@ AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attack
 AND
 DB_PartyMembers(_AttackerOwner)
 AND
-_DamageAmount > 0
+_DamageAmount > 0.0
 AND
 IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
 AND
 DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
+AND
+IntegerToReal(_DamageAmount, _DamageAmountReal)
 THEN
-PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmount);
+PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmountReal);
 //END_REGION
 
 
@@ -134,7 +136,7 @@ DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle c
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
-PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0);
+PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0.0);
 PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses
 //END_REGION
 
@@ -143,16 +145,15 @@ PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets status
 IF
 DB_PartyMembers(_Character)
 AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "RoundsCount", _Rounds)
+DB_PPMeter_DataReal(_Character, _Lifetime, "RoundsCount", _Rounds)
 AND
-DB_PPMeter_DataInteger(_Character, _Lifetime, "Damage", _Damage)
+DB_PPMeter_DataReal(_Character, _Lifetime, "Damage", _Damage)
 AND
-_Rounds > 0
+_Rounds > 0.0
 AND
-IntegerDivide(_Damage, _Rounds, _DPR)
+RealDivide(_Damage, _Rounds, _DPR)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DPR", _DPR);
-//DebugText(_Character, "REFRESHING DPR");
 //END_REGION
 EXITSECTION
 
