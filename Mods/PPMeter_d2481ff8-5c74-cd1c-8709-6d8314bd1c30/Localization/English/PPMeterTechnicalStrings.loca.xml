@@ -4,7 +4,11 @@
     <content contentuid="h0a20c80eg7b8cg42e7gac24ga564565268d1" version="1">PPMeterCombatRounds</content>
     <content contentuid="hec9ac46egb5c0g4a2dg816bga33a6424f66c" version="1">PPMeterCombatDPR</content>
     <content contentuid="h3f77388cg68d4g4ee3g9820g42e9b02da02b" version="1">PPMeterDayDamage</content>
+    <content contentuid="ha0b2e1aeg40ebg4934gb9dbg4d77224d53e8" version="1">PPMeterDayRounds</content>
+    <content contentuid="hf69fa3e4gc1b0g40f6g8736g3d8a6d4dda84" version="1">PPMeterDayDPR</content>
     <content contentuid="heaf28dd3g06f4g4358gb06agf720f27e636e" version="1">PPMeterLevelDamage</content>
+    <content contentuid="h81e1fae3g1098g4fa4g941ag616ec5351265" version="1">PPMeterLevelRounds</content>
+    <content contentuid="h2c3a6debge6cfg4525g9421g065c6ab35169" version="1">PPMeterLevelDPR</content>
     <content contentuid="h473f95c7gbb69g4ec4gb500g099f880019d2" version="1">PPMeterOverallDamage</content>
     <content contentuid="h843a7430g1253g4a57g95c5g5a1b5b8d85ba" version="1">PPMeterOverallRounds</content>
     <content contentuid="hb2304068g4803g45aeg8e5cgcfedc7c82a09" version="1">PPMeterOverallDPR</content>
