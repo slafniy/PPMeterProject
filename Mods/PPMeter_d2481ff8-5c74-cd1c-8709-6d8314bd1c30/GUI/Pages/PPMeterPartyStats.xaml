@@ -306,6 +306,29 @@
                     </StackPanel>
                 </DataTemplate>
 
+                <DataTemplate x:Key="PPMeterOverallDamageTakenTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterOverallDamageTaken'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
             </ControlTemplate.Resources>
 
 
@@ -361,6 +384,7 @@
                                 <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                 <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                 <ls:LSRadioButton x:Name="ToggleOverall" Content="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                <ls:LSRadioButton x:Name="ToggleDamageTaken" Content="{Binding Source='h496dd6c1g10fdg4281ga405g78879955405e', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                             </StackPanel>
 
                             <!-- TABLES -->
@@ -405,6 +429,16 @@
                                         <GridViewColumn Header="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallDamageTemplate}"/>
                                         <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallRoundsTemplate}"/>
                                         <GridViewColumn Header="{Binding Source='hccac5399g1424g4dc9gbf1cge2f8810ab5fa', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallDPRTemplate}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <!-- Damage Taken -->
+                            <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleDamageTaken, Converter={StaticResource BoolToVisibleConverter}}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
+                                        <GridViewColumn Header="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallDamageTakenTemplate}"/>
+                                        <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallRoundsTemplate}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

@@ -15,8 +15,9 @@ DB_PPMeter_Lifetime("Overall");
 DB_PPMeter_StatsType("Damage");
 DB_PPMeter_StatsType("RoundsCount");
 DB_PPMeter_StatsType("DPR");
+DB_PPMeter_StatsType("DamageTaken");
 
-// INTEGER Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
+// REAL Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 
 
 KBSECTION

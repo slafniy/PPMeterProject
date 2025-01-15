@@ -15,6 +15,7 @@ DB_PPMeter_ResourceNames("PPMeterLevelDPR", "DPR", "Level");
 DB_PPMeter_ResourceNames("PPMeterOverallDamage", "Damage", "Overall");
 DB_PPMeter_ResourceNames("PPMeterOverallRounds", "RoundsCount", "Overall");
 DB_PPMeter_ResourceNames("PPMeterOverallDPR", "DPR", "Overall");
+DB_PPMeter_ResourceNames("PPMeterOverallDamageTaken", "DamageTaken", "Overall");
 
 // Save current resource boost to be able to remove it
 // Character - ResourceName - BoostString
