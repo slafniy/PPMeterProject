@@ -129,6 +129,24 @@ PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmountReal);
 //END_REGION
 
 
+//REGION Handle damage taken
+IF
+AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
+AND
+DB_PartyMembers((CHARACTER)_Defender)
+AND
+_DamageAmount > 0.0
+AND
+IsEnemy((CHARACTER)_Defender, _AttackerOwner, 1)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply damage taken to every lifetime
+AND
+IntegerToReal(_DamageAmount, _DamageAmountReal)
+THEN
+PROC_PPMeterAdd((CHARACTER)_Defender, _Lifetime, "DamageTaken", _DamageAmountReal);
+//END_REGION
+
+
 //REGION On Long Rest
 IF
 LongRestFinished()
