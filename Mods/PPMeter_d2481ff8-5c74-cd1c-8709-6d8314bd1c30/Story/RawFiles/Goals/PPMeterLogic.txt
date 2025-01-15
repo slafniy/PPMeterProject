@@ -161,7 +161,7 @@ PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets status
 //END_REGION
 
 
-//REGION // Refresh DPR
+//REGION // Refresh DPR and DTPR
 IF
 DB_PartyMembers(_Character)
 AND
@@ -174,6 +174,19 @@ AND
 RealDivide(_Damage, _Rounds, _DPR)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DPR", _DPR);
+
+IF
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, "DamageTaken", _DamageTaken)
+AND
+_Rounds > 0.0
+AND
+RealDivide(_DamageTaken, _Rounds, _DTPR)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, "DTPR", _DTPR);
 //END_REGION
 EXITSECTION
 
