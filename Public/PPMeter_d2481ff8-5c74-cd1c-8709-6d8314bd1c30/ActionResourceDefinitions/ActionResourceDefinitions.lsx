@@ -128,6 +128,34 @@
                 </node>
 
                 <!-- DTPR -->
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hcaab9af0g4adag4e92g8b57gc3f3d5632de5" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterCombatDTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="ac8fd89a-deb6-42ca-b613-f16dbac61c0a"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hc02260a8g0344g4d6dga1e4gd53ca8835312" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterDayDTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="adb4ba2e-1a2a-4128-9e92-abfc1e36ff09"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h60393134g8c6eg41a9gbd4fgeb3ff10cc843" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterLevelDTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="a074d9b2-db04-424e-b59d-0a514269bce8"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h325f9b96g0d00g43bcgbc7fg62d56013e9b0" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterOverallDTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="1d7ccc7b-e2ad-48b6-a082-d8cf2b4d149f"/>
+                </node>
             </children>
         </node>
     </region>
