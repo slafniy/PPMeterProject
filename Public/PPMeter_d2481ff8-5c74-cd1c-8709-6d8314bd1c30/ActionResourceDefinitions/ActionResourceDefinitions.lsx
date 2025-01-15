@@ -99,32 +99,32 @@
 
                 <!-- DAMAGE TAKEN -->
                 <node id="ActionResourceDefinition">
-                    <attribute id="DisplayName" type="TranslatedString" handle="" version="1"/>
+                    <attribute id="DisplayName" type="TranslatedString" handle="h518ab635gab8cg4f26g9fe5gf49ba14ef028" version="1"/>
                     <attribute id="Name" type="FixedString" value="PPMeterCombatDamageTaken"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
-                    <attribute id="UUID" type="guid" value=""/>
+                    <attribute id="UUID" type="guid" value="14ec4be8-3ffb-4978-8bbd-8c90d7b8f170"/>
                 </node>
                 <node id="ActionResourceDefinition">
-                    <attribute id="DisplayName" type="TranslatedString" handle="" version="1"/>
+                    <attribute id="DisplayName" type="TranslatedString" handle="hae406fdbga188g46b5ga086geb0c91ee8311" version="1"/>
                     <attribute id="Name" type="FixedString" value="PPMeterDayDamageTaken"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
-                    <attribute id="UUID" type="guid" value=""/>
+                    <attribute id="UUID" type="guid" value="6a11de87-8e93-4517-86d3-ba571763918a"/>
                 </node>
                 <node id="ActionResourceDefinition">
-                    <attribute id="DisplayName" type="TranslatedString" handle="" version="1"/>
+                    <attribute id="DisplayName" type="TranslatedString" handle="h3db4a752gcdf3g4f42gbc0dg8e68a39aa129" version="1"/>
                     <attribute id="Name" type="FixedString" value="PPMeterLevelDamageTaken"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
-                    <attribute id="UUID" type="guid" value=""/>
+                    <attribute id="UUID" type="guid" value="2df36fae-0980-463c-b34d-f53a4e07c7c3"/>
                 </node>
                 <node id="ActionResourceDefinition">
-                    <attribute id="DisplayName" type="TranslatedString" handle="" version="1"/>
+                    <attribute id="DisplayName" type="TranslatedString" handle="h7101d9deg6e03g40a6gb8e0gcf594d8576ce" version="1"/>
                     <attribute id="Name" type="FixedString" value="PPMeterOverallDamageTaken"/>
                     <attribute id="ReplenishType" type="FixedString" value="Never"/>
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
-                    <attribute id="UUID" type="guid" value=""/>
+                    <attribute id="UUID" type="guid" value="27f1f152-75eb-490b-8e28-ec13483f4826"/>
                 </node>
 
                 <!-- DTPR -->
