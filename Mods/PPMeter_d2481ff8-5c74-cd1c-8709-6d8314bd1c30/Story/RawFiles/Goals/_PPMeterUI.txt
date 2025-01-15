@@ -3,19 +3,30 @@ SubGoalCombiner SGC_AND
 INITSECTION
 // Mapping to Resource Name (names are declared in Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Localization/English/PPMeterTechnicalStrings.loca.xml)
 // ResourceName - StatsType - Lifetime
-DB_PPMeter_ResourceNames("PPMeterCombatDamage", "Damage", "Combat");
 DB_PPMeter_ResourceNames("PPMeterCombatRounds", "RoundsCount", "Combat");
-DB_PPMeter_ResourceNames("PPMeterCombatDPR", "DPR", "Combat");
-DB_PPMeter_ResourceNames("PPMeterDayDamage", "Damage", "Day");
 DB_PPMeter_ResourceNames("PPMeterDayRounds", "RoundsCount", "Day");
-DB_PPMeter_ResourceNames("PPMeterDayDPR", "DPR", "Day");
-DB_PPMeter_ResourceNames("PPMeterLevelDamage", "Damage", "Level");
 DB_PPMeter_ResourceNames("PPMeterLevelRounds", "RoundsCount", "Level");
-DB_PPMeter_ResourceNames("PPMeterLevelDPR", "DPR", "Level");
-DB_PPMeter_ResourceNames("PPMeterOverallDamage", "Damage", "Overall");
 DB_PPMeter_ResourceNames("PPMeterOverallRounds", "RoundsCount", "Overall");
+
+DB_PPMeter_ResourceNames("PPMeterCombatDamage", "Damage", "Combat");
+DB_PPMeter_ResourceNames("PPMeterDayDamage", "Damage", "Day");
+DB_PPMeter_ResourceNames("PPMeterLevelDamage", "Damage", "Level");
+DB_PPMeter_ResourceNames("PPMeterOverallDamage", "Damage", "Overall");
+
+DB_PPMeter_ResourceNames("PPMeterCombatDPR", "DPR", "Combat");
+DB_PPMeter_ResourceNames("PPMeterDayDPR", "DPR", "Day");
+DB_PPMeter_ResourceNames("PPMeterLevelDPR", "DPR", "Level");
 DB_PPMeter_ResourceNames("PPMeterOverallDPR", "DPR", "Overall");
+
+DB_PPMeter_ResourceNames("PPMeterCombatDamageTaken", "DamageTaken", "Combat");
+DB_PPMeter_ResourceNames("PPMeterDayDamageTaken", "DamageTaken", "Day");
+DB_PPMeter_ResourceNames("PPMeterLevelDamageTaken", "DamageTaken", "Level");
 DB_PPMeter_ResourceNames("PPMeterOverallDamageTaken", "DamageTaken", "Overall");
+
+DB_PPMeter_ResourceNames("PPMeterCombatDTPR", "DTPR", "Combat");
+DB_PPMeter_ResourceNames("PPMeterDayDTPR", "DTPR", "Day");
+DB_PPMeter_ResourceNames("PPMeterLevelDTPR", "DTPR", "Level");
+DB_PPMeter_ResourceNames("PPMeterOverallDTPR", "DTPR", "Overall");
 
 // Save current resource boost to be able to remove it
 // Character - ResourceName - BoostString

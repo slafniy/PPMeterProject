@@ -16,4 +16,8 @@
     <content contentuid="hae406fdbga188g46b5ga086geb0c91ee8311" version="1">PPMeterDayDamageTaken</content>
     <content contentuid="h3db4a752gcdf3g4f42gbc0dg8e68a39aa129" version="1">PPMeterLevelDamageTaken</content>
     <content contentuid="h7101d9deg6e03g40a6gb8e0gcf594d8576ce" version="1">PPMeterOverallDamageTaken</content>
+    <content contentuid="hcaab9af0g4adag4e92g8b57gc3f3d5632de5" version="1">PPMeterCombatDTPR</content>
+    <content contentuid="hc02260a8g0344g4d6dga1e4gd53ca8835312" version="1">PPMeterDayDTPR</content>
+    <content contentuid="h60393134g8c6eg41a9gbd4fgeb3ff10cc843" version="1">PPMeterLevelDTPR</content>
+    <content contentuid="h325f9b96g0d00g43bcgbc7fg62d56013e9b0" version="1">PPMeterOverallDTPR</content>
 </contentList>
