@@ -1,0 +1,16 @@
+# Tracks healing to trigger StatusApplied event.
+# This is needed to get Caster+Target+HealedAmount values in single Osiris event.
+new entry "PPMeter_OnHealingPassive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnHeal"
+data "StatsFunctors" "ApplyStatus(PPMETER_HEALING_APPLIED,100,1)"
+
+new entry "PPMETER_HEALING_APPLIED"
+type "StatusData"
+data "StatusType" "BOOST"
+data "DisplayName" ";1"
+data "Description" ";1"
+data "Icon" "Action_Paladin_AuraOfWarding"
+data "OnApplyFunctors" "RemoveStatus(PPMETER_HEALING_APPLIED)"
+#data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
