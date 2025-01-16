@@ -148,6 +148,28 @@ PROC_PPMeterAdd((CHARACTER)_Defender, _Lifetime, "DamageTaken", _DamageAmountRea
 //END_REGION
 
 
+//REGION Handle healing applied
+IF
+StatusApplied((CHARACTER)_Target, _Status, (CHARACTER)_Caster, _)
+AND
+DB_PartyMembers(_Target)
+AND
+DB_PartyMembers(_Caster)
+AND
+_Status == "PPMETER_HEALING_APPLIED"
+AND
+GetStatusTurns(_Target, "PPMETER_HEALING_APPLIED", _Stacks)
+AND
+ConcatenateInteger("Got ", _Stacks, _msg1)
+AND
+Concatenate(_msg1, " healing from ", _msg2)
+AND
+ConcatenateGUID(_msg2, _Caster, _msg)
+THEN
+DebugText(_Target, _msg);
+//END_REGION
+
+
 //REGION On Long Rest
 IF
 LongRestFinished()
