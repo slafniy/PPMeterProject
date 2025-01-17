@@ -11,6 +11,77 @@
     <ls:UIWidget.Template>
         <ControlTemplate>
             <ControlTemplate.Resources>
+
+                <!-- RadioButton with picture style -->
+                <Style x:Key="PPMeterRadioButtonStyle" TargetType="ls:LSRadioButton">
+                    <Setter Property="ToolTipService.Placement" Value="Center"/>
+                    <Setter Property="ToolTipService.VerticalOffset" Value="-80"/>
+                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ls:LSRadioButton">
+                                <Grid>
+                                    <Image x:Name="bg" Source="{DynamicResource BtnWeaponsToggle}" Stretch="None"/>
+                                    <Image x:Name="icon" Source="{DynamicResource WeaponSetIcon}" Stretch="None"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgHover}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgPressed}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgNormalActive}"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsChecked" Value="True"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgHoverActive}"/>
+                                    </MultiTrigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsChecked" Value="True"/>
+                                            <Condition Property="IsPressed" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgPressedActive}"/>
+                                    </MultiTrigger>
+
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsChecked" Value="False"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                    </MultiTrigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsChecked" Value="False"/>
+                                            <Condition Property="IsPressed" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter TargetName="icon" Property="Margin" Value="0,0,0,-4"/>
+                                    </MultiTrigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter TargetName="icon" Property="Opacity" Value="0.8"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+
+                        <!--Are Weapon Toggles Available-->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="BoundEvent" Value="{x:Null}"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+                </Style>
+
                 <!-- Radio buttons template -->
                 <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
                     <Border x:Name="RBBorder" Background="Black" BorderBrush="Gray" BorderThickness="1" Margin="4,4,4,4">
@@ -534,7 +605,19 @@
 
                                 <!-- TOGGLE BUTTONS - STAT TYPE -->
                                 <StackPanel Orientation="Horizontal" Margin="20,10,0,10">
-                                    <ls:LSRadioButton x:Name="ToggleDamage" Content="{Binding Source='h8fb07252gc832g4ca7g8314gcf90917db4ac', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                        <ls:LSRadioButton.Resources>
+                                            <BitmapImage x:Key="WeaponSetIcon" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/ico_ranged.png"/>
+
+                                            <BitmapImage x:Key="WeaponSetBgHover" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_unselected_h.png"/>
+                                            <BitmapImage x:Key="WeaponSetBgPressed" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_unselected_p.png"/>
+
+                                            <BitmapImage x:Key="WeaponSetBgNormalActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
+                                            <BitmapImage x:Key="WeaponSetBgHoverActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
+                                            <BitmapImage x:Key="WeaponSetBgPressedActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
+
+                                        </ls:LSRadioButton.Resources>
+                                    </ls:LSRadioButton>
                                     <ls:LSRadioButton x:Name="ToggleDamageTaken" Content="{Binding Source='h496dd6c1g10fdg4281ga405g78879955405e', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
                                 </StackPanel>
                             </StackPanel>
