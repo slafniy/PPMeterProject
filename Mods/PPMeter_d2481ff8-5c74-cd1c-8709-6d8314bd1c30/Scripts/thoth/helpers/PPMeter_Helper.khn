@@ -1,3 +1,0 @@
-function TotalHealingDoneIs(value)
-    return ConditionResult(context.HitDescription.TotalHealDone == value)
-end

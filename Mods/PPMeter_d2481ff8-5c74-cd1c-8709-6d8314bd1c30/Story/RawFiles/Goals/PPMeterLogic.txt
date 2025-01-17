@@ -20,7 +20,9 @@ DB_PPMeter_StatsType("DTPR");
 
 // REAL Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 
-
+// Save last HP data to handle healing
+// Character - Integer
+NOT DB_PPMeter_CharacterPreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 KBSECTION
 //REGION // PROC_FillZeroes - if no data in DB
 PROC
@@ -148,25 +150,34 @@ PROC_PPMeterAdd((CHARACTER)_Defender, _Lifetime, "DamageTaken", _DamageAmountRea
 //END_REGION
 
 
-//REGION Handle healing applied
+//REGION Handle hp changes
+// Set hp value if none
 IF
-StatusApplied((CHARACTER)_Target, _Status, (CHARACTER)_Caster, _)
+DB_PartyMembers(_Character)
 AND
-DB_PartyMembers(_Target)
+NOT DB_PPMeter_CharacterPreviousHP(_Character, _)
 AND
-DB_PartyMembers(_Caster)
-AND
-_Status == "PPMETER_HEALING_APPLIED"
-AND
-GetStatusTurns(_Target, "PPMETER_HEALING_APPLIED", _Stacks)
-AND
-ConcatenateInteger("Got ", _Stacks, _msg1)
-AND
-Concatenate(_msg1, " healing from ", _msg2)
-AND
-ConcatenateGUID(_msg2, _Caster, _msg)
+GetHitpoints(_Character, _CurrentHP)
 THEN
-DebugText(_Target, _msg);
+DB_PPMeter_CharacterPreviousHP(_Character, _CurrentHP);
+
+// handle hp change event
+IF
+HitpointsChanged((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+AND
+GetHitpoints(_Character, _CurrentHP)
+AND
+DB_PPMeter_CharacterPreviousHP(_Character, _PreviousHP)
+AND
+IntegerSubtract(_CurrentHP, _PreviousHP, _HPDelta)
+AND
+ConcatenateInteger("HP change: ", _HPDelta, _msg)
+THEN
+DB_PPMeter_CharacterPreviousHP(_Character, _CurrentHP);
+NOT DB_PPMeter_CharacterPreviousHP(_Character, _PreviousHP);
+DebugText(_Character, _msg);
 //END_REGION
 
 
