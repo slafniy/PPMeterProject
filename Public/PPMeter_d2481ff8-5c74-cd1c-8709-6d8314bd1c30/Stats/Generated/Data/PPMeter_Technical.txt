@@ -4,8 +4,10 @@ new entry "PPMeter_OnHealingPassive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnHeal"
-data "StatsFunctors" "ApplyStatus(PPMETER_HEALING_APPLIED,100,1)"
+data "Conditions" ""
+data "StatsFunctors" "IF(TotalHealingDoneIs(1)):ApplyStatus(PPMETER_HEALING_APPLIED,100,1);IF(TotalHealingDoneIs(2)):ApplyStatus(PPMETER_HEALING_APPLIED,100,2);IF(TotalHealingDoneIs(3)):ApplyStatus(PPMETER_HEALING_APPLIED,100,3);IF(TotalHealingDoneIs(4)):ApplyStatus(PPMETER_HEALING_APPLIED,100,4);IF(TotalHealingDoneIs(5)):ApplyStatus(PPMETER_HEALING_APPLIED,100,5);IF(TotalHealingDoneIs(6)):ApplyStatus(PPMETER_HEALING_APPLIED,100,6);IF(TotalHealingDoneIs(7)):ApplyStatus(PPMETER_HEALING_APPLIED,100,7);IF(TotalHealingDoneIs(8)):ApplyStatus(PPMETER_HEALING_APPLIED,100,8);IF(TotalHealingDoneIs(9)):ApplyStatus(PPMETER_HEALING_APPLIED,100,9);IF(TotalHealingDoneIs(10)):ApplyStatus(PPMETER_HEALING_APPLIED,100,10);IF(TotalHealingDoneIs(11)):ApplyStatus(PPMETER_HEALING_APPLIED,100,11);IF(TotalHealingDoneIs(12)):ApplyStatus(PPMETER_HEALING_APPLIED,100,12);IF(TotalHealingDoneIs(13)):ApplyStatus(PPMETER_HEALING_APPLIED,100,13);"
 
+# I cannot remove this status after apply because Osiris needs some time to read status duration
 new entry "PPMETER_HEALING_APPLIED"
 type "StatusData"
 data "StatusType" "BOOST"
