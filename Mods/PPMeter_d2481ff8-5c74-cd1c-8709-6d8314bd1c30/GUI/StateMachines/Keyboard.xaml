@@ -3,10 +3,16 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ls:StateMachine.States>
 
-        <!--STATE-->
-        <ls:State Name="PlayerPortraits" ModType="Extend">
+        <!--STATE -->
+        <ls:State Layout="Player" Owner="Player" Name="PlayerUIsHolder" ModType="Extend">
+            <ls:State.InitialSubstates>
+                <ls:InitialSubstate Name="PPMeter"/>
+            </ls:State.InitialSubstates>
+        </ls:State>
+
+        <ls:State Layout="Player" Owner="Player" Name="PPMeter">
             <ls:State.Widgets>
-                <ls:StateWidget Filename="PPMeterPartyStats.xaml" Layer="PopupPanels"/>
+                <ls:StateWidget Filename="PPMeterWidget.xaml" Layer="HUD"/>
             </ls:State.Widgets>
         </ls:State>
 
