@@ -20,33 +20,40 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ls:LSRadioButton">
+                                <ControlTemplate.Resources>
+                                    <BitmapImage x:Key="PPMeterButtonBgHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_hover.png"/>
+                                    <BitmapImage x:Key="PPMeterButtonBgPressed" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_disabled.png"/>
+                                    <BitmapImage x:Key="PPMeterButtonBgNormalActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_selected.png"/>
+                                    <BitmapImage x:Key="PPMeterButtonBgHoverActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_selected.png"/>
+                                    <BitmapImage x:Key="PPMeterButtonBgPressedActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_selected.png"/>
+                                </ControlTemplate.Resources>
                                 <Grid>
-                                    <Image x:Name="bg" Source="{DynamicResource BtnWeaponsToggle}" Stretch="None"/>
+                                    <Image x:Name="bg" Source="{StaticResource PPMeterButtonBgNormalActive}" Stretch="None"/>
                                     <Image x:Name="icon" Source="{DynamicResource WeaponSetIcon}" Stretch="None"/>
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgHover}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgHighlighted}"/>
                                     </Trigger>
                                     <Trigger Property="IsPressed" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgPressed}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressed}"/>
                                     </Trigger>
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgNormalActive}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressedActive}"/>
                                     </Trigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="IsChecked" Value="True"/>
                                             <Condition Property="IsMouseOver" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgHoverActive}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgHoverActive}"/>
                                     </MultiTrigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="IsChecked" Value="True"/>
                                             <Condition Property="IsPressed" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                        <Setter TargetName="bg" Property="Source" Value="{DynamicResource WeaponSetBgPressedActive}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressedActive}"/>
                                     </MultiTrigger>
 
                                     <MultiTrigger>
@@ -608,14 +615,6 @@
                                     <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                         <ls:LSRadioButton.Resources>
                                             <BitmapImage x:Key="WeaponSetIcon" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_d.png"/>
-
-                                            <BitmapImage x:Key="WeaponSetBgHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_h.png"/>
-                                            <BitmapImage x:Key="WeaponSetBgPressed" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_unselected_p.png"/>
-
-                                            <BitmapImage x:Key="WeaponSetBgNormalActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
-                                            <BitmapImage x:Key="WeaponSetBgHoverActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
-                                            <BitmapImage x:Key="WeaponSetBgPressedActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
-
                                         </ls:LSRadioButton.Resources>
                                     </ls:LSRadioButton>
                                     <ls:LSRadioButton x:Name="ToggleDamageTaken" Content="{Binding Source='h496dd6c1g10fdg4281ga405g78879955405e', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
