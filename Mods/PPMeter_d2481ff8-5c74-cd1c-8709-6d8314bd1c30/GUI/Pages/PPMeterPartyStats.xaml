@@ -607,9 +607,9 @@
                                 <StackPanel Orientation="Horizontal" Margin="20,10,0,10">
                                     <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                         <ls:LSRadioButton.Resources>
-                                            <BitmapImage x:Key="WeaponSetIcon" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/ico_ranged.png"/>
+                                            <BitmapImage x:Key="WeaponSetIcon" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_d.png"/>
 
-                                            <BitmapImage x:Key="WeaponSetBgHover" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_unselected_h.png"/>
+                                            <BitmapImage x:Key="WeaponSetBgHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_h.png"/>
                                             <BitmapImage x:Key="WeaponSetBgPressed" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_unselected_p.png"/>
 
                                             <BitmapImage x:Key="WeaponSetBgNormalActive" UriSource="pack://application:,,,/GustavNoesisGUI;component/Assets/BottomBar/btn_hb_selected.png"/>
