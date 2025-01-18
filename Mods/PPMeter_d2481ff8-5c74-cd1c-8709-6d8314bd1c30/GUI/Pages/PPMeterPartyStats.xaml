@@ -29,17 +29,18 @@
                                 </ControlTemplate.Resources>
                                 <Grid>
                                     <Image x:Name="bg" Source="{StaticResource PPMeterButtonBgNormalActive}" Stretch="None"/>
-                                    <Image x:Name="icon" Source="{DynamicResource WeaponSetIcon}" Stretch="None"/>
+                                    <Image x:Name="icon" Source="{DynamicResource PPMeterToggleDamageIconDeselected}" Stretch="None"/>
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgHighlighted}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgHoverActive}"/>
                                     </Trigger>
                                     <Trigger Property="IsPressed" Value="True">
                                         <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressed}"/>
                                     </Trigger>
                                     <Trigger Property="IsChecked" Value="True">
                                         <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressedActive}"/>
+                                        <Setter TargetName="icon" Property="Source" Value="{DynamicResource PPMeterToggleDamageIconSelected}"/>
                                     </Trigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
@@ -614,7 +615,8 @@
                                 <StackPanel Orientation="Horizontal" Margin="20,10,0,10">
                                     <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                         <ls:LSRadioButton.Resources>
-                                            <BitmapImage x:Key="WeaponSetIcon" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_d.png"/>
+                                            <BitmapImage x:Key="PPMeterToggleDamageIconSelected" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_selected.png"/>
+                                            <BitmapImage x:Key="PPMeterToggleDamageIconDeselected" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_deselected.png"/>
                                         </ls:LSRadioButton.Resources>
                                     </ls:LSRadioButton>
                                     <ls:LSRadioButton x:Name="ToggleDamageTaken" Content="{Binding Source='h496dd6c1g10fdg4281ga405g78879955405e', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
