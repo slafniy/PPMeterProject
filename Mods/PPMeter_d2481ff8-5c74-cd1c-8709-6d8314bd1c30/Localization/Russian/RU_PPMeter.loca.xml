@@ -2,14 +2,16 @@
 <contentList>
     <content contentuid="h0406e412g1362g4eccgbe9dgd35bd6653785" version="1">Показать/Скрыть PPMeter</content>
     <content contentuid="h5e4a29f6g1329g49d6g80acg72fa24371d86" version="1">PPMeter by slafniy</content>
-    <content contentuid="ha85bd579gf2bdg459cgb379g1ef5f3d0a40c" version="1">Бой</content>
-    <content contentuid="hc93603c0g0470g4676gb105ge95ab44ab6ac" version="1">День</content>
-    <content contentuid="ha8bfa6e7g16a1g464ag892bg89d87a1ab378" version="1">Уровень</content>
-    <content contentuid="hab7fa700g572eg4953ga4a1g7631e78145ca" version="1">Всего</content>
     <content contentuid="h3a4ab91agf336g4e20g85bcg4a5a72fad730" version="1">Раунды</content>
     <content contentuid="h8fb07252gc832g4ca7g8314gcf90917db4ac" version="1">Урон</content>
     <content contentuid="hccac5399g1424g4dc9gbf1cge2f8810ab5fa" version="1">УЗР</content>
     <content contentuid="h4c07541bg0c4ag4316g95dfgc639cae23097" version="1">Персонаж</content>
     <content contentuid="h496dd6c1g10fdg4281ga405g78879955405e" version="1">Полученный урон</content>
     <content contentuid="hcf2c9b63ge198g46f6gaa09gaf1b73c8c7cf" version="1">УПЗР</content>
+    <content contentuid="heeb91403gc609g488cgbd2fgea86f8caa9de" version="1">Показывать данные за текущий или прошлый бой.</content>
+    <content contentuid="hce3f0705g07b6g415fgb28dgcad1319dfffc" version="1">Показывать данные за текущий день.</content>
+    <content contentuid="h73b0ec6agb59dg4f1ag8014g5cbb285fda83" version="1">Показывать данные для текущего уровня персонажа.</content>
+    <content contentuid="h6146c45bg8da1g460bg9711gdef46dc9c985" version="1">Показывать данные за всё время.</content>
+    <content contentuid="h5f86ce76g9aacg4409ga53dg201170119bbc" version="1">Показывать данные о нанесённом уроне.</content>
+    <content contentuid="h873d627agc005g46c2ga705g80483a7a3f07" version="1">Показывать данные о полученном уроне.</content>
 </contentList>
