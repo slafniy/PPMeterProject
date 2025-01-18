@@ -21,58 +21,38 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ls:LSRadioButton">
                                 <ControlTemplate.Resources>
-                                    <BitmapImage x:Key="PPMeterButtonBgHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_hover.png"/>
-                                    <BitmapImage x:Key="PPMeterButtonBgPressed" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_disabled.png"/>
-                                    <BitmapImage x:Key="PPMeterButtonBgNormalActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_selected.png"/>
-                                    <BitmapImage x:Key="PPMeterButtonBgHoverActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_selected.png"/>
-                                    <BitmapImage x:Key="PPMeterButtonBgPressedActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_selected.png"/>
+                                    <BitmapImage x:Key="RBBgActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_active.png"/>
+                                    <BitmapImage x:Key="RBBgActiveHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_active_hover.png"/>
+                                    <BitmapImage x:Key="RBBgInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_inactive.png"/>
+                                    <BitmapImage x:Key="RBBgInactiveHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_inactive_hover.png"/>
                                 </ControlTemplate.Resources>
                                 <Grid>
-                                    <Image x:Name="bg" Source="{StaticResource PPMeterButtonBgNormalActive}" Stretch="None"/>
-                                    <Image x:Name="icon" Source="{DynamicResource PPMeterToggleDamageIconDeselected}" Stretch="None"/>
+                                    <!-- Inactive by default -->
+                                    <Image x:Name="bg" Source="{StaticResource RBBgInactive}" Stretch="None"/>
+                                    <Image x:Name="icon" Source="{DynamicResource RBIconInactive}" Stretch="None"/>
                                 </Grid>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgHoverActive}"/>
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressed}"/>
-                                    </Trigger>
+                                    <!-- Active -->
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressedActive}"/>
-                                        <Setter TargetName="icon" Property="Source" Value="{DynamicResource PPMeterToggleDamageIconSelected}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource RBBgActive}"/>
+                                        <Setter TargetName="icon" Property="Source" Value="{DynamicResource RBIconActive}"/>
                                     </Trigger>
+                                    <!-- Inactive and mouseover -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource RBBgInactiveHover}"/>
+                                    </Trigger>
+                                    <!-- Active and mouseover -->
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="IsChecked" Value="True"/>
                                             <Condition Property="IsMouseOver" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgHoverActive}"/>
+                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource RBBgActiveHover}"/>
                                     </MultiTrigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsChecked" Value="True"/>
-                                            <Condition Property="IsPressed" Value="True"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressedActive}"/>
-                                    </MultiTrigger>
-
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsChecked" Value="False"/>
-                                            <Condition Property="IsMouseOver" Value="True"/>
-                                        </MultiTrigger.Conditions>
-                                    </MultiTrigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsChecked" Value="False"/>
-                                            <Condition Property="IsPressed" Value="True"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter TargetName="icon" Property="Margin" Value="0,0,0,-4"/>
-                                    </MultiTrigger>
-                                    <Trigger Property="IsChecked" Value="False">
-                                        <Setter TargetName="icon" Property="Opacity" Value="0.8"/>
-                                    </Trigger>
+                                    <!-- Pressed -->
+<!--                                    <Trigger Property="IsPressed" Value="True">-->
+<!--                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressed}"/>-->
+<!--                                    </Trigger>-->
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -615,8 +595,8 @@
                                 <StackPanel Orientation="Horizontal" Margin="20,10,0,10">
                                     <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                         <ls:LSRadioButton.Resources>
-                                            <BitmapImage x:Key="PPMeterToggleDamageIconSelected" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_selected.png"/>
-                                            <BitmapImage x:Key="PPMeterToggleDamageIconDeselected" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_deselected.png"/>
+                                            <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_selected.png"/>
+                                            <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_deselected.png"/>
                                         </ls:LSRadioButton.Resources>
                                     </ls:LSRadioButton>
                                     <ls:LSRadioButton x:Name="ToggleDamageTaken" Content="{Binding Source='h496dd6c1g10fdg4281ga405g78879955405e', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
