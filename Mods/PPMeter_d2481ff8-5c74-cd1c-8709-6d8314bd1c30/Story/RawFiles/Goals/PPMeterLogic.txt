@@ -19,10 +19,6 @@ DB_PPMeter_StatsType("DamageTaken");
 DB_PPMeter_StatsType("DTPR");
 
 // REAL Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
-
-// Save last HP data to handle healing
-// Character - Integer
-NOT DB_PPMeter_CharacterPreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 KBSECTION
 //REGION // PROC_FillZeroes - if no data in DB
 PROC
@@ -147,37 +143,6 @@ AND
 IntegerToReal(_DamageAmount, _DamageAmountReal)
 THEN
 PROC_PPMeterAdd((CHARACTER)_Defender, _Lifetime, "DamageTaken", _DamageAmountReal);
-//END_REGION
-
-
-//REGION Handle hp changes
-// Set hp value if none
-IF
-DB_PartyMembers(_Character)
-AND
-NOT DB_PPMeter_CharacterPreviousHP(_Character, _)
-AND
-GetHitpoints(_Character, _CurrentHP)
-THEN
-DB_PPMeter_CharacterPreviousHP(_Character, _CurrentHP);
-
-// handle hp change event
-IF
-HitpointsChanged((CHARACTER)_Character, _)
-AND
-DB_PartyMembers(_Character)
-AND
-GetHitpoints(_Character, _CurrentHP)
-AND
-DB_PPMeter_CharacterPreviousHP(_Character, _PreviousHP)
-AND
-IntegerSubtract(_CurrentHP, _PreviousHP, _HPDelta)
-AND
-ConcatenateInteger("HP change: ", _HPDelta, _msg)
-THEN
-DB_PPMeter_CharacterPreviousHP(_Character, _CurrentHP);
-NOT DB_PPMeter_CharacterPreviousHP(_Character, _PreviousHP);
-DebugText(_Character, _msg);
 //END_REGION
 
 
