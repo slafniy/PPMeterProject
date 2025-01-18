@@ -49,25 +49,10 @@
                                         </MultiTrigger.Conditions>
                                         <Setter TargetName="bg" Property="Source" Value="{StaticResource RBBgActiveHover}"/>
                                     </MultiTrigger>
-                                    <!-- Pressed -->
-<!--                                    <Trigger Property="IsPressed" Value="True">-->
-<!--                                        <Setter TargetName="bg" Property="Source" Value="{StaticResource PPMeterButtonBgPressed}"/>-->
-<!--                                    </Trigger>-->
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Style.Triggers>
-
-                        <!--Are Weapon Toggles Available-->
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="BoundEvent" Value="{x:Null}"/>
-                        </Trigger>
-
-                    </Style.Triggers>
                 </Style>
 
                 <!-- Radio buttons template -->
@@ -582,29 +567,32 @@
                                    Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"
                                    IsHitTestVisible="False" Panel.ZIndex="1" Width="{Binding ActualWidth, ElementName=PartyMembers}"/>
 
+                            <!-- TOGGLE BUTTONS -->
                             <StackPanel Orientation="Horizontal">
-                                <!-- TOGGLE BUTTONS - LIFETIME -->
-                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                    <ls:LSRadioButton x:Name="ToggleCombat" Content="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
-                                    <ls:LSRadioButton x:Name="ToggleOverall" Content="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
-                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <!-- TOGGLE BUTTONS - LIFETIME -->
+                                    <StackPanel Orientation="Horizontal" Margin="10,10,30,10">
+                                        <ls:LSRadioButton x:Name="ToggleCombat" Content="{Binding Source='ha85bd579gf2bdg459cgb379g1ef5f3d0a40c', Converter={StaticResource TranslatedStringConverter}}" IsChecked="True" Template="{StaticResource RBLifetimeTemplate}"/>
+                                        <ls:LSRadioButton x:Name="ToggleDay" Content="{Binding Source='hc93603c0g0470g4676gb105ge95ab44ab6ac', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                        <ls:LSRadioButton x:Name="ToggleLevel" Content="{Binding Source='ha8bfa6e7g16a1g464ag892bg89d87a1ab378', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                        <ls:LSRadioButton x:Name="ToggleOverall" Content="{Binding Source='hab7fa700g572eg4953ga4a1g7631e78145ca', Converter={StaticResource TranslatedStringConverter}}" Template="{StaticResource RBLifetimeTemplate}"/>
+                                    </StackPanel>
 
-                                <!-- TOGGLE BUTTONS - STAT TYPE -->
-                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Right">
-                                    <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
-                                        <ls:LSRadioButton.Resources>
-                                            <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_selected.png"/>
-                                            <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_deselected.png"/>
-                                        </ls:LSRadioButton.Resources>
-                                    </ls:LSRadioButton>
-                                    <ls:LSRadioButton x:Name="ToggleDamageTaken" Style="{StaticResource PPMeterRadioButtonStyle}">
-                                        <ls:LSRadioButton.Resources>
-                                            <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_shield_selected.png"/>
-                                            <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_shield_deselected.png"/>
-                                        </ls:LSRadioButton.Resources>
-                                    </ls:LSRadioButton>
+                                    <!-- TOGGLE BUTTONS - STAT TYPE -->
+                                    <StackPanel Orientation="Horizontal" Margin="30,10,10,10">
+                                        <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                            <ls:LSRadioButton.Resources>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_deselected.png"/>
+                                            </ls:LSRadioButton.Resources>
+                                        </ls:LSRadioButton>
+                                        <ls:LSRadioButton x:Name="ToggleDamageTaken" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                            <ls:LSRadioButton.Resources>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_shield_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_shield_deselected.png"/>
+                                            </ls:LSRadioButton.Resources>
+                                        </ls:LSRadioButton>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
 
