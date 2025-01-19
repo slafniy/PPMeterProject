@@ -731,7 +731,7 @@
 
                 <!-- Show PPMeter button -->
                 <!-- Shows PPMeter widget on click, is collapsed when PPMeter is shown -->
-                <Grid VerticalAlignment="Top" HorizontalAlignment="Left"
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-3,-3,0,0"
                       Visibility="{Binding Visibility, ElementName=PPMeterWidget, Converter={StaticResource InvertVisibilityConverter}}">
 
                     <ls:LSButton x:Name="ShowPPMeterButton" VerticalAlignment="Center">
