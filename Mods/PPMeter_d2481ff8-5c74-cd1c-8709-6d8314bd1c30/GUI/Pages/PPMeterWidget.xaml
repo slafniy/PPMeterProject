@@ -741,8 +741,8 @@
                                     <BitmapImage x:Key="ButtonShowNormalImg" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_show_normal.png"/>
                                     <BitmapImage x:Key="ButtonShowHoverImg" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_show_hover.png"/>
                                 </ControlTemplate.Resources>
-                                <Grid Height="42" Width="42" Background="Transparent">
-                                    <Image x:Name="btn" Source="{StaticResource ButtonShowNormalImg}"/>
+                                <Grid>
+                                    <Image x:Name="btn" Source="{StaticResource ButtonShowNormalImg}" Stretch="None"/>
                                     <Grid.ToolTip>
                                         <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>
                                     </Grid.ToolTip>
