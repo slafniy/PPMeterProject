@@ -729,12 +729,12 @@
                     </ls:LSNineSliceImage>
                 </Grid>
 
-                <!-- Show PPMeter button -->
+                <!-- Show PPMeter buttons -->
                 <!-- Shows PPMeter widget on click, is collapsed when PPMeter is shown -->
-                <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-3,-3,0,0"
-                      Visibility="{Binding Visibility, ElementName=PPMeterWidget, Converter={StaticResource InvertVisibilityConverter}}">
+                <!-- While collapsed, the "Hide PPMeter" button appears, but it is transparent if not hovered -->
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-3,-3,0,0">
 
-                    <ls:LSButton x:Name="ShowPPMeterButton" VerticalAlignment="Center">
+                    <ls:LSButton x:Name="ShowPPMeterButton" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=PPMeterWidget, Converter={StaticResource InvertVisibilityConverter}}">
                         <ls:LSButton.Template>
                             <ControlTemplate TargetType="ls:LSButton">
                                 <ControlTemplate.Resources>
@@ -757,6 +757,32 @@
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="LSButtonReleased">
                                 <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Visible"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </ls:LSButton>
+
+                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=PPMeterWidget}">
+                        <ls:LSButton.Template>
+                            <ControlTemplate TargetType="ls:LSButton">
+                                <ControlTemplate.Resources>
+                                    <BitmapImage x:Key="ButtonShowNormalImg" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_show_hover.png"/>
+                                </ControlTemplate.Resources>
+                                <Grid>
+                                    <Image x:Name="btn" Source="{StaticResource ButtonShowNormalImg}" Stretch="None" Opacity="0"/>
+                                    <Grid.ToolTip>
+                                        <ls:LSTooltip Placement="Left" Content="{Binding Source='h282f2094g6787g45cbgbb34g92aee70ff33b', Converter={StaticResource TranslatedStringConverter}}"/>
+                                    </Grid.ToolTip>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="btn" Property="Opacity" Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </ls:LSButton.Template>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="LSButtonReleased">
+                                <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Collapsed"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                     </ls:LSButton>
