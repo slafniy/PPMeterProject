@@ -2,16 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ls="clr-namespace:ls;assembly=Code"
              xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:System="clr-namespace:System;assembly=mscorlib">
-
+             Style="{StaticResource hud.root.Style}">
     <ls:UIWidget.Template>
         <ControlTemplate>
             <ControlTemplate.Resources>
-
                 <!-- RadioButton with picture style -->
                 <Style x:Key="PPMeterRadioButtonStyle" TargetType="ls:LSRadioButton">
                     <Setter Property="ToolTipService.Placement" Value="Center"/>
@@ -54,23 +53,6 @@
                         </Setter.Value>
                     </Setter>
                 </Style>
-
-                <!-- Radio buttons template -->
-                <ControlTemplate x:Key="RBLifetimeTemplate" TargetType="ls:LSRadioButton">
-                    <Border x:Name="RBBorder" Background="Black" BorderBrush="Gray" BorderThickness="1" Margin="4,4,4,4">
-                        <TextBlock x:Name="ButtonTextBlock" Text="{TemplateBinding Content}"
-                                   Foreground="WhiteSmoke" Style="{StaticResource TooltipTitleStyle}"
-                                   FontSize="{StaticResource MediumFontSize}" Margin="8,4,4,8"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="RBBorder" Property="Background" Value="#A2838383"/>
-                            <Setter TargetName="RBBorder" Property="BorderBrush" Value="White"/>
-                            <Setter TargetName="ButtonTextBlock" Property="Foreground" Value="#FF26C826"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
 
                 <!-- Resource value templates -->
                 <!-- TODO: create universal template if possible -->
@@ -517,14 +499,13 @@
                         </ItemsControl>
                     </StackPanel>
                 </DataTemplate>
-
             </ControlTemplate.Resources>
 
+            <!-- Root Grid is needed for correct mouse drag, contains a PPMeter widget itself and a toggle button -->
+            <Grid x:Name="root">
 
-            <Grid x:Name="bgFade" Margin="0,0,0,0">  <!-- This Grid is needed for normal drag -->
-
-                <!-- WIDGET ITSELF -->
-                <Grid x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <!-- PPMeter widget -->
+                <Grid x:Name="PPMeterWidget" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <b:Interaction.Behaviors>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
@@ -554,7 +535,7 @@
                                     </ls:LSButton.Style>
                                     <b:Interaction.Triggers>
                                         <b:EventTrigger EventName="LSButtonReleased">
-                                            <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Collapsed"/>
+                                            <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Collapsed"/>
                                             <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
                                             <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>
                                         </b:EventTrigger>
@@ -579,7 +560,7 @@
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='heeb91403gc609g488cgbd2fgea86f8caa9de', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='heeb91403gc609g488cgbd2fgea86f8caa9de', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -590,7 +571,7 @@
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='hce3f0705g07b6g415fgb28dgcad1319dfffc', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='hce3f0705g07b6g415fgb28dgcad1319dfffc', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -601,7 +582,7 @@
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h73b0ec6agb59dg4f1ag8014g5cbb285fda83', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h73b0ec6agb59dg4f1ag8014g5cbb285fda83', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -612,7 +593,7 @@
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h6146c45bg8da1g460bg9711gdef46dc9c985', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h6146c45bg8da1g460bg9711gdef46dc9c985', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -627,7 +608,7 @@
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h5f86ce76g9aacg4409ga53dg201170119bbc', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h5f86ce76g9aacg4409ga53dg201170119bbc', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -638,7 +619,7 @@
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h873d627agc005g46c2ga705g80483a7a3f07', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h873d627agc005g46c2ga705g80483a7a3f07', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -777,7 +758,7 @@
                         </ls:LSButton.Template>
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="LSButtonReleased">
-                                <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Visible"/>
+                                <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Visible"/>
                                 <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
                                 <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Visible"/>
                             </b:EventTrigger>
@@ -808,7 +789,7 @@
                         </ls:LSButton.Template>
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="LSButtonReleased">
-                                <b:ChangePropertyAction TargetName="Root" PropertyName="Visibility" Value="Collapsed"/>
+                                <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Collapsed"/>
                                 <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
                                 <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>
                             </b:EventTrigger>
@@ -818,6 +799,4 @@
             </Grid>
         </ControlTemplate>
     </ls:UIWidget.Template>
-
-
 </ls:UIWidget>
