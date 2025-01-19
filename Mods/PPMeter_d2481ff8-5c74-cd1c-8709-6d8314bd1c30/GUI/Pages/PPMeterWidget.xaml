@@ -729,7 +729,8 @@
                     </ls:LSNineSliceImage>
                 </Grid>
 
-                <!-- Show PPMeter button widget -->
+                <!-- Show PPMeter button -->
+                <!-- Shows PPMeter widget on click, is collapsed when PPMeter is shown -->
                 <Grid VerticalAlignment="Top" HorizontalAlignment="Left"
                       Visibility="{Binding Visibility, ElementName=PPMeterWidget, Converter={StaticResource InvertVisibilityConverter}}">
 
@@ -759,37 +760,6 @@
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                     </ls:LSButton>
-
-                    <!--                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center">-->
-                    <!--                        <ls:LSButton.Template>-->
-                    <!--                            <ControlTemplate TargetType="ls:LSButton">-->
-                    <!--                                <Grid Height="114" Width="80" Background="Transparent">-->
-                    <!--                                    <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>-->
-                    <!--                                    <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>-->
-                    <!--                                    <Grid.ToolTip>-->
-                    <!--                                        <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>-->
-                    <!--                                    </Grid.ToolTip>-->
-                    <!--                                </Grid>-->
-                    <!--                                <ControlTemplate.Triggers>-->
-                    <!--                                    <Trigger Property="IsMouseOver" Value="true">-->
-                    <!--                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_h.png"/>-->
-                    <!--                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_h.png"/>-->
-                    <!--                                    </Trigger>-->
-                    <!--                                    <Trigger Property="IsPressed" Value="true">-->
-                    <!--                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_p.png"/>-->
-                    <!--                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_p.png"/>-->
-                    <!--                                    </Trigger>-->
-                    <!--                                </ControlTemplate.Triggers>-->
-                    <!--                            </ControlTemplate>-->
-                    <!--                        </ls:LSButton.Template>-->
-                    <!--                        <b:Interaction.Triggers>-->
-                    <!--                            <b:EventTrigger EventName="LSButtonReleased">-->
-                    <!--                                <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Collapsed"/>-->
-                    <!--                                <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>-->
-                    <!--                                <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>-->
-                    <!--                            </b:EventTrigger>-->
-                    <!--                        </b:Interaction.Triggers>-->
-                    <!--                    </ls:LSButton>-->
                 </Grid>
             </Grid>
         </ControlTemplate>
