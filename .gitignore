@@ -1,8 +1,5 @@
 /.idea/
 
-# some strange auto-generated binary files
-/Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/GUI/metadata.lsf
-
 # BG3 story generated files which are safe to remove to decrease mod pak size
 # SAFETOREMOVE_START
 /Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Story/goals.raw

@@ -20,10 +20,10 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ls:LSRadioButton">
                                 <ControlTemplate.Resources>
-                                    <BitmapImage x:Key="RBBgActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_active.png"/>
-                                    <BitmapImage x:Key="RBBgActiveHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_active_hover.png"/>
-                                    <BitmapImage x:Key="RBBgInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_inactive.png"/>
-                                    <BitmapImage x:Key="RBBgInactiveHover" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_bg_inactive_hover.png"/>
+                                    <BitmapImage x:Key="RBBgActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_bg_active.png"/>
+                                    <BitmapImage x:Key="RBBgActiveHover" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_bg_active_hover.png"/>
+                                    <BitmapImage x:Key="RBBgInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_bg_inactive.png"/>
+                                    <BitmapImage x:Key="RBBgInactiveHover" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_bg_inactive_hover.png"/>
                                 </ControlTemplate.Resources>
                                 <Grid>
                                     <!-- Inactive by default -->
@@ -555,8 +555,8 @@
                                     <StackPanel Orientation="Horizontal" Margin="10,10,30,10">
                                         <ls:LSRadioButton x:Name="ToggleCombat" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
-                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_C_selected.png"/>
-                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_C_deselected.png"/>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_C_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_C_deselected.png"/>
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
@@ -566,8 +566,8 @@
                                         </ls:LSRadioButton>
                                         <ls:LSRadioButton x:Name="ToggleDay" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
-                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_D_selected.png"/>
-                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_D_deselected.png"/>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_D_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_D_deselected.png"/>
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
@@ -577,8 +577,8 @@
                                         </ls:LSRadioButton>
                                         <ls:LSRadioButton x:Name="ToggleLevel" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
-                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_L_selected.png"/>
-                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_L_deselected.png"/>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_L_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_L_deselected.png"/>
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
@@ -588,8 +588,8 @@
                                         </ls:LSRadioButton>
                                         <ls:LSRadioButton x:Name="ToggleOverall" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
-                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_O_selected.png"/>
-                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_letter_O_deselected.png"/>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_O_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_O_deselected.png"/>
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
@@ -603,8 +603,8 @@
                                     <StackPanel Orientation="Horizontal" Margin="30,10,10,10">
                                         <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
-                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_selected.png"/>
-                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_sword_deselected.png"/>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_sword_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_sword_deselected.png"/>
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
@@ -614,8 +614,8 @@
                                         </ls:LSRadioButton>
                                         <ls:LSRadioButton x:Name="ToggleDamageTaken" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
-                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_shield_selected.png"/>
-                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/buttons/btn_ppmeter_shield_deselected.png"/>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_shield_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_shield_deselected.png"/>
                                             </ls:LSRadioButton.Resources>
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
@@ -729,29 +729,24 @@
                     </ls:LSNineSliceImage>
                 </Grid>
 
-                <!-- SHOW / HIDE BUTTON -->
-                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,0" Panel.ZIndex="10">
-
-                    <Image x:Name="bg" Source="pack://application:,,,/Core;component/Assets/CombatLog/combatlog_gizmo_bg.png" Stretch="None"/>
-
+                <!-- Show PPMeter button widget -->
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
                     <ls:LSButton x:Name="ShowPPMeterButton" VerticalAlignment="Center">
                         <ls:LSButton.Template>
                             <ControlTemplate TargetType="ls:LSButton">
-                                <Grid Height="114" Width="80" Background="Transparent">
-                                    <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>
-                                    <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>
+                                <ControlTemplate.Resources>
+                                    <BitmapImage x:Key="ButtonShowNormalImg" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_show_normal.png"/>
+                                    <BitmapImage x:Key="ButtonShowHoverImg" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_show_hover.png"/>
+                                </ControlTemplate.Resources>
+                                <Grid Height="42" Width="42" Background="Transparent">
+                                    <Image x:Name="btn" Source="{StaticResource ButtonShowNormalImg}"/>
                                     <Grid.ToolTip>
                                         <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>
                                     </Grid.ToolTip>
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_h.png"/>
-                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_h.png"/>
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_p.png"/>
-                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_p.png"/>
+                                        <Setter TargetName="btn" Property="Source" Value="{StaticResource ButtonShowHoverImg}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -759,42 +754,40 @@
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="LSButtonReleased">
                                 <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Visible"/>
-                                <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
-                                <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Visible"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                     </ls:LSButton>
 
-                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center">
-                        <ls:LSButton.Template>
-                            <ControlTemplate TargetType="ls:LSButton">
-                                <Grid Height="114" Width="80" Background="Transparent">
-                                    <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>
-                                    <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>
-                                    <Grid.ToolTip>
-                                        <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>
-                                    </Grid.ToolTip>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_h.png"/>
-                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_h.png"/>
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_p.png"/>
-                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_p.png"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </ls:LSButton.Template>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="LSButtonReleased">
-                                <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Collapsed"/>
-                                <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>
-                                <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </ls:LSButton>
+                    <!--                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center">-->
+                    <!--                        <ls:LSButton.Template>-->
+                    <!--                            <ControlTemplate TargetType="ls:LSButton">-->
+                    <!--                                <Grid Height="114" Width="80" Background="Transparent">-->
+                    <!--                                    <Image x:Name="btn" Source="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_d.png" Stretch="None"/>-->
+                    <!--                                    <Image x:Name="img" Source="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_d.png" Stretch="None"/>-->
+                    <!--                                    <Grid.ToolTip>-->
+                    <!--                                        <ls:LSTooltip Placement="Left" Content="{Binding Source='h0406e412g1362g4eccgbe9dgd35bd6653785', Converter={StaticResource TranslatedStringConverter}}"/>-->
+                    <!--                                    </Grid.ToolTip>-->
+                    <!--                                </Grid>-->
+                    <!--                                <ControlTemplate.Triggers>-->
+                    <!--                                    <Trigger Property="IsMouseOver" Value="true">-->
+                    <!--                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_h.png"/>-->
+                    <!--                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_h.png"/>-->
+                    <!--                                    </Trigger>-->
+                    <!--                                    <Trigger Property="IsPressed" Value="true">-->
+                    <!--                                        <Setter TargetName="btn" Property="Source" Value="pack://application:,,,/Core;component/Assets/Buttons/btn_hudNav_p.png"/>-->
+                    <!--                                        <Setter TargetName="img" Property="Source" Value="pack://application:,,,/Core;component/Assets/CombatLog/ico_combatlog_p.png"/>-->
+                    <!--                                    </Trigger>-->
+                    <!--                                </ControlTemplate.Triggers>-->
+                    <!--                            </ControlTemplate>-->
+                    <!--                        </ls:LSButton.Template>-->
+                    <!--                        <b:Interaction.Triggers>-->
+                    <!--                            <b:EventTrigger EventName="LSButtonReleased">-->
+                    <!--                                <b:ChangePropertyAction TargetName="PPMeterWidget" PropertyName="Visibility" Value="Collapsed"/>-->
+                    <!--                                <b:ChangePropertyAction TargetName="HidePPMeterButton" PropertyName="Visibility" Value="Collapsed"/>-->
+                    <!--                                <b:ChangePropertyAction TargetName="ShowPPMeterButton" PropertyName="Visibility" Value="Visible"/>-->
+                    <!--                            </b:EventTrigger>-->
+                    <!--                        </b:Interaction.Triggers>-->
+                    <!--                    </ls:LSButton>-->
                 </Grid>
             </Grid>
         </ControlTemplate>
