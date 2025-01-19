@@ -730,7 +730,9 @@
                 </Grid>
 
                 <!-- Show PPMeter button widget -->
-                <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Left"
+                      Visibility="{Binding Visibility, ElementName=PPMeterWidget, Converter={StaticResource InvertVisibilityConverter}}">
+
                     <ls:LSButton x:Name="ShowPPMeterButton" VerticalAlignment="Center">
                         <ls:LSButton.Template>
                             <ControlTemplate TargetType="ls:LSButton">
