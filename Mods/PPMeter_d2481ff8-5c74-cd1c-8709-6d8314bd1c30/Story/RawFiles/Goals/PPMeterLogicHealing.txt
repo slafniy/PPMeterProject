@@ -1,0 +1,66 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+// Store last HitpointsChangedEvents which INCREASED hp (drop HP loss!) to match them with HEAL status later.
+// Character - New HP %
+//NOT DB_PPMeter_HitpointsIncreasedEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0.0);
+
+// Store previous HP value to figure out if character healed
+// Character - HP
+NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
+KBSECTION
+// Set previous HP if it's not set - ONLY ONCE
+IF
+DB_PartyMembers(_Character)
+AND
+NOT DB_PPMeter_PreviousHP(_Character, _)
+AND
+GUIDToString(_Character, _OnlyOnceString)
+AND
+QRY_OnlyOnce(_OnlyOnceString)
+AND
+GetHitpoints(_Character, _HP)
+THEN
+DB_PPMeter_PreviousHP(_Character, _HP);
+DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
+
+
+//REGION
+IF
+HitpointsChanged((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+AND
+GetHitpoints(_Character, _HPCurrent)
+THEN
+PROC_PPMeter_ProcessHPChange(_Character, _HPCurrent);
+
+PROC
+PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
+AND
+DB_PPMeter_PreviousHP(_Character, _HPPrev)
+AND
+IntegerSubtract(_HPCurrent, _HPPrev, _DiffHP)
+AND
+_DiffHP > 0
+AND
+ConcatenateInteger("HP change: ", _DiffHP, _msg)
+THEN
+DebugText(_Character, _msg);
+
+PROC
+PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
+AND
+DB_PPMeter_PreviousHP(_Character, _HPPrev)
+THEN
+NOT DB_PPMeter_PreviousHP(_Character, _HPPrev);
+
+PROC
+PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
+THEN
+DB_PPMeter_PreviousHP(_Character, _HPCurrent);
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"
