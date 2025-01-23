@@ -1,15 +1,18 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-// Store last HitpointsChangedEvents which INCREASED hp (drop HP loss!) to match them with HEAL status later.
-// Character - New HP %
-//NOT DB_PPMeter_HitpointsIncreasedEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0.0);
+// Simple counter to compare events to figure out which one is the first
+DB_PPMeter_EventsCounter(0);
+
+// Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
+// Character - HealValue - EventID
+NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
 
 // Store previous HP value to figure out if character healed
 // Character - HP
 NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 KBSECTION
-// Set previous HP if it's not set - ONLY ONCE
+//REGION Set previous HP if it's not set - ONLY ONCE
 IF
 DB_PartyMembers(_Character)
 AND
@@ -23,6 +26,7 @@ GetHitpoints(_Character, _HP)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
 DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
+//END_REGION
 
 
 //REGION
@@ -44,8 +48,9 @@ IntegerSubtract(_HPCurrent, _HPPrev, _DiffHP)
 AND
 _DiffHP > 0
 AND
-ConcatenateInteger("HP change: ", _DiffHP, _msg)
+ConcatenateInteger("Healed, value: ", _DiffHP, _msg)
 THEN
+PROC_PPMeter_WriteHealEvent(_Character, _DiffHP);
 DebugText(_Character, _msg);
 
 PROC
@@ -59,6 +64,54 @@ PROC
 PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HPCurrent);
+
+// Increase counter and write heal event with it
+PROC
+PROC_PPMeter_WriteHealEvent((CHARACTER)_Character, (INTEGER)_DiffHP)
+AND
+DB_PPMeter_EventsCounter(_CurrentCounter)
+AND
+QRY_PPMeterIsHighgestCounter(_CurrentCounter)  // Filter counters because we add new first and only then remove second
+AND
+IntegerSum(_CurrentCounter, 1, _NewCounter)
+THEN
+PROC_PPMeter_WriteHealEventWithCounter(_Character, _DiffHP, _CurrentCounter, _NewCounter);
+
+PROC
+PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
+THEN
+DB_PPMeter_HealEvents(_Character, _HP, _NewCounter);
+DB_PPMeter_EventsCounter(_NewCounter);
+
+PROC
+PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
+THEN
+NOT DB_PPMeter_EventsCounter(_CurrentCounter);
+//END_REGION
+
+QRY
+QRY_PPMeterIsHighgestCounter((INTEGER)_ValueToCheck)
+AND
+DB_PPMeter_EventsCounter(_Value)
+AND
+_ValueToCheck >= _Value
+THEN
+DB_NOOP(1);
+
+//REGION Debug
+IF
+TextEvent("healevents")
+AND
+DB_PPMeter_HealEvents(_Character, _Value, _Counter)
+AND
+ConcatenateInteger("Heal val: ", _Value, _msg1)
+AND
+Concatenate(_msg1, " Counter: ", _msg2)
+AND
+ConcatenateInteger(_msg2, _Counter, _msg)
+THEN
+DebugText(_Character, _msg);
+
 //END_REGION
 EXITSECTION
 
