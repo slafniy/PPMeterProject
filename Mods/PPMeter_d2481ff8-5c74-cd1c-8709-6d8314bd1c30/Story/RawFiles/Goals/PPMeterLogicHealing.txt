@@ -2,7 +2,7 @@ Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
 // Simple counter to compare events to figure out which one is the first
-DB_PPMeter_EventsCounter(0);
+NOT DB_PPMeter_EventsCounter((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 
 // Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
 // Character - HealValue - EventID
@@ -12,7 +12,8 @@ NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 // Character - HP
 NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 KBSECTION
-//REGION Set previous HP if it's not set - ONLY ONCE
+//REGION Initializations
+// Set previous HP if it's not set - ONLY ONCE
 IF
 DB_PartyMembers(_Character)
 AND
@@ -26,6 +27,14 @@ GetHitpoints(_Character, _HP)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
 DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
+
+// Initialize heal events counter by 0 if there are no counter records
+IF
+DB_PartyMembers(_Character)
+AND
+NOT DB_PPMeter_EventsCounter(_Character, _)
+THEN
+DB_PPMeter_EventsCounter(_Character, 0);
 //END_REGION
 
 
@@ -69,9 +78,9 @@ DB_PPMeter_PreviousHP(_Character, _HPCurrent);
 PROC
 PROC_PPMeter_WriteHealEvent((CHARACTER)_Character, (INTEGER)_DiffHP)
 AND
-DB_PPMeter_EventsCounter(_CurrentCounter)
+DB_PPMeter_EventsCounter(_Character, _CurrentCounter)
 AND
-QRY_PPMeterIsHighgestCounter(_CurrentCounter)  // Filter counters because we add new first and only then remove second
+QRY_PPMeterIsHighgestCounter(_Character, _CurrentCounter)  // Filter counters because we add new first and only then remove second
 AND
 IntegerSum(_CurrentCounter, 1, _NewCounter)
 THEN
@@ -81,22 +90,24 @@ PROC
 PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
 THEN
 DB_PPMeter_HealEvents(_Character, _HP, _NewCounter);
-DB_PPMeter_EventsCounter(_NewCounter);
+DB_PPMeter_EventsCounter(_Character, _NewCounter);
 
 PROC
 PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
 THEN
-NOT DB_PPMeter_EventsCounter(_CurrentCounter);
+NOT DB_PPMeter_EventsCounter(_Character, _CurrentCounter);
 //END_REGION
 
+
 QRY
-QRY_PPMeterIsHighgestCounter((INTEGER)_ValueToCheck)
+QRY_PPMeterIsHighgestCounter((CHARACTER)_Character, (INTEGER)_ValueToCheck)
 AND
-DB_PPMeter_EventsCounter(_Value)
+DB_PPMeter_EventsCounter(_Character, _Value)
 AND
 _ValueToCheck >= _Value
 THEN
 DB_NOOP(1);
+
 
 //REGION Debug
 IF
