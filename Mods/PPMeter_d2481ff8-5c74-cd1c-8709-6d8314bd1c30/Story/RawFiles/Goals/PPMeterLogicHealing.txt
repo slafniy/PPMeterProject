@@ -137,8 +137,18 @@ Concatenate(_msg1, ", healer: ", _msg2)
 AND
 ConcatenateGUID(_msg2, _Caster, _msg)
 THEN
+PROC_PPMeterApplyHealingDone(_Caster, _HealValue);
 DebugText(_Target, _msg);
 NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
+
+PROC
+PROC_PPMeterApplyHealingDone((CHARACTER)_Healer, (INTEGER)_HealValue)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
 //END_REGION
 
 

@@ -28,6 +28,11 @@ DB_PPMeter_ResourceNames("PPMeterDayDTPR", "DTPR", "Day");
 DB_PPMeter_ResourceNames("PPMeterLevelDTPR", "DTPR", "Level");
 DB_PPMeter_ResourceNames("PPMeterOverallDTPR", "DTPR", "Overall");
 
+DB_PPMeter_ResourceNames("PPMeterCombatHealing", "Healing", "Combat");
+DB_PPMeter_ResourceNames("PPMeterDayHealing", "Healing", "Day");
+DB_PPMeter_ResourceNames("PPMeterLevelHealing", "Healing", "Level");
+DB_PPMeter_ResourceNames("PPMeterOverallHealing", "Healing", "Overall");
+
 // Save current resource boost to be able to remove it
 // Character - ResourceName - BoostString
 NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "");
