@@ -20,4 +20,8 @@
     <content contentuid="hc02260a8g0344g4d6dga1e4gd53ca8835312" version="1">PPMeterDayDTPR</content>
     <content contentuid="h60393134g8c6eg41a9gbd4fgeb3ff10cc843" version="1">PPMeterLevelDTPR</content>
     <content contentuid="h325f9b96g0d00g43bcgbc7fg62d56013e9b0" version="1">PPMeterOverallDTPR</content>
+    <content contentuid="hf2b8ff5fg0c4bg421dg88e2g7e69696dc94b" version="1">PPMeterCombatHealing</content>
+    <content contentuid="ha15fc9bfge442g4698g8ca4g69e4cda08c2b" version="1">PPMeterDayHealing</content>
+    <content contentuid="hc1e8ae63g0196g49bdgad45g9097c396ff8e" version="1">PPMeterLevelHealing</content>
+    <content contentuid="h1f30309cg2bdeg4546g83cag692344d683f2" version="1">PPMeterOverallHealing</content>
 </contentList>
