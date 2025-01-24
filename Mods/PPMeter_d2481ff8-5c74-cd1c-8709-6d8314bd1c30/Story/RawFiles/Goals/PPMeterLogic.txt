@@ -78,8 +78,6 @@ AND
 DB_PartyMembers(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
-AND
-Concatenate("Reset ", _StatsName, _msg)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
 //END_REGION

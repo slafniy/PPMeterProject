@@ -19,7 +19,7 @@ DB_PartyMembers(_Character)
 AND
 NOT DB_PPMeter_PreviousHP(_Character, _)
 AND
-GUIDToString(_Character, _OnlyOnceString)
+ConcatenateGUID("DB_PPMeter_PreviousHP_OnlyOnce_", _Character, _OnlyOnceString)
 AND
 QRY_OnlyOnce(_OnlyOnceString)
 AND
