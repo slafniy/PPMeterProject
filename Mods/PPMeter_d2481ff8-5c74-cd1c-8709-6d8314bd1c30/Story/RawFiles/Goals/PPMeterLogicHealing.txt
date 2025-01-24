@@ -11,6 +11,10 @@ NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 // Store previous HP value to figure out if character healed
 // Character - HP
 NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
+
+// HEAL statuses - technical statuses which indicate that caster healed target
+//DB_PPMeter_HealingTechnicalStatuses("HEAL");
+//DB_PPMeter_HealingTechnicalStatuses("PASSIVE_DISCIPLE_OF_LIFE");
 KBSECTION
 //REGION Initializations
 // Set previous HP if it's not set - ONLY ONCE
@@ -60,7 +64,7 @@ AND
 ConcatenateInteger("Healed, value: ", _DiffHP, _msg)
 THEN
 PROC_PPMeter_WriteHealEvent(_Character, _DiffHP);
-DebugText(_Character, _msg);
+//DebugText(_Character, _msg);
 
 PROC
 PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
@@ -98,7 +102,7 @@ THEN
 NOT DB_PPMeter_EventsCounter(_Character, _CurrentCounter);
 //END_REGION
 
-
+//REGION Queries
 QRY
 QRY_PPMeterIsHighgestCounter((CHARACTER)_Character, (INTEGER)_ValueToCheck)
 AND
@@ -107,6 +111,35 @@ AND
 _ValueToCheck >= _Value
 THEN
 DB_NOOP(1);
+
+QRY
+QRY_PPMeterIsEarliestHealEvent((CHARACTER)_Character, (INTEGER)_EventIDToCheck)
+AND
+DB_PPMeter_HealEvents(_Character, _, _EventID)
+AND
+_EventIDToCheck <= _EventID
+THEN
+DB_NOOP(1);
+//END_REGION
+
+
+//REGION Process HEAL status applied
+IF
+StatusApplied((CHARACTER)_Target, "HEAL", (CHARACTER)_Caster, _)
+AND
+DB_PPMeter_HealEvents(_Target, _HealValue, _EventID)
+AND
+QRY_PPMeterIsEarliestHealEvent(_Target, _EventID)
+AND
+ConcatenateInteger("Healed by ", _HealValue, _msg1)
+AND
+Concatenate(_msg1, ", healer: ", _msg2)
+AND
+ConcatenateGUID(_msg2, _Caster, _msg)
+THEN
+DebugText(_Target, _msg);
+NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
+//END_REGION
 
 
 //REGION Debug
@@ -122,7 +155,6 @@ AND
 ConcatenateInteger(_msg2, _Counter, _msg)
 THEN
 DebugText(_Character, _msg);
-
 //END_REGION
 EXITSECTION
 
