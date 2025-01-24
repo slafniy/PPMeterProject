@@ -623,6 +623,17 @@
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
+                                        <ls:LSRadioButton x:Name="ToggleHealingDone" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                            <ls:LSRadioButton.Resources>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_out_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_out_deselected.png"/>
+                                            </ls:LSRadioButton.Resources>
+                                            <ls:LSRadioButton.ToolTip>
+                                                <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h14159632g0a47g4048g8f84ga6ac8860a6b7', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
+                                                </ls:LSTooltip>
+                                            </ls:LSRadioButton.ToolTip>
+                                        </ls:LSRadioButton>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
