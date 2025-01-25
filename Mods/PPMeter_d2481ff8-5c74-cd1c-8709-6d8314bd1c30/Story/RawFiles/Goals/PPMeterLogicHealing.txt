@@ -12,9 +12,12 @@ NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 // Character - HP
 NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 
-// HEAL statuses - technical statuses which indicate that caster healed target
-//DB_PPMeter_HealingTechnicalStatuses("HEAL");
-//DB_PPMeter_HealingTechnicalStatuses("PASSIVE_DISCIPLE_OF_LIFE");
+// Timer events list
+// character - timer string - event id
+NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", 0);
+
+// Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
+DB_PPMeter_HealEventTimerValueMs(100);
 KBSECTION
 //REGION Initializations
 // Set previous HP if it's not set - ONLY ONCE
@@ -60,8 +63,6 @@ AND
 IntegerSubtract(_HPCurrent, _HPPrev, _DiffHP)
 AND
 _DiffHP > 0
-AND
-ConcatenateInteger("Healed, value: ", _DiffHP, _msg)
 THEN
 PROC_PPMeter_WriteHealEvent(_Character, _DiffHP);
 //DebugText(_Character, _msg);
@@ -92,14 +93,55 @@ PROC_PPMeter_WriteHealEventWithCounter(_Character, _DiffHP, _CurrentCounter, _Ne
 
 PROC
 PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
+AND
+ConcatenateInteger("Healed event write, value: ", _HP, _msg1)
+AND
+Concatenate(_msg1, " ID: ", _msg2)
+AND
+ConcatenateInteger(_msg2, _NewCounter, _msg)
 THEN
 DB_PPMeter_HealEvents(_Character, _HP, _NewCounter);
 DB_PPMeter_EventsCounter(_Character, _NewCounter);
+DebugText(_Character, _msg);
 
 PROC
 PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
 THEN
 NOT DB_PPMeter_EventsCounter(_Character, _CurrentCounter);
+
+// Set lifetime timer to eliminate this event if no HEAL status matched in given time
+PROC
+PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
+AND
+ConcatenateGUID("heal_event_timer", _Character, _str1)
+AND
+ConcatenateInteger(_str1, _NewCounter, _str)
+AND
+DB_PPMeter_HealEventTimerValueMs(_TimerValueMs)
+THEN
+TimerLaunch(_str, _TimerValueMs);
+DebugText(_Character, _str);
+DB_PPMeter_HealEventTimers(_Character, _str, _NewCounter);
+
+IF
+TimerFinished(_TimerString)
+AND
+DB_PPMeter_HealEventTimers(_Character, _TimerString, _EventID)
+AND
+DB_PPMeter_HealEvents(_Character, _HP, _EventID)
+AND
+ConcatenateInteger("Heal event removed by timer, ID: ", _EventID, _msg)
+THEN
+NOT DB_PPMeter_HealEvents(_Character, _HP, _EventID);
+DebugText(_Character, _msg);
+
+// Remove additional timer info in any case
+IF
+TimerFinished(_TimerString)
+AND
+DB_PPMeter_HealEventTimers(_Character, _TimerString, _EventID)
+THEN
+NOT DB_PPMeter_HealEventTimers(_Character, _TimerString, _EventID);
 //END_REGION
 
 //REGION Queries
@@ -165,6 +207,13 @@ AND
 ConcatenateInteger(_msg2, _Counter, _msg)
 THEN
 DebugText(_Character, _msg);
+
+IF
+TextEvent("healeventtimers")
+AND
+DB_PPMeter_HealEventTimers(_Character, _TimerStr, _)
+THEN
+DebugText(_Character, _TimerStr);
 //END_REGION
 EXITSECTION
 
