@@ -175,6 +175,17 @@ AND
 ConcatenateInteger(_msg2, _Counter, _msg)
 THEN
 DebugText(_Character, _msg);
+
+IF
+TextEvent("maxhp")
+AND
+DB_PartyMembers(_Character)
+AND
+GetMaxHitpoints(_Character, _MaxHP)
+AND
+ConcatenateInteger("Max HP: ", _MaxHP, _msg)
+THEN
+DebugText(_Character, _msg);
 //END_REGION
 EXITSECTION
 
