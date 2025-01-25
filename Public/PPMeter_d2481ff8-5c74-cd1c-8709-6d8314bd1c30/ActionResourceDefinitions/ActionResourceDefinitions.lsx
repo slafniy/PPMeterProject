@@ -216,6 +216,66 @@
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
                     <attribute id="UUID" type="guid" value="1aa40dd7-d5b0-4839-a490-52a30064f661"/>
                 </node>
+
+                <!-- HEALING TAKEN -->
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h67cac54dg3278g4f5cgb019gde64e835700c" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterCombatHealingTaken"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="e4867001-faa8-4378-9df2-a6d5609f1ef2"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h764c6774gab80g4b2dg89b8gf2f25598553f" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterDayHealingTaken"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="7df965c9-f89f-450e-9f5c-604f9c68f78a"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h8e5e68a0g5cf0g4410g8381g670c7339f830" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterLevelHealingTaken"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="36516a2b-6c34-4d54-aba9-d6a3100c1e22"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h88d3c4d3g07d5g4cc1ga69cgb03167143533" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterOverallHealingTaken"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="12914276-0f26-4317-b06a-bb8c2eaaad4f"/>
+                </node>
+
+                <!-- HTPR -->
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="ha52c3249gd442g4aafga19ag47d5d62ff854" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterCombatHTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="d70e3086-32ff-456d-b554-44ee36964048"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hd788dd42g864dg4c22g92ccgf4434acf5266" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterDayHTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="24838589-d432-4f8e-8418-076a98f75acf"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h132feac8g6770g4dfegacebg2da98f2f3dc7" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterLevelHTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="9d2e9979-064c-4de6-9fed-9d5fcadffe9e"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h5fa70b51g3b00g48ffg8cafg2035a08e905b" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterOverallHTPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="26cabe9b-26c1-4e3d-9a4a-daab62c0d093"/>
+                </node>
             </children>
         </node>
     </region>
