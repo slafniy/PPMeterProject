@@ -12,9 +12,25 @@ NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 // Character - HP %
 NOT DB_PPMeter_PreviousHPPercent((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0.0);
 
-// HEAL statuses - technical statuses which indicate that caster healed target
-//DB_PPMeter_HealingTechnicalStatuses("HEAL");
-//DB_PPMeter_HealingTechnicalStatuses("PASSIVE_DISCIPLE_OF_LIFE");
+// Current MaxHP without(!) temporary hp
+// Needed because Osiris cannot handle temp HP
+NOT DB_PPMeter_CurrentMaxHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
+
+// Info about class HP
+// ClassTag - Initial HP - LevelUp HP
+DB_PPMeter_ClassHP((TAG)BARBARIAN_02913f9a-f696-40cf-acdf-32032afab32c, 12, 7);
+DB_PPMeter_ClassHP((TAG)BARD_d93434bd-6b71-4789-b128-ee24156057cc, 8, 5);
+DB_PPMeter_ClassHP((TAG)CLERIC_1671b4bf-4f47-4bb7-9cb9-80bb1f6009d5, 8, 5);
+DB_PPMeter_ClassHP((TAG)DRUID_44ac4317-4d38-4d28-80e2-94024c6e42f0, 8, 5);
+DB_PPMeter_ClassHP((TAG)FIGHTER_1ae7017c-4884-4a43-bc4a-742fa0d201c0, 10, 6);
+DB_PPMeter_ClassHP((TAG)MONK_e1e460bb-d0ae-4452-8529-c9e176558731, 8, 5);
+DB_PPMeter_ClassHP((TAG)PALADIN_6d85ab2d-5c23-498c-a61e-98f05a00177a, 10, 6);
+DB_PPMeter_ClassHP((TAG)RANGER_37a733c1-a862-4157-b92a-9cff46232c6a, 10, 6);
+DB_PPMeter_ClassHP((TAG)ROGUE_f8a0608b-666c-4be6-a49c-03b369c10bd2, 8, 5);
+DB_PPMeter_ClassHP((TAG)SORCERER_18266c0b-efbc-4c80-8784-ada4a37218d7, 6, 4);
+DB_PPMeter_ClassHP((TAG)WIZARD_6fe3ae27-dc6c-4fc9-9245-710c790c396c, 6, 4);
+DB_PPMeter_ClassHP((TAG)WARLOCK_5804f55a-93f7-4281-9512-8d548a9e2a22, 8, 5);
+
 KBSECTION
 //REGION Initializations
 // Set previous HP if it's not set - ONLY ONCE
@@ -162,7 +178,37 @@ PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
 //END_REGION
 
 
+//REGION Track MaxHP for each character WITHONT temp hp
+// Clear first
+PROC
+PROC_PPMeter_RecalculateMaxHP((CHARACTER)_Character)
+AND
+DB_PPMeter_CurrentMaxHP(_Character, _MaxHP)
+THEN
+NOT DB_PPMeter_CurrentMaxHP(_Character, _MaxHP);
+
+PROC
+PROC_PPMeter_RecalculateMaxHP((CHARACTER)_Character)
+AND
+DB_PPMeter_ClassHP(_ClassTag, _InitialHP, _LevelupHP)
+AND
+IsTagged(_Character, _ClassTag, 1)
+AND
+GUIDToString(_ClassTag, _msg)
+THEN
+DebugText(_Character, _msg);
+//END_REGION
+
+
 //REGION Debug
+IF
+TextEvent("recalcmaxhp")
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_RecalculateMaxHP(_Character);
+
+
 IF
 TextEvent("healevents")
 AND
