@@ -1393,9 +1393,9 @@
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
-                                            <GridViewColumn Header="{Binding Source='hc6cfde3egfb6cg474dg8200g4fe0cc168748', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='hcfab1717gb771g45b0gaa85g17572733a1ea', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatHealingSelfTemplate}"/>
                                             <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatRoundsTemplate}"/>
-                                            <GridViewColumn Header="{Binding Source='h656e9c9cgad19g4526gba95gff5af6483883', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatSHPRTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='he539a00ag478ag4533g94fdg56fc266bdd29', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatSHPRTemplate}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
@@ -1404,9 +1404,9 @@
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
-                                            <GridViewColumn Header="{Binding Source='h826577dag6384g4d75g92ddg7ca505d5fdf5', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDayHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='hcfab1717gb771g45b0gaa85g17572733a1ea', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDayHealingSelfTemplate}"/>
                                             <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDayRoundsTemplate}"/>
-                                            <GridViewColumn Header="{Binding Source='hc7e72c09g20d3g4567g8b4eg785e81236a2f', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDaySHPRTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='he539a00ag478ag4533g94fdg56fc266bdd29', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDaySHPRTemplate}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
@@ -1415,9 +1415,9 @@
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
-                                            <GridViewColumn Header="{Binding Source='h227e29f0gdadag4c73g8d49g3c52b22135a4', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='hcfab1717gb771g45b0gaa85g17572733a1ea', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelHealingSelfTemplate}"/>
                                             <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelRoundsTemplate}"/>
-                                            <GridViewColumn Header="{Binding Source='h5bb06a32gf645g43f3g809eg672bf53991ad', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelSHPRTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='he539a00ag478ag4533g94fdg56fc266bdd29', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelSHPRTemplate}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
@@ -1426,9 +1426,9 @@
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
-                                            <GridViewColumn Header="{Binding Source='h58453ae5g0d2eg41c9gbac7ga2f42e37003a', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='hcfab1717gb771g45b0gaa85g17572733a1ea', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallHealingSelfTemplate}"/>
                                             <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallRoundsTemplate}"/>
-                                            <GridViewColumn Header="{Binding Source='h1f3f4887gb64cg4c18g968cgb771cc8d8dca', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallSHPRTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='he539a00ag478ag4533g94fdg56fc266bdd29', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallSHPRTemplate}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
