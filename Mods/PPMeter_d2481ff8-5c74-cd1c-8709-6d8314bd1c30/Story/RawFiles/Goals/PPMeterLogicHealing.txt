@@ -182,6 +182,7 @@ AND
 ConcatenateGUID(_msg2, _Caster, _msg)
 THEN
 PROC_PPMeterApplyHealingDone(_Caster, _HealValue);
+PROC_PPMeterApplyHealingTaken(_Caster, _Target, _HealValue);
 DebugText(_Target, _msg);
 NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
 
@@ -193,6 +194,17 @@ AND
 IntegerToReal(_HealValue, _HealValueReal)
 THEN
 PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
+
+PROC
+PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
+AND
+_Caster != _Target  // calculate only external healing
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Target, _Lifetime, "HealingTaken", _HealValueReal);
 //END_REGION
 
 
