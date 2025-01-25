@@ -45,7 +45,7 @@ DB_PPMeter_EventsCounter(_Character, 0);
 //END_REGION
 
 
-//REGION
+//REGION store actual HP value on HitpointsChanged to calculate hp diff later
 IF
 HitpointsChanged((CHARACTER)_Character, _)
 AND
@@ -165,9 +165,11 @@ DB_NOOP(1);
 //END_REGION
 
 
-//REGION Process HEAL status applied
+//REGION Process HEAL status applied - only if HEAL target is in combat!
 IF
 StatusApplied((CHARACTER)_Target, "HEAL", (CHARACTER)_Caster, _)
+AND
+IsInCombat(_Target, 1)
 AND
 DB_PPMeter_HealEvents(_Target, _HealValue, _EventID)
 AND
