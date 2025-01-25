@@ -9,6 +9,8 @@
     <content contentuid="h4c07541bg0c4ag4316g95dfgc639cae23097" version="1">Character</content>
     <content contentuid="h496dd6c1g10fdg4281ga405g78879955405e" version="1">Damage Taken</content>
     <content contentuid="hcf2c9b63ge198g46f6gaa09gaf1b73c8c7cf" version="1">DTPR</content>
+    <content contentuid="h6cbd913egf762g472cga014g86fa8ca01488" version="1">Healing done</content>
+    <content contentuid="hfc43b5cbgaf93g44f3ga99ag2014fdefcfe8" version="1">HPR</content>
     <content contentuid="heeb91403gc609g488cgbd2fgea86f8caa9de" version="1">Show data for the last or current Combat.</content>
     <content contentuid="hce3f0705g07b6g415fgb28dgcad1319dfffc" version="1">Show data for the current Day.</content>
     <content contentuid="h73b0ec6agb59dg4f1ag8014g5cbb285fda83" version="1">Show data for the current character Level.</content>
