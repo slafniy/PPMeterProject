@@ -8,9 +8,9 @@ NOT DB_PPMeter_EventsCounter((CHARACTER)NULL_00000000-0000-0000-0000-00000000000
 // Character - HealValue - EventID
 NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
 
-// Store previous HP value to figure out if character healed
-// Character - HP
-NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
+// Store previous HP % value to figure out if character healed
+// Character - HP %
+NOT DB_PPMeter_PreviousHPPercent((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0.0);
 
 // HEAL statuses - technical statuses which indicate that caster healed target
 //DB_PPMeter_HealingTechnicalStatuses("HEAL");
@@ -21,16 +21,16 @@ KBSECTION
 IF
 DB_PartyMembers(_Character)
 AND
-NOT DB_PPMeter_PreviousHP(_Character, _)
+NOT DB_PPMeter_PreviousHPPercent(_Character, _)
 AND
-ConcatenateGUID("DB_PPMeter_PreviousHP_OnlyOnce_", _Character, _OnlyOnceString)
+ConcatenateGUID("DB_PPMeter_PreviousHPPercent_OnlyOnce_", _Character, _OnlyOnceString)
 AND
 QRY_OnlyOnce(_OnlyOnceString)
 AND
-GetHitpoints(_Character, _HP)
+GetHitpointsPercentage(_Character, _HPPercent)
 THEN
-DB_PPMeter_PreviousHP(_Character, _HP);
-DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
+DB_PPMeter_PreviousHPPercent(_Character, _HPPercent);
+DebugText(_Character, "DB_PPMeter_PreviousHPPercent is set!");
 
 // Initialize heal events counter by 0 if there are no counter records
 IF
@@ -44,49 +44,59 @@ DB_PPMeter_EventsCounter(_Character, 0);
 
 //REGION
 IF
-HitpointsChanged((CHARACTER)_Character, _)
+HitpointsChanged((CHARACTER)_Character, _HPPercentCurrent)
 AND
 DB_PartyMembers(_Character)
-AND
-GetHitpoints(_Character, _HPCurrent)
 THEN
-PROC_PPMeter_ProcessHPChange(_Character, _HPCurrent);
+PROC_PPMeter_ProcessHPChange(_Character, _HPPercentCurrent);
 
 PROC
-PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
+PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (REAL)_HPPercentCurrent)
 AND
-DB_PPMeter_PreviousHP(_Character, _HPPrev)
+DB_PPMeter_PreviousHPPercent(_Character, _HPPercentPrev)
 AND
-IntegerSubtract(_HPCurrent, _HPPrev, _DiffHP)
+RealSubtract(_HPPercentCurrent, _HPPercentPrev, _DiffPercentHP)
 AND
-_DiffHP > 0
+_DiffPercentHP > 0.0
 AND
-ConcatenateInteger("Healed, value: ", _DiffHP, _msg)
+ConcatenateReal("Healed, value: ", _DiffPercentHP, _msg)
 THEN
-PROC_PPMeter_WriteHealEvent(_Character, _DiffHP);
+PROC_PPMeter_WriteHealEvent(_Character, _DiffPercentHP);
 //DebugText(_Character, _msg);
 
 PROC
-PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
+PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (REAL)_HPPercentCurrent)
 AND
-DB_PPMeter_PreviousHP(_Character, _HPPrev)
+DB_PPMeter_PreviousHPPercent(_Character, _HPPercentPrev)
 THEN
-NOT DB_PPMeter_PreviousHP(_Character, _HPPrev);
+NOT DB_PPMeter_PreviousHPPercent(_Character, _HPPercentPrev);
 
 PROC
-PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (INTEGER)_HPCurrent)
+PROC_PPMeter_ProcessHPChange((CHARACTER)_Character, (REAL)_HPPercentCurrent)
 THEN
-DB_PPMeter_PreviousHP(_Character, _HPCurrent);
+DB_PPMeter_PreviousHPPercent(_Character, _HPPercentCurrent);
 
 // Increase counter and write heal event with it
 PROC
-PROC_PPMeter_WriteHealEvent((CHARACTER)_Character, (INTEGER)_DiffHP)
+PROC_PPMeter_WriteHealEvent((CHARACTER)_Character, (REAL)_DiffPercentHP)
 AND
 DB_PPMeter_EventsCounter(_Character, _CurrentCounter)
 AND
 QRY_PPMeterIsHighgestCounter(_Character, _CurrentCounter)  // Filter counters because we add new first and only then remove second
 AND
 IntegerSum(_CurrentCounter, 1, _NewCounter)
+AND
+GetMaxHitpoints(_Character, _MaxHP)
+AND
+IntegerToReal(_MaxHP, _MaxHPReal)
+AND
+RealDivide(_DiffPercentHP, 100.0, _DiffHPPercentNumber)
+AND
+RealProduct(_MaxHPReal, _DiffHPPercentNumber, _DiffHPReal)
+AND
+RealSum(_DiffHPReal, 0.5, _DiffHPRealModified)  // To be sure it rounds UP!
+AND
+RealToInteger(_DiffHPRealModified, _DiffHP)
 THEN
 PROC_PPMeter_WriteHealEventWithCounter(_Character, _DiffHP, _CurrentCounter, _NewCounter);
 
