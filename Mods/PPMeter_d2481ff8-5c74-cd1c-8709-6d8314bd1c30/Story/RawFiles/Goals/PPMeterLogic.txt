@@ -19,12 +19,15 @@ DB_PPMeter_StatsType("DamageTaken");
 DB_PPMeter_StatsType("DTPR");
 DB_PPMeter_StatsType("Healing");
 DB_PPMeter_StatsType("HPR");
+DB_PPMeter_StatsType("HealingTaken");
+DB_PPMeter_StatsType("HTPR");
 
 // Stats which should be calculated "per round avg"
 // StatsTypeSource - StatsTypeTarget
 DB_PPMeter_CalculatedStats("Damage", "DPR");
 DB_PPMeter_CalculatedStats("DamageTaken", "DTPR");
 DB_PPMeter_CalculatedStats("Healing", "HPR");
+DB_PPMeter_CalculatedStats("HealingTaken", "HTPR");
 
 // REAL Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 KBSECTION
