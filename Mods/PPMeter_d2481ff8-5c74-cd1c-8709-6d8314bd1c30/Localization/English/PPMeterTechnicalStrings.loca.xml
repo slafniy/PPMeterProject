@@ -36,4 +36,12 @@
     <content contentuid="hd788dd42g864dg4c22g92ccgf4434acf5266" version="1">PPMeterDayHTPR</content>
     <content contentuid="h132feac8g6770g4dfegacebg2da98f2f3dc7" version="1">PPMeterLevelHTPR</content>
     <content contentuid="h5fa70b51g3b00g48ffg8cafg2035a08e905b" version="1">PPMeterOverallHTPR</content>
+    <content contentuid="hc6cfde3egfb6cg474dg8200g4fe0cc168748" version="1">PPMeterCombatHealingSelf</content>
+    <content contentuid="h826577dag6384g4d75g92ddg7ca505d5fdf5" version="1">PPMeterDayHealingSelf</content>
+    <content contentuid="h227e29f0gdadag4c73g8d49g3c52b22135a4" version="1">PPMeterLevelHealingSelf</content>
+    <content contentuid="h58453ae5g0d2eg41c9gbac7ga2f42e37003a" version="1">PPMeterOverallHealingSelf</content>
+    <content contentuid="h656e9c9cgad19g4526gba95gff5af6483883" version="1">PPMeterCombatSHPR</content>
+    <content contentuid="hc7e72c09g20d3g4567g8b4eg785e81236a2f" version="1">PPMeterDaySHPR</content>
+    <content contentuid="h5bb06a32gf645g43f3g809eg672bf53991ad" version="1">PPMeterLevelSHPR</content>
+    <content contentuid="h1f3f4887gb64cg4c18g968cgb771cc8d8dca" version="1">PPMeterOverallSHPR</content>
 </contentList>

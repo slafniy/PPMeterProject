@@ -851,6 +851,184 @@
                         </ItemsControl>
                     </StackPanel>
                 </DataTemplate>
+
+                <DataTemplate x:Key="PPMeterCombatHealingSelfTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterCombatHealingSelf'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterDayHealingSelfTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterDayHealingSelf'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterLevelHealingSelfTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterLevelHealingSelf'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterOverallHealingSelfTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterOverallHealingSelf'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterCombatSHPRTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterCombatSHPR'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterDaySHPRTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterDaySHPR'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterLevelSHPRTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterLevelSHPR'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate x:Key="PPMeterOverallSHPRTemplate">
+                    <StackPanel>
+                        <ItemsControl x:Name="ActionResourcesList" ItemsSource="{Binding Stats.ActionResources}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value, StringFormat={}{0:F2}}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Name, Converter={StaticResource CompareStringConverter}, ConverterParameter='PPMeterOverallSHPR'}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
             </ControlTemplate.Resources>
 
             <!-- Root Grid is needed for correct mouse drag, contains a PPMeter widget itself and a toggle button -->
@@ -986,7 +1164,7 @@
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
-                                        <ls:LSRadioButton x:Name="ToggleHealingTaken" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                        <ls:LSRadioButton x:Name="ToggleHealingExternal" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
                                                 <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_in_selected.png"/>
                                                 <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_in_deselected.png"/>
@@ -994,6 +1172,17 @@
                                             <ls:LSRadioButton.ToolTip>
                                                 <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
                                                     <TextBlock VerticalAlignment="Center" Text="{Binding Source='h639e9f3cg4b0bg4173gaa28g2c5a1df98836', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
+                                                </ls:LSTooltip>
+                                            </ls:LSRadioButton.ToolTip>
+                                        </ls:LSRadioButton>
+                                        <ls:LSRadioButton x:Name="ToggleHealingSelf" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                            <ls:LSRadioButton.Resources>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_self_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_self_deselected.png"/>
+                                            </ls:LSRadioButton.Resources>
+                                            <ls:LSRadioButton.ToolTip>
+                                                <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='hf427232ag72fag4b61g9adeg767c875cdba4', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
@@ -1148,8 +1337,8 @@
                             </StackPanel>
                             <!-- TABLES HEALING DONE END-->
 
-                            <!-- TABLES HEALING TAKEN -->
-                            <StackPanel Visibility="{Binding IsChecked, ElementName=ToggleHealingTaken, Converter={StaticResource BoolToVisibleConverter}}">
+                            <!-- TABLES HEALING EXTERNAL -->
+                            <StackPanel Visibility="{Binding IsChecked, ElementName=ToggleHealingExternal, Converter={StaticResource BoolToVisibleConverter}}">
                                 <!-- Healing Taken Combat -->
                                 <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleCombat, Converter={StaticResource BoolToVisibleConverter}}">
                                     <ListView.View>
@@ -1195,7 +1384,56 @@
                                     </ListView.View>
                                 </ListView>
                             </StackPanel>
-                            <!-- TABLES HEALING TAKEN -->
+                            <!-- TABLES HEALING EXTERNAL -->
+
+                            <!-- TABLES HEALING SELF -->
+                            <StackPanel Visibility="{Binding IsChecked, ElementName=ToggleHealingSelf, Converter={StaticResource BoolToVisibleConverter}}">
+                                <!-- Healing Taken Self Combat -->
+                                <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleCombat, Converter={StaticResource BoolToVisibleConverter}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
+                                            <GridViewColumn Header="{Binding Source='hc6cfde3egfb6cg474dg8200g4fe0cc168748', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatRoundsTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h656e9c9cgad19g4526gba95gff5af6483883', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterCombatSHPRTemplate}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <!-- Healing Taken Self Day -->
+                                <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleDay, Converter={StaticResource BoolToVisibleConverter}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
+                                            <GridViewColumn Header="{Binding Source='h826577dag6384g4d75g92ddg7ca505d5fdf5', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDayHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDayRoundsTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='hc7e72c09g20d3g4567g8b4eg785e81236a2f', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterDaySHPRTemplate}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <!-- Healing Taken Self Level -->
+                                <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleLevel, Converter={StaticResource BoolToVisibleConverter}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
+                                            <GridViewColumn Header="{Binding Source='h227e29f0gdadag4c73g8d49g3c52b22135a4', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelRoundsTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h5bb06a32gf645g43f3g809eg672bf53991ad', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterLevelSHPRTemplate}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <!-- Healing Taken Self Overall -->
+                                <ListView ItemsSource="{Binding Data.PartyCharacters}" Visibility="{Binding IsChecked, ElementName=ToggleOverall, Converter={StaticResource BoolToVisibleConverter}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{Binding Source='h4c07541bg0c4ag4316g95dfgc639cae23097', Converter={StaticResource TranslatedStringConverter}}"/>
+                                            <GridViewColumn Header="{Binding Source='h58453ae5g0d2eg41c9gbac7ga2f42e37003a', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallHealingSelfTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h3a4ab91agf336g4e20g85bcg4a5a72fad730', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallRoundsTemplate}"/>
+                                            <GridViewColumn Header="{Binding Source='h1f3f4887gb64cg4c18g968cgb771cc8d8dca', Converter={StaticResource TranslatedStringConverter}}" CellTemplate="{StaticResource PPMeterOverallSHPRTemplate}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
+                            <!-- TABLES HEALING SELF -->
                         </StackPanel>
                     </ls:LSNineSliceImage>
                 </Grid>
