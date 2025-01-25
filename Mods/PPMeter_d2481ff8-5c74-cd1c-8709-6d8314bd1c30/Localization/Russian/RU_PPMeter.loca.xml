@@ -18,4 +18,5 @@
     <content contentuid="h5f86ce76g9aacg4409ga53dg201170119bbc" version="1">Показывать данные о нанесённом уроне (включая избыточный).</content>
     <content contentuid="h873d627agc005g46c2ga705g80483a7a3f07" version="1">Показывать данные о полученном уроне.</content>
     <content contentuid="h14159632g0a47g4048g8f84ga6ac8860a6b7" version="1">Показывать данные об исходящем исцелении (исключая избыточное).</content>
+    <content contentuid="h639e9f3cg4b0bg4173gaa28g2c5a1df98836" version="1">Показывать данные о полученном исцелении (исключая избыточное).</content>
 </contentList>

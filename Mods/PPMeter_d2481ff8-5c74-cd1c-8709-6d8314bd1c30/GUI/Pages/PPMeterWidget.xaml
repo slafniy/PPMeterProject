@@ -810,6 +810,17 @@
                                                 </ls:LSTooltip>
                                             </ls:LSRadioButton.ToolTip>
                                         </ls:LSRadioButton>
+                                        <ls:LSRadioButton x:Name="ToggleHealingTaken" Style="{StaticResource PPMeterRadioButtonStyle}">
+                                            <ls:LSRadioButton.Resources>
+                                                <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_in_selected.png"/>
+                                                <BitmapImage x:Key="RBIconInactive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_heal_in_deselected.png"/>
+                                            </ls:LSRadioButton.Resources>
+                                            <ls:LSRadioButton.ToolTip>
+                                                <ls:LSTooltip IsHitTestVisible="False" Placement="Top">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source='h639e9f3cg4b0bg4173gaa28g2c5a1df98836', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource TooltipDefaultTextStyle}"/>
+                                                </ls:LSTooltip>
+                                            </ls:LSRadioButton.ToolTip>
+                                        </ls:LSRadioButton>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
@@ -961,7 +972,9 @@
                             </StackPanel>
                             <!-- TABLES HEALING DONE END-->
 
-
+                            <!-- TABLES HEALING TAKEN -->
+                            
+                            <!-- TABLES HEALING TAKEN -->
                         </StackPanel>
                     </ls:LSNineSliceImage>
                 </Grid>
