@@ -195,6 +195,7 @@ IntegerToReal(_HealValue, _HealValueReal)
 THEN
 PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
 
+// Count External Healing Received
 PROC
 PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
 AND
@@ -205,6 +206,18 @@ AND
 IntegerToReal(_HealValue, _HealValueReal)
 THEN
 PROC_PPMeterAdd(_Target, _Lifetime, "HealingTaken", _HealValueReal);
+
+// Count self-healing
+PROC
+PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
+AND
+_Caster == _Target
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Target, _Lifetime, "HealingSelf", _HealValueReal);
 //END_REGION
 
 
