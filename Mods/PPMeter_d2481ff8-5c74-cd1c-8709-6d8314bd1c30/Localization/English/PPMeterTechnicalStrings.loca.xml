@@ -24,4 +24,8 @@
     <content contentuid="ha15fc9bfge442g4698g8ca4g69e4cda08c2b" version="1">PPMeterDayHealing</content>
     <content contentuid="hc1e8ae63g0196g49bdgad45g9097c396ff8e" version="1">PPMeterLevelHealing</content>
     <content contentuid="h1f30309cg2bdeg4546g83cag692344d683f2" version="1">PPMeterOverallHealing</content>
+    <content contentuid="h86e79dd7gc517g438dg9971g52209627f857" version="1">PPMeterCombatHPR</content>
+    <content contentuid="hb0fa2b29g3e7eg4ea3gae16g4d7a34530fe7" version="1">PPMeterDayHPR</content>
+    <content contentuid="hdca52bf0g5f4ag4f2bgb02bg35a66f4fb86c" version="1">PPMeterLevelHPR</content>
+    <content contentuid="h713b7d45g7eaeg4bd7gbffagfb6b692347fc" version="1">PPMeterOverallHPR</content>
 </contentList>

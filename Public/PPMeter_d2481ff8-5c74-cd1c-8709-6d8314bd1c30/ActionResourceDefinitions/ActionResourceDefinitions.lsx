@@ -186,6 +186,36 @@
                     <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
                     <attribute id="UUID" type="guid" value="bb2ed87c-1e95-4769-9140-032aead99aee"/>
                 </node>
+
+                <!-- HPR -->
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h86e79dd7gc517g438dg9971g52209627f857" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterCombatHPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="21dc0248-3ca3-42e2-a0db-afd15c6b62d8"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hb0fa2b29g3e7eg4ea3gae16g4d7a34530fe7" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterDayHPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="efc14035-cd34-445d-9c62-a0a763055fe8"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hdca52bf0g5f4ag4f2bgb02bg35a66f4fb86c" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterLevelHPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="42f08ea9-81c4-462f-b51b-ecf4e914ba82"/>
+                </node>
+                <node id="ActionResourceDefinition">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h713b7d45g7eaeg4bd7gbffagfb6b692347fc" version="1"/>
+                    <attribute id="Name" type="FixedString" value="PPMeterOverallHPR"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Never"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="false"/>
+                    <attribute id="UUID" type="guid" value="1aa40dd7-d5b0-4839-a490-52a30064f661"/>
+                </node>
             </children>
         </node>
     </region>
