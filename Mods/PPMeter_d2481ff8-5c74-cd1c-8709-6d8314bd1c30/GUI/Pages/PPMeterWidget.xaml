@@ -1082,7 +1082,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Orientation="Horizontal">
                                     <!-- TOGGLE BUTTONS - LIFETIME -->
-                                    <StackPanel Orientation="Horizontal" Margin="10,10,30,10">
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,5,20">
                                         <ls:LSRadioButton x:Name="ToggleCombat" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
                                                 <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_letter_C_selected.png"/>
@@ -1130,7 +1130,7 @@
                                     </StackPanel>
 
                                     <!-- TOGGLE BUTTONS - STAT TYPE -->
-                                    <StackPanel Orientation="Horizontal" Margin="30,10,10,10">
+                                    <StackPanel Orientation="Horizontal" Margin="20,5,5,5">
                                         <ls:LSRadioButton x:Name="ToggleDamage" IsChecked="True" Style="{StaticResource PPMeterRadioButtonStyle}">
                                             <ls:LSRadioButton.Resources>
                                                 <BitmapImage x:Key="RBIconActive" UriSource="pack://application:,,,/Core;component/Assets/Buttons/btn_ppmeter_sword_selected.png"/>

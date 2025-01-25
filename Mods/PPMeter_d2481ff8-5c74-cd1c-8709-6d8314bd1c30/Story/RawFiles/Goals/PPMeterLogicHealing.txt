@@ -45,7 +45,7 @@ DB_PPMeter_EventsCounter(_Character, 0);
 //END_REGION
 
 
-//REGION store actual HP value on HitpointsChanged to calculate hp diff later
+//REGION store actual HP value on HitpointsChanged and handle hp change
 IF
 HitpointsChanged((CHARACTER)_Character, _)
 AND
