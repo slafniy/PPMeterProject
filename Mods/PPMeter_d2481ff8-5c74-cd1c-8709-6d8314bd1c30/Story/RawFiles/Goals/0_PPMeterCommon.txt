@@ -131,6 +131,24 @@ THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _StatsName, _NewValue);
 //END_REGION
 
+/*
+//REGION // PROC_PPMeter_RefreshCalculatedStats - refresh calculated stats (see DB_PPMeter_CalculatedStats list)
+PROC
+PROC_PPMeter_RefreshCalculatedStats((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName)
+AND
+DB_PPMeter_CalculatedStats(_StatsName, _TargetStat)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _SourceStat, _SourceValue)
+AND
+_Rounds > 0.0
+AND
+RealDivide(_SourceValue, _Rounds, _TargetValue)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _TargetStat, _TargetValue);
+//END_REGION*/
+
 
 //REGION
 IF
