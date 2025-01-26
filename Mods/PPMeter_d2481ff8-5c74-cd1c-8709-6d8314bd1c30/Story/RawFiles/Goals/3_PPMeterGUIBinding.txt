@@ -54,10 +54,9 @@ PROC_PPMeter_ForseUpdateStatuses((CHARACTER)_Character)
 AND
 DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
 THEN
-DebugText(_Character, "forced update");
 PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
 EXITSECTION
 
 ENDEXITSECTION
-ParentTargetEdge "PPMeter"
+ParentTargetEdge "Start"

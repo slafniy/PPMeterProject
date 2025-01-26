@@ -33,7 +33,7 @@ AND
 GetHitpoints(_Character, _HP)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
-DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
+//DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
 
 // Initialize heal events counter by 0 if there are no counter records
 IF
@@ -103,16 +103,9 @@ PROC_PPMeter_WriteHealEventWithCounter(_Character, _DiffHP, _CurrentCounter, _Ne
 
 PROC
 PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
-AND
-ConcatenateInteger("Healed event write, value: ", _HP, _msg1)
-AND
-Concatenate(_msg1, " ID: ", _msg2)
-AND
-ConcatenateInteger(_msg2, _NewCounter, _msg)
 THEN
 DB_PPMeter_HealEvents(_Character, _HP, _NewCounter);
 DB_PPMeter_EventsCounter(_Character, _NewCounter);
-DebugText(_Character, _msg);
 
 PROC
 PROC_PPMeter_WriteHealEventWithCounter((CHARACTER)_Character, (INTEGER)_HP, (INTEGER)_CurrentCounter, (INTEGER)_NewCounter)
@@ -130,7 +123,6 @@ AND
 DB_PPMeter_HealEventTimerValueMs(_TimerValueMs)
 THEN
 TimerLaunch(_str, _TimerValueMs);
-DebugText(_Character, _str);
 DB_PPMeter_HealEventTimers(_Character, _str, _NewCounter);
 
 IF
@@ -139,11 +131,8 @@ AND
 DB_PPMeter_HealEventTimers(_Character, _TimerString, _EventID)
 AND
 DB_PPMeter_HealEvents(_Character, _HP, _EventID)
-AND
-ConcatenateInteger("Heal event removed by timer, ID: ", _EventID, _msg)
 THEN
 NOT DB_PPMeter_HealEvents(_Character, _HP, _EventID);
-DebugText(_Character, _msg);
 
 // Remove additional timer info in any case
 IF
@@ -193,7 +182,6 @@ ConcatenateGUID(_msg2, _Caster, _msg)
 THEN
 PROC_PPMeterApplyHealingDone(_Caster, _HealValue);
 PROC_PPMeterApplyHealingTaken(_Caster, _Target, _HealValue);
-DebugText(_Target, _msg);
 NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
 
 PROC
@@ -266,4 +254,4 @@ DebugText(_Character, _msg);
 EXITSECTION
 
 ENDEXITSECTION
-ParentTargetEdge "PPMeter"
+ParentTargetEdge "Start"

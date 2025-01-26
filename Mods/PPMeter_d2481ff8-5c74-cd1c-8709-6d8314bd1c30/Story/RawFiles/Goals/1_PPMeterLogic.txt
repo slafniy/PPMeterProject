@@ -15,6 +15,7 @@ PROC_FillZeroes(_Character);
 IF
 EnteredCombat((CHARACTER)_Character, _)
 THEN
+//DebugText(_Character, "Entered combat!");
 PROC_FillZeroes(_Character);
 
 IF
@@ -121,4 +122,4 @@ PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _TargetStat, _TargetValue);
 EXITSECTION
 
 ENDEXITSECTION
-ParentTargetEdge "PPMeter"
+ParentTargetEdge "Start"

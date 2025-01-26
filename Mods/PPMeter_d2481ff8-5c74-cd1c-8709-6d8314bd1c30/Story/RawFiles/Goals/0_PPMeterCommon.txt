@@ -101,6 +101,7 @@ AND
 NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
 THEN
 DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
+//DebugText(_Character, "Fill zeros call!");
 //END_REGION
 
 
@@ -124,6 +125,7 @@ QRY_OnlyOnce(_onlyOnceStr)
 AND
 NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
 THEN
+//DebugText(_Character, "Fill zeros - only once!");
 DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
 //END_REGION
 
@@ -152,6 +154,26 @@ AND
 RealSum(_OldValue, _Value, _NewValue)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _StatsName, _NewValue);
+//END_REGION
+
+
+//REGION
+IF
+TextEvent("ppmdata")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _Value)
+AND
+Concatenate(_Lifetime, ", ", _msg1)
+AND
+Concatenate(_msg1, _StatsName, _msg2)
+AND
+Concatenate(_msg2, ", ", _msg3)
+AND
+ConcatenateReal(_msg3, _Value, _msg)
+THEN
+DebugText(_Character, _msg);
 //END_REGION
 EXITSECTION
 
