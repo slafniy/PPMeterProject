@@ -1,8 +1,6 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-
-
 // Save current resource boost to be able to remove it
 // Character - ResourceName - BoostString
 NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "");
@@ -62,4 +60,4 @@ PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 EXITSECTION
 
 ENDEXITSECTION
-ParentTargetEdge "Start"
+ParentTargetEdge "PPMeter"
