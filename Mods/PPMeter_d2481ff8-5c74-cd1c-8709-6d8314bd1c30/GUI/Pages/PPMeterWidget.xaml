@@ -1470,7 +1470,7 @@
                         </b:Interaction.Triggers>
                     </ls:LSButton>
 
-                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=PPMeterWidget}">
+                    <ls:LSButton x:Name="HidePPMeterButton" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=ShowPPMeterButton, Converter={StaticResource InvertVisibilityConverter}}">
                         <ls:LSButton.Template>
                             <ControlTemplate TargetType="ls:LSButton">
                                 <ControlTemplate.Resources>
