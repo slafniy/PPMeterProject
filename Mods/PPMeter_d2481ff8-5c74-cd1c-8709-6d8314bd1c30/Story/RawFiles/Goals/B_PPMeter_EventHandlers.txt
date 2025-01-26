@@ -108,7 +108,6 @@ AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
 PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0.0);
-PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses  TODO: is it needed with action resources?
 //END_REGION
 
 

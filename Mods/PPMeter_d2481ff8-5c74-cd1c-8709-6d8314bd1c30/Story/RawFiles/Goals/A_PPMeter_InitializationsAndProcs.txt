@@ -146,16 +146,6 @@ AddBoosts(_Character, _BoostStr, "", _Character);
 //END_REGION
 
 
-//REGION // PROC_PPMeter_ForseUpdateStatuses - updates action resource boosts
-PROC
-PROC_PPMeter_ForseUpdateStatuses((CHARACTER)_Character)
-AND
-DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
-THEN
-PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
-//END_REGION
-
-
 //REGION // PROC_FillZeroes - inits DB_PPMeter_DataReal if there is no data
 PROC
 PROC_FillZeroes((CHARACTER)_Character)
