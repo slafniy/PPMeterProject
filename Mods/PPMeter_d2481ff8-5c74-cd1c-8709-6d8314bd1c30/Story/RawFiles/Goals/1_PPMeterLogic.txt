@@ -3,6 +3,16 @@ SubGoalCombiner SGC_AND
 INITSECTION
 
 KBSECTION
+//REGION handle level start - fill zeroes if needed
+IF
+LevelGameplayStarted(_, _)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_FillZeroes(_Character);
+//END_REGION
+
+
 //REGION // handle joined party - fill zeros
 IF
 CharacterJoinedParty(_Character)
@@ -15,7 +25,6 @@ PROC_FillZeroes(_Character);
 IF
 EnteredCombat((CHARACTER)_Character, _)
 THEN
-//DebugText(_Character, "Entered combat!");
 PROC_FillZeroes(_Character);
 
 IF

@@ -105,31 +105,6 @@ DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
 //END_REGION
 
 
-//REGION // Fill zeros for player - only once
-IF
-DB_PartyMembers(_Character)
-AND
-IsPlayer(_Character, 1)
-AND
-GUIDToString(_Character, _onlyOnceStr1)
-AND
-DB_PPMeter_StatsType(_StatsType)
-AND
-DB_PPMeter_Lifetime(_Lifetime)
-AND
-Concatenate(_onlyOnceStr1, _StatsType, _onlyOnceStr2)
-AND
-Concatenate(_onlyOnceStr2, _Lifetime, _onlyOnceStr)
-AND
-QRY_OnlyOnce(_onlyOnceStr)
-AND
-NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
-THEN
-//DebugText(_Character, "Fill zeros - only once!");
-DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
-//END_REGION
-
-
 //REGION PROC_PPMeter_ReplaceInDB // write a value to DB and remove old value.
 PROC
 PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)

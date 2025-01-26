@@ -19,29 +19,41 @@ NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000
 // Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
 DB_PPMeter_HealEventTimerValueMs(100);
 KBSECTION
-//REGION Initializations
-// Set previous HP if it's not set - ONLY ONCE
-IF
+//REGION PROC_PPMeter_InitializePreviousHPAndHealEventCounter
+// Set previous HP if it's not set
+PROC
+PROC_PPMeter_InitializePreviousHPAndHealEventCounter()
+AND
 DB_PartyMembers(_Character)
 AND
 NOT DB_PPMeter_PreviousHP(_Character, _)
 AND
-ConcatenateGUID("DB_PPMeter_PreviousHP_OnlyOnce_", _Character, _OnlyOnceString)
-AND
-QRY_OnlyOnce(_OnlyOnceString)
-AND
 GetHitpoints(_Character, _HP)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
-//DebugText(_Character, "DB_PPMeter_PreviousHP is set!");
 
 // Initialize heal events counter by 0 if there are no counter records
-IF
+PROC
+PROC_PPMeter_InitializePreviousHPAndHealEventCounter()
+AND
 DB_PartyMembers(_Character)
 AND
 NOT DB_PPMeter_EventsCounter(_Character, _)
 THEN
 DB_PPMeter_EventsCounter(_Character, 0);
+//END_REGION
+
+
+//REGION Initializations
+IF
+LevelGameplayStarted(_, _)
+THEN
+PROC_PPMeter_InitializePreviousHPAndHealEventCounter();
+
+IF
+CharacterJoinedParty(_)
+THEN
+PROC_PPMeter_InitializePreviousHPAndHealEventCounter();
 //END_REGION
 
 
