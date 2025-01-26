@@ -4,34 +4,6 @@ INITSECTION
 // PPMeter mod by slafniy
 // An attempt to re-create Recount :) kinda...
 
-
-// Data Lifetime enum
-DB_PPMeter_Lifetime("Combat");
-DB_PPMeter_Lifetime("Day");
-DB_PPMeter_Lifetime("Level");
-DB_PPMeter_Lifetime("Overall");
-
-// Data stats type enum
-DB_PPMeter_StatsType("Damage");
-DB_PPMeter_StatsType("RoundsCount");
-DB_PPMeter_StatsType("DPR");
-DB_PPMeter_StatsType("DamageTaken");
-DB_PPMeter_StatsType("DTPR");
-DB_PPMeter_StatsType("Healing");
-DB_PPMeter_StatsType("HPR");
-DB_PPMeter_StatsType("HealingTaken");
-DB_PPMeter_StatsType("HTPR");
-DB_PPMeter_StatsType("HealingSelf");
-DB_PPMeter_StatsType("SHPR");
-
-// Stats which should be calculated "per round avg"
-// StatsTypeSource - StatsTypeTarget
-DB_PPMeter_CalculatedStats("Damage", "DPR");
-DB_PPMeter_CalculatedStats("DamageTaken", "DTPR");
-DB_PPMeter_CalculatedStats("Healing", "HPR");
-DB_PPMeter_CalculatedStats("HealingTaken", "HTPR");
-DB_PPMeter_CalculatedStats("HealingSelf", "SHPR");
-
 // REAL Tables DB_PPMeter_DataReal (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 KBSECTION
 //REGION // PROC_FillZeroes - if no data in DB
