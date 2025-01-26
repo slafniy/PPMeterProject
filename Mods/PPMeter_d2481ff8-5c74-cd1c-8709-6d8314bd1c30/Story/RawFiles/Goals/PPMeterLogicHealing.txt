@@ -48,6 +48,16 @@ DB_PPMeter_EventsCounter(_Character, 0);
 //REGION store actual HP value on HitpointsChanged and handle hp change
 IF
 HitpointsChanged((CHARACTER)_Character, _)
+THEN
+PROC_PPMeter_ProcessHPChanged(_Character);
+
+IF
+ShapeshiftedHitpointsChanged((CHARACTER)_Character, _)
+THEN
+PROC_PPMeter_ProcessHPChanged(_Character);
+
+PROC
+PROC_PPMeter_ProcessHPChanged((CHARACTER)_Character)
 AND
 DB_PartyMembers(_Character)
 AND
@@ -241,6 +251,17 @@ AND
 DB_PPMeter_HealEventTimers(_Character, _TimerStr, _)
 THEN
 DebugText(_Character, _TimerStr);
+
+IF
+TextEvent("gethp")
+AND
+DB_PartyMembers(_Character)
+AND
+GetHitpoints(_Character, _HP)
+AND
+ConcatenateInteger("GetHitpoints() result: ", _HP, _msg)
+THEN
+DebugText(_Character, _msg);
 //END_REGION
 EXITSECTION
 
