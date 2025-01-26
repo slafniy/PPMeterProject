@@ -22,7 +22,7 @@ PPMeter accumulates combat data for party members and shows it in a table.
 - It counts rounds in combat per character.
 - It counts damage dealt by party characters, including damage from summons and barrels.
 - It counts damage taken from enemies.
-- It counts healing done and received. 
+- It counts healing done and received (new **experimental** feature).
 - It calculates averages per combat round: 
   - DPR (Damage Per Round)
   - DTPR (Damage Taken Per Round)
@@ -36,11 +36,14 @@ PPMeter accumulates combat data for party members and shows it in a table.
   - Overall - never resets.
 
     
-### Known limitations
+### Known limitations 
 - Cannot guarantee correct healer detection if two or more healers use their heal abilities simultaneously, PPMeter needs at least 0.1 sec window between them.
 - Healing from [Amulet of the Drunkard](https://bg3.wiki/wiki/Amulet_of_the_Drunkard) does not count.
 - Temporary HPs do not count, except from [Boots of Aid and Comfort](https://bg3.wiki/wiki/Boots_of_Aid_and_Comfort).
+- Healing from [Psionic Ward Armour](https://bg3.wiki/wiki/Psionic_Ward_Armour) counts as healing from person who cast harmful spell.
 - Damage made while hiding does not count.
+
+Some healing mechanics are very strange, and the game does not provide "X healed Y by N hp" Osiris event. So healing counting background logic is complicated and has limitations. Some issues I can fix, but it will require more time. Please consider healing counter experimental :) and report all bugs you've found.
 
 
 ### Development and future plans
