@@ -1,0 +1,58 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+//REGION debug
+IF
+TextEvent("ppmdata")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _Value)
+AND
+Concatenate(_Lifetime, ", ", _msg1)
+AND
+Concatenate(_msg1, _StatsName, _msg2)
+AND
+Concatenate(_msg2, ", ", _msg3)
+AND
+ConcatenateReal(_msg3, _Value, _msg)
+THEN
+DebugText(_Character, _msg);
+
+IF
+TextEvent("healevents")
+AND
+DB_PPMeter_HealEvents(_Character, _Value, _Counter)
+AND
+ConcatenateInteger("Heal val: ", _Value, _msg1)
+AND
+Concatenate(_msg1, " Counter: ", _msg2)
+AND
+ConcatenateInteger(_msg2, _Counter, _msg)
+THEN
+DebugText(_Character, _msg);
+
+IF
+TextEvent("healeventtimers")
+AND
+DB_PPMeter_HealEventTimers(_Character, _TimerStr, _)
+THEN
+DebugText(_Character, _TimerStr);
+
+IF
+TextEvent("gethp")
+AND
+DB_PartyMembers(_Character)
+AND
+GetHitpoints(_Character, _HP)
+AND
+ConcatenateInteger("GetHitpoints() result: ", _HP, _msg)
+THEN
+DebugText(_Character, _msg);
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"

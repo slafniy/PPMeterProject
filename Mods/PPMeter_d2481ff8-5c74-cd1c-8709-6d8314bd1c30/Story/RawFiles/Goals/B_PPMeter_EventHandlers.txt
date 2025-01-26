@@ -1,0 +1,184 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+//REGION // handle LevelGameplayStarted - fill zeroes if needed
+IF
+LevelGameplayStarted(_, _)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_FillZeroes(_Character);
+//END_REGION
+
+
+//REGION // handle CharacterJoinedParty - fill zeros if needed
+IF
+CharacterJoinedParty(_Character)
+THEN
+PROC_FillZeroes(_Character);
+//END_REGION
+
+
+//REGION // handle EnteredCombat - on new combat fill zeros if needed and reset per-combat stats for each StatsType
+IF
+EnteredCombat((CHARACTER)_Character, _)
+THEN
+PROC_FillZeroes(_Character);
+
+IF
+EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
+//END_REGION
+
+
+//REGION // handle LeveledUp - on levelup reset per Level stats
+IF
+LeveledUp((CHARACTER)_Character)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0.0);
+//END_REGION
+
+
+//REGION // handle TurnEnded - count rounds
+// Note: cannot count on round start because it races with EnteredCombat event in case if player joined to existing fight
+IF
+TurnEnded((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+THEN
+PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1.0);
+//END_REGION
+
+
+//REGION // handle AttackedBy - count damage dealt
+IF
+AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
+AND
+DB_PartyMembers(_AttackerOwner)
+AND
+_DamageAmount > 0.0
+AND
+IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
+AND
+IntegerToReal(_DamageAmount, _DamageAmountReal)
+THEN
+PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmountReal);
+//END_REGION
+
+
+//REGION // handle AttackedBy - count damage taken
+IF
+AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
+AND
+DB_PartyMembers((CHARACTER)_Defender)
+AND
+_DamageAmount > 0.0
+AND
+IsEnemy((CHARACTER)_Defender, _AttackerOwner, 1)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply damage taken to every lifetime
+AND
+IntegerToReal(_DamageAmount, _DamageAmountReal)
+THEN
+PROC_PPMeterAdd((CHARACTER)_Defender, _Lifetime, "DamageTaken", _DamageAmountReal);
+//END_REGION
+
+
+//REGION // handle LongRestFinished -  reset daily data
+IF
+LongRestFinished()
+AND
+DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0.0);
+PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses  TODO: is it needed with action resources?
+//END_REGION
+
+
+//REGION // handle LevelGameplayStarted and CharacterJoinedParty
+IF
+LevelGameplayStarted(_, _)
+THEN
+PROC_PPMeter_InitializePreviousHPAndHealEventCounter();
+
+IF
+CharacterJoinedParty(_)
+THEN
+PROC_PPMeter_InitializePreviousHPAndHealEventCounter();
+//END_REGION
+
+
+//REGION // Process StatusApplied - HEAL status applied - only if HEAL target is in combat!
+IF
+StatusApplied((CHARACTER)_Target, "HEAL", (CHARACTER)_Caster, _)
+AND
+IsInCombat(_Target, 1)
+AND
+DB_PPMeter_HealEvents(_Target, _HealValue, _EventID)
+AND
+QRY_PPMeterIsEarliestHealEvent(_Target, _EventID)
+AND
+ConcatenateInteger("Healed by ", _HealValue, _msg1)
+AND
+Concatenate(_msg1, ", healer: ", _msg2)
+AND
+ConcatenateGUID(_msg2, _Caster, _msg)
+THEN
+PROC_PPMeterApplyHealingDone(_Caster, _HealValue);
+PROC_PPMeterApplyHealingTaken(_Caster, _Target, _HealValue);
+NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
+
+PROC
+PROC_PPMeterApplyHealingDone((CHARACTER)_Healer, (INTEGER)_HealValue)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
+
+// Count External Healing Received
+PROC
+PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
+AND
+_Caster != _Target  // calculate only external healing
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Target, _Lifetime, "HealingTaken", _HealValueReal);
+
+// Count self-healing
+PROC
+PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
+AND
+_Caster == _Target
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Target, _Lifetime, "HealingSelf", _HealValueReal);
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"

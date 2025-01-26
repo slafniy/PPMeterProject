@@ -28,7 +28,6 @@ DB_PPMeter_CalculatedStats("Healing", "HPR");
 DB_PPMeter_CalculatedStats("HealingTaken", "HTPR");
 DB_PPMeter_CalculatedStats("HealingSelf", "SHPR");
 
-
 // Mapping to Resource Name (names are declared in Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Localization/English/PPMeterTechnicalStrings.loca.xml)
 // ResourceName - StatsType - Lifetime
 DB_PPMeter_ResourceNames("PPMeterCombatRounds", "RoundsCount", "Combat");
@@ -114,25 +113,7 @@ NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-0000
 
 
 KBSECTION
-
-//REGION // Refresh calculated stats (see DB_PPMeter_CalculatedStats list)
-IF
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_CalculatedStats(_SourceStat, _TargetStat)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, "RoundsCount", _Rounds)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, _SourceStat, _SourceValue)
-AND
-_Rounds > 0.0
-AND
-RealDivide(_SourceValue, _Rounds, _TargetValue)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _TargetStat, _TargetValue);
-//END_REGION
-
-//REGION Write data to resource
+//REGION // PROC_PPMeter_WriteResource - write data to ActionResource
 // Clear old boost first!
 PROC
 PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (REAL)_Number)
@@ -165,16 +146,7 @@ AddBoosts(_Character, _BoostStr, "", _Character);
 //END_REGION
 
 
-//REGION Update UI damage(set statuses) - looking if DB changed
-IF
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
-THEN
-PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
-//END_REGION
-
-//REGION // PROC Force apply damage UI statuses
+//REGION // PROC_PPMeter_ForseUpdateStatuses - updates action resource boosts
 PROC
 PROC_PPMeter_ForseUpdateStatuses((CHARACTER)_Character)
 AND
@@ -183,7 +155,8 @@ THEN
 PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
 
-//REGION // PROC_FillZeroes - if no data in DB
+
+//REGION // PROC_FillZeroes - inits DB_PPMeter_DataReal if there is no data
 PROC
 PROC_FillZeroes((CHARACTER)_Character)
 AND
@@ -198,7 +171,7 @@ DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
 //END_REGION
 
 
-//REGION PROC_PPMeter_ReplaceInDB // write a value to DB and remove old value.
+//REGION // PROC_PPMeter_ReplaceInDB - write a value to DB and remove old value.
 PROC
 PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
 AND
@@ -213,7 +186,7 @@ DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _NewValue); // write new 
 //END_REGION
 
 
-//REGION PROC_PPMeterAdd // _Value += _NewValue
+//REGION // PROC_PPMeterAdd - does _Value += _NewValue
 PROC
 PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_Value)
 AND
@@ -224,153 +197,8 @@ THEN
 PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _StatsName, _NewValue);
 //END_REGION
 
-/*
-//REGION // PROC_PPMeter_RefreshCalculatedStats - refresh calculated stats (see DB_PPMeter_CalculatedStats list)
-PROC
-PROC_PPMeter_RefreshCalculatedStats((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName)
-AND
-DB_PPMeter_CalculatedStats(_StatsName, _TargetStat)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, "RoundsCount", _Rounds)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, _SourceStat, _SourceValue)
-AND
-_Rounds > 0.0
-AND
-RealDivide(_SourceValue, _Rounds, _TargetValue)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _TargetStat, _TargetValue);
-//END_REGION*/
 
-
-//REGION
-IF
-TextEvent("ppmdata")
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _Value)
-AND
-Concatenate(_Lifetime, ", ", _msg1)
-AND
-Concatenate(_msg1, _StatsName, _msg2)
-AND
-Concatenate(_msg2, ", ", _msg3)
-AND
-ConcatenateReal(_msg3, _Value, _msg)
-THEN
-DebugText(_Character, _msg);
-//END_REGION
-
-//REGION handle level start - fill zeroes if needed
-IF
-LevelGameplayStarted(_, _)
-AND
-DB_PartyMembers(_Character)
-THEN
-PROC_FillZeroes(_Character);
-//END_REGION
-
-
-//REGION // handle joined party - fill zeros
-IF
-CharacterJoinedParty(_Character)
-THEN
-PROC_FillZeroes(_Character);
-//END_REGION
-
-
-//REGION On new combat - fill zeros if needed and reset per-combat stats for each StatsType
-IF
-EnteredCombat((CHARACTER)_Character, _)
-THEN
-PROC_FillZeroes(_Character);
-
-IF
-EnteredCombat((CHARACTER)_Character, _)
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_StatsType(_StatsName)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
-//END_REGION
-
-
-//REGION On leveled up - reset per Level stats
-IF
-LeveledUp((CHARACTER)_Character)
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_StatsType(_StatsName)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0.0);
-//END_REGION
-
-
-//REGION Handle turn end - count rounds
-// Note: cannot count on round start because it races with EnteredCombat event in case if player joined to existing fight
-IF
-TurnEnded((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
-AND
-DB_PartyMembers(_Character)
-AND
-DB_PPMeter_Lifetime(_Lifetime)
-THEN
-PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1.0);
-//END_REGION
-
-
-//REGION Handle damage dealt
-IF
-AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
-AND
-DB_PartyMembers(_AttackerOwner)
-AND
-_DamageAmount > 0.0
-AND
-IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
-AND
-IntegerToReal(_DamageAmount, _DamageAmountReal)
-THEN
-PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmountReal);
-//END_REGION
-
-
-//REGION Handle damage taken
-IF
-AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
-AND
-DB_PartyMembers((CHARACTER)_Defender)
-AND
-_DamageAmount > 0.0
-AND
-IsEnemy((CHARACTER)_Defender, _AttackerOwner, 1)
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply damage taken to every lifetime
-AND
-IntegerToReal(_DamageAmount, _DamageAmountReal)
-THEN
-PROC_PPMeterAdd((CHARACTER)_Defender, _Lifetime, "DamageTaken", _DamageAmountReal);
-//END_REGION
-
-
-//REGION On Long Rest
-IF
-LongRestFinished()
-AND
-DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
-AND
-DB_PPMeter_StatsType(_StatsName)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0.0);
-PROC_PPMeter_ForseUpdateStatuses(_Character);  // Because LongRest resets statuses
-//END_REGION
-
-//REGION PROC_PPMeter_InitializePreviousHPAndHealEventCounter
+//REGION // PROC_PPMeter_InitializePreviousHPAndHealEventCounter
 // Set previous HP if it's not set
 PROC
 PROC_PPMeter_InitializePreviousHPAndHealEventCounter()
@@ -395,16 +223,31 @@ DB_PPMeter_EventsCounter(_Character, 0);
 //END_REGION
 
 
-//REGION Initializations
+//REGION // Rule:  Refresh calculated stats (see DB_PPMeter_CalculatedStats list)
 IF
-LevelGameplayStarted(_, _)
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_CalculatedStats(_SourceStat, _TargetStat)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, "RoundsCount", _Rounds)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _SourceStat, _SourceValue)
+AND
+_Rounds > 0.0
+AND
+RealDivide(_SourceValue, _Rounds, _TargetValue)
 THEN
-PROC_PPMeter_InitializePreviousHPAndHealEventCounter();
+PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _TargetStat, _TargetValue);
+//END_REGION
 
+
+//REGION // Rule: Update UI damage(set action resource boosts) - looking if DB changed
 IF
-CharacterJoinedParty(_)
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
 THEN
-PROC_PPMeter_InitializePreviousHPAndHealEventCounter();
+PROC_PPMeter_WriteResource(_Character, _StatsType, _LifeTime, _Value);
 //END_REGION
 
 
@@ -418,7 +261,10 @@ IF
 ShapeshiftedHitpointsChanged((CHARACTER)_Character, _)
 THEN
 PROC_PPMeter_ProcessHPChanged(_Character);
+//END_REGION
 
+
+//REGION // PROC_PPMeter_ProcessHPChanged, PROC_PPMeter_ProcessHPChange, PROC_PPMeter_WriteHealEvent, PROC_PPMeter_WriteHealEventWithCounter
 PROC
 PROC_PPMeter_ProcessHPChanged((CHARACTER)_Character)
 AND
@@ -506,7 +352,8 @@ THEN
 NOT DB_PPMeter_HealEventTimers(_Character, _TimerString, _EventID);
 //END_REGION
 
-//REGION Queries
+
+//REGION // Queries
 QRY
 QRY_PPMeterIsHighgestCounter((CHARACTER)_Character, (INTEGER)_ValueToCheck)
 AND
@@ -525,96 +372,6 @@ _EventIDToCheck <= _EventID
 THEN
 DB_NOOP(1);
 //END_REGION
-
-
-//REGION Process HEAL status applied - only if HEAL target is in combat!
-IF
-StatusApplied((CHARACTER)_Target, "HEAL", (CHARACTER)_Caster, _)
-AND
-IsInCombat(_Target, 1)
-AND
-DB_PPMeter_HealEvents(_Target, _HealValue, _EventID)
-AND
-QRY_PPMeterIsEarliestHealEvent(_Target, _EventID)
-AND
-ConcatenateInteger("Healed by ", _HealValue, _msg1)
-AND
-Concatenate(_msg1, ", healer: ", _msg2)
-AND
-ConcatenateGUID(_msg2, _Caster, _msg)
-THEN
-PROC_PPMeterApplyHealingDone(_Caster, _HealValue);
-PROC_PPMeterApplyHealingTaken(_Caster, _Target, _HealValue);
-NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
-
-PROC
-PROC_PPMeterApplyHealingDone((CHARACTER)_Healer, (INTEGER)_HealValue)
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
-AND
-IntegerToReal(_HealValue, _HealValueReal)
-THEN
-PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
-
-// Count External Healing Received
-PROC
-PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
-AND
-_Caster != _Target  // calculate only external healing
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
-AND
-IntegerToReal(_HealValue, _HealValueReal)
-THEN
-PROC_PPMeterAdd(_Target, _Lifetime, "HealingTaken", _HealValueReal);
-
-// Count self-healing
-PROC
-PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
-AND
-_Caster == _Target
-AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
-AND
-IntegerToReal(_HealValue, _HealValueReal)
-THEN
-PROC_PPMeterAdd(_Target, _Lifetime, "HealingSelf", _HealValueReal);
-//END_REGION
-
-
-//REGION Debug
-IF
-TextEvent("healevents")
-AND
-DB_PPMeter_HealEvents(_Character, _Value, _Counter)
-AND
-ConcatenateInteger("Heal val: ", _Value, _msg1)
-AND
-Concatenate(_msg1, " Counter: ", _msg2)
-AND
-ConcatenateInteger(_msg2, _Counter, _msg)
-THEN
-DebugText(_Character, _msg);
-
-IF
-TextEvent("healeventtimers")
-AND
-DB_PPMeter_HealEventTimers(_Character, _TimerStr, _)
-THEN
-DebugText(_Character, _TimerStr);
-
-IF
-TextEvent("gethp")
-AND
-DB_PartyMembers(_Character)
-AND
-GetHitpoints(_Character, _HP)
-AND
-ConcatenateInteger("GetHitpoints() result: ", _HP, _msg)
-THEN
-DebugText(_Character, _msg);
-//END_REGION
-
 EXITSECTION
 
 ENDEXITSECTION
