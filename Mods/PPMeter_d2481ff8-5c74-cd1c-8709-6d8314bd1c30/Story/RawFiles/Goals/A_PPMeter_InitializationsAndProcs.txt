@@ -19,6 +19,7 @@ DB_PPMeter_StatsType("HealingTaken");
 DB_PPMeter_StatsType("HTPR");
 DB_PPMeter_StatsType("HealingSelf");
 DB_PPMeter_StatsType("SHPR");
+
 /*
 // Stats which should be calculated "per round avg"
 // StatsTypeSource - StatsTypeTarget
@@ -27,7 +28,7 @@ DB_PPMeter_CalculatedStats("DamageTaken", "DTPR");
 DB_PPMeter_CalculatedStats("Healing", "HPR");
 DB_PPMeter_CalculatedStats("HealingTaken", "HTPR");
 DB_PPMeter_CalculatedStats("HealingSelf", "SHPR");*/
-/*
+
 // Mapping to Resource Name (names are declared in Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Localization/English/PPMeterTechnicalStrings.loca.xml)
 // ResourceName - StatsType - Lifetime
 DB_PPMeter_ResourceNames("PPMeterCombatRounds", "RoundsCount", "Combat");
@@ -84,7 +85,7 @@ DB_PPMeter_ResourceNames("PPMeterCombatSHPR", "SHPR", "Combat");
 DB_PPMeter_ResourceNames("PPMeterDaySHPR", "SHPR", "Day");
 DB_PPMeter_ResourceNames("PPMeterLevelSHPR", "SHPR", "Level");
 DB_PPMeter_ResourceNames("PPMeterOverallSHPR", "SHPR", "Overall");
-*/
+
 
 // REAL Tables format: (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 NOT DB_PPMeter_DataReal((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0.0);
@@ -96,6 +97,10 @@ NOT DB_PPMeter_EventsCounter((CHARACTER)NULL_00000000-0000-0000-0000-00000000000
 // Character - HP
 NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 
+// Save current resource boost to be able to remove it
+// Character - ResourceName - Lifetime - StatsType - BoostString
+NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", "", "");
+
 // Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
 // Character - HealValue - EventID
 //NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
@@ -103,10 +108,6 @@ NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 // Timer events list
 // character - timer string - event id
 //NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", 0);
-
-// Save current resource boost to be able to remove it
-// Character - ResourceName - BoostString
-//NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "");
 
 // Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
 //DB_PPMeter_HealEventTimerValueMs(100);
@@ -125,11 +126,20 @@ IF
 
 //END_REGION*/
 
-//REGION  // handle EnteredCombat - Initialize character data
+//REGION  // handle EnteredCombat - Initialize character data, refresh GUI
 IF
 EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
 THEN
 PROC_PPMeter_InitializeCharacterData(_Character);
+
+IF
+EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_UpdateCharacterGUI(_Character);
 //END_REGION
 
 
@@ -173,26 +183,38 @@ DebugText(_Character, "Initialized PreviousHP");
 //END_REGION
 
 
+//REGION // PROC_PPMeter_UpdateCharacterGUI - write ALL character data to ActionResources, if something is missing
+PROC
+PROC_PPMeter_UpdateCharacterGUI((CHARACTER)_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+DB_PPMeter_StatsType(_StatsType)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _Value)
+AND
+NOT DB_PPMeter_CurrentResourceBoost(_Character, _, _Lifetime, _StatsType, _)  // check there is no boost for this yet
+THEN
+PROC_PPMeter_WriteResource(_Character, _Lifetime, _StatsType, _Value);
+DebugText(_Character, "Refreshing all GUI data");
+//END_REGION
 
 
-
-
-/*
 //REGION // PROC_PPMeter_WriteResource - write data to ActionResource
 // Clear old boost first!
 PROC
-PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (REAL)_Number)
+PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Number)
 AND
 DB_PPMeter_ResourceNames(_ResourceName, _StatsType, _Lifetime)
 AND
-DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _BoostString)
+DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString)
 THEN
 RemoveBoosts(_Character, _BoostString, 0, "", _Character);
-NOT DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _BoostString);
+NOT DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString);
 
 // Construct new boost string and apply it
 PROC
-PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_StatsType, (STRING)_Lifetime, (REAL)_Number)
+PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Number)
 AND
 RealToString(_Number, _NumberStr)
 AND
@@ -206,11 +228,11 @@ Concatenate(_str2, _NumberStr, _str3)
 AND
 Concatenate(_str3, ",0)", _BoostStr)
 THEN
-DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _BoostStr);
+DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostStr);
 AddBoosts(_Character, _BoostStr, "", _Character);
 //END_REGION
 
-
+/*
 //REGION // PROC_FillZeroes - inits DB_PPMeter_DataReal if there is no data
 PROC
 PROC_FillZeroes((CHARACTER)_Character)
