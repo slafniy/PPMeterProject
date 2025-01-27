@@ -101,17 +101,6 @@ NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 // Character - ResourceName - Lifetime - StatsType - BoostString
 NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", "", "");
 
-// Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
-// Character - HealValue - EventID
-//NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
-
-// Timer events list
-// character - timer string - event id
-//NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", 0);
-
-// Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
-//DB_PPMeter_HealEventTimerValueMs(100);
-
 // how much time to wait after LevelGameplayStarted event
 DB_PPMeter_LevelGameplayStartedTimerMs(500);
 
