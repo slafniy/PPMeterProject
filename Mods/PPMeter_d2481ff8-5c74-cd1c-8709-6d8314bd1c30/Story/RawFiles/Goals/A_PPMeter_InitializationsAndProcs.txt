@@ -141,6 +141,20 @@ DebugText(_Character, "Initialization by PPMeter_TimerLevelGameplayStarted!");
 //END_REGION
 
 
+//REGION // handle CharacterJoinedParty - Initialize character data, refresh GUI
+IF
+CharacterJoinedParty(_Character)
+THEN
+PROC_PPMeter_InitializeCharacterData(_Character);
+
+IF
+CharacterJoinedParty(_Character)
+THEN
+PROC_PPMeter_UpdateCharacterGUI(_Character);
+DebugText(_Character, "Initialization on CharacterJoinedParty");
+//END_REGION
+
+
 //REGION  // handle EnteredCombat - Initialize character data, refresh GUI
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -155,6 +169,7 @@ AND
 DB_PartyMembers(_Character)
 THEN
 PROC_PPMeter_UpdateCharacterGUI(_Character);
+DebugText(_Character, "Initialization on EnteredCombat");
 //END_REGION
 
 
@@ -198,7 +213,7 @@ AND
 NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
 THEN
 DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
-DebugText(_Character, "Initialized DataReal");
+//DebugText(_Character, "Initialized DataReal");
 
 PROC
 PROC_PPMeter_InitEventsCounter((CHARACTER)_Character)
@@ -206,7 +221,7 @@ AND
 NOT DB_PPMeter_EventsCounter(_Character, _)
 THEN
 DB_PPMeter_EventsCounter(_Character, 0);
-DebugText(_Character, "Initialized EventsCounter");
+//DebugText(_Character, "Initialized EventsCounter");
 
 PROC
 PROC_PPMeter_InitPreviousHP((CHARACTER)_Character)
@@ -216,7 +231,7 @@ AND
 GetHitpoints(_Character, _HP)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
-DebugText(_Character, "Initialized PreviousHP");
+//DebugText(_Character, "Initialized PreviousHP");
 //END_REGION
 
 
@@ -234,7 +249,7 @@ AND
 NOT DB_PPMeter_CurrentResourceBoost(_Character, _, _Lifetime, _StatsType, _)  // check there is no boost for this yet
 THEN
 PROC_PPMeter_WriteResource(_Character, _Lifetime, _StatsType, _Value);
-DebugText(_Character, "Refreshing all GUI data");
+//DebugText(_Character, "Refreshing all GUI data");
 //END_REGION
 
 
