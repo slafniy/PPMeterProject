@@ -19,15 +19,15 @@ DB_PPMeter_StatsType("HealingTaken");
 DB_PPMeter_StatsType("HTPR");
 DB_PPMeter_StatsType("HealingSelf");
 DB_PPMeter_StatsType("SHPR");
-
+/*
 // Stats which should be calculated "per round avg"
 // StatsTypeSource - StatsTypeTarget
 DB_PPMeter_CalculatedStats("Damage", "DPR");
 DB_PPMeter_CalculatedStats("DamageTaken", "DTPR");
 DB_PPMeter_CalculatedStats("Healing", "HPR");
 DB_PPMeter_CalculatedStats("HealingTaken", "HTPR");
-DB_PPMeter_CalculatedStats("HealingSelf", "SHPR");
-
+DB_PPMeter_CalculatedStats("HealingSelf", "SHPR");*/
+/*
 // Mapping to Resource Name (names are declared in Mods/PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30/Localization/English/PPMeterTechnicalStrings.loca.xml)
 // ResourceName - StatsType - Lifetime
 DB_PPMeter_ResourceNames("PPMeterCombatRounds", "RoundsCount", "Combat");
@@ -84,7 +84,7 @@ DB_PPMeter_ResourceNames("PPMeterCombatSHPR", "SHPR", "Combat");
 DB_PPMeter_ResourceNames("PPMeterDaySHPR", "SHPR", "Day");
 DB_PPMeter_ResourceNames("PPMeterLevelSHPR", "SHPR", "Level");
 DB_PPMeter_ResourceNames("PPMeterOverallSHPR", "SHPR", "Overall");
-
+*/
 
 // REAL Tables format: (CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsType, (REAL)_Value
 NOT DB_PPMeter_DataReal((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "", 0.0);
@@ -92,27 +92,92 @@ NOT DB_PPMeter_DataReal((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, ""
 // Simple counter to compare events to figure out which one is the first
 NOT DB_PPMeter_EventsCounter((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 
-// Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
-// Character - HealValue - EventID
-NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
-
 // Store previous HP value to figure out if character healed
 // Character - HP
 NOT DB_PPMeter_PreviousHP((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 
+// Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
+// Character - HealValue - EventID
+//NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
+
 // Timer events list
 // character - timer string - event id
-NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", 0);
-
-// Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
-DB_PPMeter_HealEventTimerValueMs(100);
+//NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", 0);
 
 // Save current resource boost to be able to remove it
 // Character - ResourceName - BoostString
-NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "");
+//NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", "");
+
+// Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
+//DB_PPMeter_HealEventTimerValueMs(100);
+
+
 
 
 KBSECTION
+/*//REGION // handle LevelGameplayStarted - initialize everything
+IF
+LevelGameplayStarted(_, _)
+THEN
+TimerLaunch("PPMeter_TimerLevelGameplayStarted", 1500);  // give some time for game to load everything
+
+IF
+
+//END_REGION*/
+
+//REGION
+IF
+EnteredCombat((CHARACTER)_Character, _)
+THEN
+PROC_PPMeter_InitializeCharacterData(_Character);
+//END_REGION
+
+
+//REGION  // PROC_PPMeter_InitializeCharacterData
+PROC
+PROC_PPMeter_InitializeCharacterData((CHARACTER)_Character)
+THEN
+PROC_PPMeter_InitDataReal(_Character);
+PROC_PPMeter_InitEventsCounter(_Character);
+PROC_PPMeter_InitPreviousHP(_Character);
+
+PROC
+PROC_PPMeter_InitDataReal((CHARACTER)_Character)
+AND
+DB_PPMeter_Lifetime(_Lifetime)
+AND
+DB_PPMeter_StatsType(_StatsType)
+AND
+NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _)
+THEN
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
+DebugText(_Character, "Initialized DataReal");
+
+PROC
+PROC_PPMeter_InitEventsCounter((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_EventsCounter(_Character, _)
+THEN
+DB_PPMeter_EventsCounter(_Character, 0);
+DebugText(_Character, "Initialized EventsCounter");
+
+PROC
+PROC_PPMeter_InitPreviousHP((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_PreviousHP(_Character, _)
+AND
+GetHitpoints(_Character, _HP)
+THEN
+DB_PPMeter_PreviousHP(_Character, _HP);
+DebugText(_Character, "Initialized PreviousHP");
+//END_REGION
+
+
+
+
+
+
+/*
 //REGION // PROC_PPMeter_WriteResource - write data to ActionResource
 // Clear old boost first!
 PROC
@@ -233,7 +298,12 @@ PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _TargetStat, _TargetValue);
 
 //REGION // Rule: Update UI damage(set action resource boosts) - looking if DB changed
 IF
-DB_PartyMembers(_Character)
+DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
+THEN
+PROC_PPMeter_UpdateUI();
+
+PROC
+PROC_PPMeter_UpdateUI()
 AND
 DB_PPMeter_DataReal(_Character, _LifeTime, _StatsType, _Value)
 THEN
@@ -362,6 +432,7 @@ _EventIDToCheck <= _EventID
 THEN
 DB_NOOP(1);
 //END_REGION
+*/
 EXITSECTION
 
 ENDEXITSECTION

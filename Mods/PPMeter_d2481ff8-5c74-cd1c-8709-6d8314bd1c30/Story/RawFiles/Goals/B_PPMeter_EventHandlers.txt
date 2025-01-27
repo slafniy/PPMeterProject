@@ -3,13 +3,18 @@ SubGoalCombiner SGC_AND
 INITSECTION
 
 KBSECTION
-//REGION // handle LevelGameplayStarted - fill zeroes if needed
+/*//REGION // handle LevelGameplayStarted - fill zeroes if needed, refresh UI
 IF
 LevelGameplayStarted(_, _)
 AND
 DB_PartyMembers(_Character)
 THEN
 PROC_FillZeroes(_Character);
+
+IF
+LevelGameplayStarted(_, _)
+THEN
+PROC_PPMeter_UpdateUI();
 //END_REGION
 
 
@@ -18,6 +23,11 @@ IF
 CharacterJoinedParty(_Character)
 THEN
 PROC_FillZeroes(_Character);
+
+IF
+CharacterJoinedParty(_)
+THEN
+PROC_PPMeter_UpdateUI();
 //END_REGION
 
 
@@ -26,6 +36,11 @@ IF
 EnteredCombat((CHARACTER)_Character, _)
 THEN
 PROC_FillZeroes(_Character);
+
+IF
+EnteredCombat(_, _)
+THEN
+PROC_PPMeter_UpdateUI();
 
 IF
 EnteredCombat((CHARACTER)_Character, _)
@@ -177,6 +192,7 @@ IntegerToReal(_HealValue, _HealValueReal)
 THEN
 PROC_PPMeterAdd(_Target, _Lifetime, "HealingSelf", _HealValueReal);
 //END_REGION
+*/
 EXITSECTION
 
 ENDEXITSECTION

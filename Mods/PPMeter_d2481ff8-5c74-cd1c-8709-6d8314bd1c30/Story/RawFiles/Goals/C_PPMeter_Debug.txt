@@ -3,7 +3,7 @@ SubGoalCombiner SGC_AND
 INITSECTION
 
 KBSECTION
-//REGION debug
+/*//REGION debug
 IF
 TextEvent("ppmdata")
 AND
@@ -52,6 +52,7 @@ ConcatenateInteger("GetHitpoints() result: ", _HP, _msg)
 THEN
 DebugText(_Character, _msg);
 //END_REGION
+*/
 EXITSECTION
 
 ENDEXITSECTION
