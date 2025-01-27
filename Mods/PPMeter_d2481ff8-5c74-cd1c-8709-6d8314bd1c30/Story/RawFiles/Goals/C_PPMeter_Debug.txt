@@ -3,7 +3,6 @@ SubGoalCombiner SGC_AND
 INITSECTION
 
 KBSECTION
-/*//REGION debug
 IF
 TextEvent("ppmdata")
 AND
@@ -21,6 +20,29 @@ ConcatenateReal(_msg3, _Value, _msg)
 THEN
 DebugText(_Character, _msg);
 
+IF
+TextEvent("ppmeventscounter")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_EventsCounter(_Character, _Value)
+AND
+ConcatenateInteger("EventsCounter: ", _Value, _msg)
+THEN
+DebugText(_Character, _msg);
+
+IF
+TextEvent("ppmprevioushp")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_PreviousHP(_Character, _HP)
+AND
+ConcatenateInteger("PreviousHP: ", _HP, _msg)
+THEN
+DebugText(_Character, _msg);
+
+/*
 IF
 TextEvent("healevents")
 AND

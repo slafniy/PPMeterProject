@@ -125,7 +125,7 @@ IF
 
 //END_REGION*/
 
-//REGION
+//REGION  // handle EnteredCombat - Initialize character data
 IF
 EnteredCombat((CHARACTER)_Character, _)
 THEN
