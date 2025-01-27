@@ -143,6 +143,28 @@ PROC_PPMeter_UpdateCharacterGUI(_Character);
 //END_REGION
 
 
+//REGION // PROC_PPMeter_ForceClearActionResourceBoosts
+PROC
+PROC_PPMeter_ForceClearActionResourceBoosts((CHARACTER)_Character)
+AND
+DB_PPMeter_ResourceNames(_ResourceName, _StatsType, _Lifetime)
+AND
+PartyGetActionResourceValue(_Character, _ResourceName, _Value)
+AND
+RealToString(_Value, _NumberStr)
+AND
+Concatenate("ActionResource(", _ResourceName, _str1)
+AND
+Concatenate(_str1, ",", _str2)
+AND
+Concatenate(_str2, _NumberStr, _str3)
+AND
+Concatenate(_str3, ",0)", _BoostStr)
+THEN
+RemoveBoosts(_Character, _BoostStr, 0, "", _Character);
+//END_REGION
+
+
 //REGION  // PROC_PPMeter_InitializeCharacterData
 PROC
 PROC_PPMeter_InitializeCharacterData((CHARACTER)_Character)
@@ -181,6 +203,7 @@ THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
 DebugText(_Character, "Initialized PreviousHP");
 //END_REGION
+
 
 
 //REGION // PROC_PPMeter_UpdateCharacterGUI - write ALL character data to ActionResources, if something is missing

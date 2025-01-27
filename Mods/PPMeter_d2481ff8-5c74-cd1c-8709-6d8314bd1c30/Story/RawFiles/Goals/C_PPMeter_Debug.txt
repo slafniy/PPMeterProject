@@ -42,6 +42,37 @@ ConcatenateInteger("PreviousHP: ", _HP, _msg)
 THEN
 DebugText(_Character, _msg);
 
+IF
+TextEvent("ppmremoveboosts")
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_ForceClearActionResourceBoosts(_Character);
+DebugText(_Character, "Calling PROC_PPMeter_ForceClearActionResourceBoosts");
+
+
+IF
+TextEvent("ppmboosts")
+AND
+DB_PartyMembers(_Character)
+THEN
+DebugText(_Character, "ppmboosts called");
+
+IF
+TextEvent("ppmboosts")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_ResourceNames(_ResourceName, _, _)
+AND
+PartyGetActionResourceValue(_Character, _ResourceName, _Value)
+AND
+Concatenate(_ResourceName, ": ", _msg1)
+AND
+ConcatenateReal(_msg1, _Value, _msg)
+THEN
+DebugText(_Character, _msg);
+
 /*
 IF
 TextEvent("healevents")
