@@ -116,15 +116,28 @@ NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-0000
 
 
 KBSECTION
-/*//REGION // handle LevelGameplayStarted - initialize everything
+//REGION // handle LevelGameplayStarted - Initialize character data, refresh GUI
 IF
 LevelGameplayStarted(_, _)
 THEN
 TimerLaunch("PPMeter_TimerLevelGameplayStarted", 1500);  // give some time for game to load everything
 
 IF
+TimerFinished("PPMeter_TimerLevelGameplayStarted")
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_InitializeCharacterData(_Character);
 
-//END_REGION*/
+IF
+TimerFinished("PPMeter_TimerLevelGameplayStarted")
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_UpdateCharacterGUI(_Character);
+DebugText(_Character, "Initialization by PPMeter_TimerLevelGameplayStarted!");
+//END_REGION
+
 
 //REGION  // handle EnteredCombat - Initialize character data, refresh GUI
 IF
@@ -143,13 +156,13 @@ PROC_PPMeter_UpdateCharacterGUI(_Character);
 //END_REGION
 
 
-//REGION // PROC_PPMeter_ForceClearActionResourceBoosts
+//REGION // PROC_PPMeter_ForceClearActionResourceBoosts  TODO: does not work?
 PROC
 PROC_PPMeter_ForceClearActionResourceBoosts((CHARACTER)_Character)
 AND
 DB_PPMeter_ResourceNames(_ResourceName, _StatsType, _Lifetime)
 AND
-PartyGetActionResourceValue(_Character, _ResourceName, _Value)
+GetActionResourceValuePersonal(_Character, _ResourceName, 0, _Value)
 AND
 RealToString(_Value, _NumberStr)
 AND

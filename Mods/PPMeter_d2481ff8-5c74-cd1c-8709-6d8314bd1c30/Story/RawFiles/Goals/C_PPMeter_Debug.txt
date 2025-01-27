@@ -65,13 +65,31 @@ DB_PartyMembers(_Character)
 AND
 DB_PPMeter_ResourceNames(_ResourceName, _, _)
 AND
-PartyGetActionResourceValue(_Character, _ResourceName, _Value)
+GetActionResourceValuePersonal(_Character, _ResourceName, 0, _Value)
 AND
 Concatenate(_ResourceName, ": ", _msg1)
 AND
 ConcatenateReal(_msg1, _Value, _msg)
 THEN
 DebugText(_Character, _msg);
+
+
+IF
+TextEvent("ppmdbboosts")
+AND
+DB_PartyMembers(_Character)
+THEN
+DebugText(_Character, "ppmdbboosts called");
+
+IF
+TextEvent("ppmdbboosts")
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_CurrentResourceBoost(_Character, _, _, _, _BoostStr)
+THEN
+DebugText(_Character, _BoostStr);
+
 
 /*
 IF
