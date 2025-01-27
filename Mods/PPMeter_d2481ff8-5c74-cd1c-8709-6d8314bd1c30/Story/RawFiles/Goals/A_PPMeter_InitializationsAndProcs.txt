@@ -158,7 +158,7 @@ PROC_PPMeter_UpdateCharacterGUI(_Character);
 //END_REGION
 
 
-//REGION // PROC_PPMeter_ForceClearActionResourceBoosts  TODO: does not work?
+/*//REGION // PROC_PPMeter_ForceClearActionResourceBoosts  TODO: does not work?
 PROC
 PROC_PPMeter_ForceClearActionResourceBoosts((CHARACTER)_Character)
 AND
@@ -177,7 +177,7 @@ AND
 Concatenate(_str3, ",0)", _BoostStr)
 THEN
 RemoveBoosts(_Character, _BoostStr, 0, "", _Character);
-//END_REGION
+//END_REGION*/
 
 
 //REGION  // PROC_PPMeter_InitializeCharacterData

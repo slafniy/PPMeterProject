@@ -42,13 +42,13 @@ ConcatenateInteger("PreviousHP: ", _HP, _msg)
 THEN
 DebugText(_Character, _msg);
 
-IF
+/*IF
 TextEvent("ppmremoveboosts")
 AND
 DB_PartyMembers(_Character)
 THEN
 PROC_PPMeter_ForceClearActionResourceBoosts(_Character);
-DebugText(_Character, "Calling PROC_PPMeter_ForceClearActionResourceBoosts");
+DebugText(_Character, "Calling PROC_PPMeter_ForceClearActionResourceBoosts");*/
 
 
 IF
