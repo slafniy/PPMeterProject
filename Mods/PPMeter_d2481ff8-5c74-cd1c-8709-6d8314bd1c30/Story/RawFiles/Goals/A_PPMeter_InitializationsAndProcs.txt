@@ -144,7 +144,7 @@ DebugText(_Character, "Initialization on CharacterJoinedParty");
 //END_REGION
 
 
-//REGION  // handle EnteredCombat - Initialize character data, refresh GUI
+//REGION  // handle EnteredCombat - Initialize character data, refresh GUI, reset Combat data
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND
@@ -159,6 +159,39 @@ DB_PartyMembers(_Character)
 THEN
 PROC_PPMeter_UpdateCharacterGUI(_Character);
 DebugText(_Character, "Initialization on EnteredCombat");
+
+IF
+EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
+//END_REGION
+
+
+//REGION // handle LeveledUp - on levelup reset per Level stats
+IF
+LeveledUp((CHARACTER)_Character)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0.0);
+//END_REGION
+
+
+//REGION // handle LongRestFinished -  reset daily data
+IF
+LongRestFinished()
+AND
+DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
+AND
+DB_PPMeter_StatsType(_StatsName)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0.0);
 //END_REGION
 
 
@@ -249,6 +282,38 @@ Concatenate(_str3, ",0)", _BoostStr)
 THEN
 DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostStr);
 AddBoosts(_Character, _BoostStr, "", _Character);
+//END_REGION
+
+
+//REGION // PROC_PPMeterAdd - does _Value += _NewValue
+PROC
+PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_Value)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue)
+AND
+RealSum(_OldValue, _Value, _NewValue)
+THEN
+PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _StatsName, _NewValue);
+//END_REGION
+
+
+//REGION // PROC_PPMeter_ReplaceInDB - write a value to DB and remove old value and refresh GUI
+PROC
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue)
+THEN
+NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue); // remove old value
+
+PROC
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
+THEN
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _NewValue); // write new value
+
+PROC
+PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
+THEN
+PROC_PPMeter_WriteResource((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue);
 //END_REGION
 EXITSECTION
 

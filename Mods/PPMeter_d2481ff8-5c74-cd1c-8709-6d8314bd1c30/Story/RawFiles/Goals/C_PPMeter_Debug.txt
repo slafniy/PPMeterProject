@@ -1,7 +1,16 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
+// Store HitpointsChanged events which INCREASED hp (drop HP loss!) to match them with HEAL status later.
+// Character - HealValue - EventID
+//NOT DB_PPMeter_HealEvents((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0, 0);
 
+// Timer events list
+// character - timer string - event id
+//NOT DB_PPMeter_HealEventTimers((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, "", 0);
+
+// Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
+//DB_PPMeter_HealEventTimerValueMs(100);
 KBSECTION
 IF
 TextEvent("ppmdata")
@@ -162,32 +171,6 @@ DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, 0.0);
 //DebugText(_Character, "Fill zeros call!");
 //END_REGION
 
-
-//REGION // PROC_PPMeter_ReplaceInDB - write a value to DB and remove old value.
-PROC
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue)
-THEN
-NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue); // remove old value
-
-PROC
-PROC_PPMeter_ReplaceInDB((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_NewValue)
-THEN
-DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _NewValue); // write new value
-//END_REGION
-
-
-//REGION // PROC_PPMeterAdd - does _Value += _NewValue
-PROC
-PROC_PPMeterAdd((CHARACTER)_Character, (STRING)_Lifetime, (STRING)_StatsName, (REAL)_Value)
-AND
-DB_PPMeter_DataReal(_Character, _Lifetime, _StatsName, _OldValue)
-AND
-RealSum(_OldValue, _Value, _NewValue)
-THEN
-PROC_PPMeter_ReplaceInDB(_Character, _Lifetime, _StatsName, _NewValue);
-//END_REGION
 
 
 //REGION // PROC_PPMeter_InitializePreviousHPAndHealEventCounter
@@ -359,6 +342,61 @@ AND
 _ValueToCheck >= _Value
 THEN
 DB_NOOP(1);
+//END_REGION
+
+
+//REGION // Process StatusApplied - HEAL status applied - only if HEAL target is in combat!
+IF
+StatusApplied((CHARACTER)_Target, "HEAL", (CHARACTER)_Caster, _)
+AND
+IsInCombat(_Target, 1)
+AND
+DB_PPMeter_HealEvents(_Target, _HealValue, _EventID)
+AND
+QRY_PPMeterIsEarliestHealEvent(_Target, _EventID)
+AND
+ConcatenateInteger("Healed by ", _HealValue, _msg1)
+AND
+Concatenate(_msg1, ", healer: ", _msg2)
+AND
+ConcatenateGUID(_msg2, _Caster, _msg)
+THEN
+PROC_PPMeterApplyHealingDone(_Caster, _HealValue);
+PROC_PPMeterApplyHealingTaken(_Caster, _Target, _HealValue);
+NOT DB_PPMeter_HealEvents(_Target, _HealValue, _EventID);
+
+PROC
+PROC_PPMeterApplyHealingDone((CHARACTER)_Healer, (INTEGER)_HealValue)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Healer, _Lifetime, "Healing", _HealValueReal);
+
+// Count External Healing Received
+PROC
+PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
+AND
+_Caster != _Target  // calculate only external healing
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Target, _Lifetime, "HealingTaken", _HealValueReal);
+
+// Count self-healing
+PROC
+PROC_PPMeterApplyHealingTaken((CHARACTER)_Caster, (CHARACTER)_Target, (INTEGER)_HealValue)
+AND
+_Caster == _Target
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply healing to every lifetime
+AND
+IntegerToReal(_HealValue, _HealValueReal)
+THEN
+PROC_PPMeterAdd(_Target, _Lifetime, "HealingSelf", _HealValueReal);
 
 QRY
 QRY_PPMeterIsEarliestHealEvent((CHARACTER)_Character, (INTEGER)_EventIDToCheck)
