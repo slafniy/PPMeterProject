@@ -112,15 +112,17 @@ NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-0000
 // Timer value, ms - max allowed delay between actual HP increase and matching HEAL status
 //DB_PPMeter_HealEventTimerValueMs(100);
 
-
-
+// how much time to wait after LevelGameplayStarted event
+DB_PPMeter_LevelGameplayStartedTimerMs(500);
 
 KBSECTION
 //REGION // handle LevelGameplayStarted - Initialize character data, refresh GUI
 IF
 LevelGameplayStarted(_, _)
+AND
+DB_PPMeter_LevelGameplayStartedTimerMs(_Timeout)
 THEN
-TimerLaunch("PPMeter_TimerLevelGameplayStarted", 1500);  // give some time for game to load everything
+TimerLaunch("PPMeter_TimerLevelGameplayStarted", _Timeout);  // give some time for game to load everything
 
 IF
 TimerFinished("PPMeter_TimerLevelGameplayStarted")
