@@ -12,6 +12,7 @@ Important notes:
 - Requires Keyboard+Mouse UI, won't work with a Controller!
 - Does not require a new game.
 - Does not break a game if you disable it mid-game.
+- Should also work if you update it mid-game, but data could be missing until you do a corresponding action.
 - Will work if you re-enable it, but will reset data on the first fight.
 - Should be compatible with other GUI mods. Please let me know if you have issues.
 - Does **not** use ScriptExtender, written entirely in Osiris.
