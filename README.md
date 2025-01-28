@@ -11,11 +11,11 @@ I believe this mod is atomic and compatible with any other mod.
 Important notes:
 - Requires Keyboard+Mouse UI, won't work with a Controller!
 - Does not require a new game.
-- Does not break a game if you disable it mid-game.
-- Should also work if you update it mid-game, but data could be missing until you do a corresponding action.
-- Will work if you re-enable it, but will reset data on the first fight.
+- Does not break a save file if you disable it mid-game, but **collected data will be lost**!
+- Will work if you re-enable it, but will collect the data from scratch.
+- Will work if you update it mid-game, and _should keep collected data_, but GUI can show empty strings instead of zeros. It will be back to normal when a corresponding value will be updated.
 - Should be compatible with other GUI mods. Please let me know if you have issues.
-- Does **not** use ScriptExtender, written entirely in Osiris.
+- Does **not** use ScriptExtender, written entirely in Osiris. It is fully compatible with in-game mod manager.
 
 
 ### What it does
