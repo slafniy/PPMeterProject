@@ -1,0 +1,15 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _Value)
+THEN
+NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _Value);
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"

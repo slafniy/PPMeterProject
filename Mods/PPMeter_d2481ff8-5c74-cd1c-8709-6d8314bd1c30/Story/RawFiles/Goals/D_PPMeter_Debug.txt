@@ -119,7 +119,13 @@ AND
 ConcatenateInteger("GetHitpoints() result: ", _HP, _msg)
 THEN
 DebugText(_Character, _msg);
-//END_REGION
+
+
+IF
+TextEvent("ppmwipe")
+THEN
+PROC_PPMeter_WipeAllData();
+
 EXITSECTION
 
 ENDEXITSECTION
