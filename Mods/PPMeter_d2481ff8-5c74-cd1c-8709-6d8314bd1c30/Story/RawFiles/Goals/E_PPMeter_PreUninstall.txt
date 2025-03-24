@@ -15,6 +15,15 @@ INITSECTION
 // DB_PPMeter_HealEventTimers(_Val1, _Val2, _Val3)
 // DB_PPMeter_HealEventTimerValueMs(_Val1)
 KBSECTION
+// Remove existing boosts first!
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString)
+THEN
+RemoveBoosts(_Character, _BoostString, 0, "", _Character);
+NOT DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString);
+
 PROC
 PROC_PPMeter_WipeAllData()
 AND
