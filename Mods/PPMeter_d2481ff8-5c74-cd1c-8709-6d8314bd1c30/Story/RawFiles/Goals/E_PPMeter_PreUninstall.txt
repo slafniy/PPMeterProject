@@ -1,14 +1,104 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-
+// DB records to remove
+// DB_PPMeter_Lifetime(_Val1)
+// DB_PPMeter_StatsType(_Val1)
+// DB_PPMeter_CalculatedStats(_Val1, _Val2)
+// DB_PPMeter_ResourceNames(_Val1, _Val2, _Val3)
+// DB_PPMeter_DataReal(_Val1, _Val2, _Val3, _Val4)
+// DB_PPMeter_EventsCounter(_Val1, _Val2)
+// DB_PPMeter_PreviousHP(_Val1, _Val2)
+// DB_PPMeter_CurrentResourceBoost(_Val1, _Val2, _Val3, _Val4, _Val5)
+// DB_PPMeter_LevelGameplayStartedTimerMs(_Val1)
+// DB_PPMeter_HealEvents(_Val1, _Val2, _Val3)
+// DB_PPMeter_HealEventTimers(_Val1, _Val2, _Val3)
+// DB_PPMeter_HealEventTimerValueMs(_Val1)
 KBSECTION
 PROC
 PROC_PPMeter_WipeAllData()
 AND
-DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _Value)
+DB_PPMeter_Lifetime(_Val1)
 THEN
-NOT DB_PPMeter_DataReal(_Character, _Lifetime, _StatsType, _Value);
+NOT DB_PPMeter_Lifetime(_Val1);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_StatsType(_Val1)
+THEN
+NOT DB_PPMeter_StatsType(_Val1);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_CalculatedStats(_Val1, _Val2)
+THEN
+NOT DB_PPMeter_CalculatedStats(_Val1, _Val2);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_ResourceNames(_Val1, _Val2, _Val3)
+THEN
+NOT DB_PPMeter_ResourceNames(_Val1, _Val2, _Val3);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_DataReal(_Val1, _Val2, _Val3, _Val4)
+THEN
+NOT DB_PPMeter_DataReal(_Val1, _Val2, _Val3, _Val4);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_EventsCounter(_Val1, _Val2)
+THEN
+NOT DB_PPMeter_EventsCounter(_Val1, _Val2);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_PreviousHP(_Val1, _Val2)
+THEN
+NOT DB_PPMeter_PreviousHP(_Val1, _Val2);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_CurrentResourceBoost(_Val1, _Val2, _Val3, _Val4, _Val5)
+THEN
+NOT DB_PPMeter_CurrentResourceBoost(_Val1, _Val2, _Val3, _Val4, _Val5);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_LevelGameplayStartedTimerMs(_Val1)
+THEN
+NOT DB_PPMeter_LevelGameplayStartedTimerMs(_Val1);
+
+PROC
+PROC_PPMeter_WipeAllData()
+AND
+DB_PPMeter_HealEvents(_Val1, _Val2, _Val3)
+THEN
+NOT DB_PPMeter_HealEvents(_Val1, _Val2, _Val3);
+
+PROC
+PROC_PPMeterWipeAllData()
+AND
+DB_PPMeter_HealEventTimers(_Val1, _Val2, _Val3)
+THEN
+NOT DB_PPMeter_HealEventTimers(_Val1, _Val2, _Val3);
+
+PROC
+PROC_PPMeterWipeAllData()
+AND
+DB_PPMeter_HealEventTimerValueMs(_Val1)
+THEN
+NOT DB_PPMeter_HealEventTimerValueMs(_Val1);
+
 EXITSECTION
 
 ENDEXITSECTION
