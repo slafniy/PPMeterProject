@@ -27,4 +27,6 @@
     <content contentuid="h14159632g0a47g4048g8f84ga6ac8860a6b7" version="1">Show healing done data (including self-healing, excluding overheal).</content>
     <content contentuid="h639e9f3cg4b0bg4173gaa28g2c5a1df98836" version="1">Show external healing received data (excluding overheal).</content>
     <content contentuid="hf427232ag72fag4b61g9adeg767c875cdba4" version="1">Show self-healing data (excluding overheal).</content>
+
+    <content contentuid="hbde88da4gb79eg4983g8cfdg357f30b48c63" version="1">PPMETER FULL WIPE</content>
 </contentList>
