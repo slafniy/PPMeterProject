@@ -57,7 +57,7 @@ THEN
 RemoveBoosts(_Character, _BoostString, 0, "", _Character);
 NOT DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString);
 
-PROC
+/*PROC
 PROC_PPMeter_WipeAllData()
 AND
 DB_PPMeter_Lifetime(_Val1)
@@ -142,6 +142,7 @@ THEN
 NOT DB_PPMeter_HealEventTimerValueMs(_Val1);
 
 //END_REGION
+*/
 EXITSECTION
 
 ENDEXITSECTION
