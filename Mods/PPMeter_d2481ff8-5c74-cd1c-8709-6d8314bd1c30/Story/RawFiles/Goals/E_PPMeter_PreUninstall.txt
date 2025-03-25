@@ -15,8 +15,10 @@ INITSECTION
 // DB_PPMeter_HealEventTimers(_Val1, _Val2, _Val3)
 // DB_PPMeter_HealEventTimerValueMs(_Val1)
 KBSECTION
-//REGION  // Add Shout_PPMeterWipe spell
+//REGION // handle LevelGameplayStarted - Add Shout_PPMeterWipe spell after timeout
 IF
+TimerFinished("PPMeter_TimerLevelGameplayStarted")
+AND
 DB_PartyMembers(_Character)
 AND
 GetHostCharacter(_Character)
@@ -27,8 +29,9 @@ Concatenate(_onlyOnceStr1, "PPMeterWipeButtonAdd", _onlyOnceStr)
 AND
 QRY_OnlyOnce(_onlyOnceStr)
 THEN
-AddSpell(_Character, "Shout_PPMeterWipe", 0, 0);
+AddSpell(_Character, "Shout_PPMeterWipe", 1, 0);
 //END_REGION
+
 
 //REGION  // Process Shout_PPMeterWipe
 IF
