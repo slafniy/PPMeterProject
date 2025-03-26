@@ -124,7 +124,7 @@ DebugText(_Character, _msg);
 IF
 TextEvent("ppmwipe")
 THEN
-PROC_PPMeter_WipeAllData();
+PROC_PPMeter_WipeResourceData();
 
 EXITSECTION
 

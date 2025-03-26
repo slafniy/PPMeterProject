@@ -209,6 +209,38 @@ PROC_PPMeter_ReplaceInDB(_Character, "Day", _StatsName, 0.0);
 //END_REGION
 
 
+//REGION  // handle PPMETER_READY_TO_DISABLE status
+IF
+StatusApplied((CHARACTER)_Character, "PPMETER_READY_TO_DISABLE", _, _)
+AND
+GetHostCharacter(_Character)
+THEN
+PROC_PPMeter_WipeResourceData();
+DebugText(_Character, "PPMeter resource boosts removed!");
+
+IF
+StatusRemoved((CHARACTER)_HostCharacter, "PPMETER_READY_TO_DISABLE", _, _)
+AND
+GetHostCharacter(_HostCharacter)
+AND
+DB_PartyMembers(_Character)
+THEN
+PROC_PPMeter_UpdateCharacterGUI(_Character);
+DebugText(_Character, "PPMeter resource boosts restored!");
+//END_REGION
+
+
+//REGION // PROC_PPMeter_WipeResourceData
+PROC
+PROC_PPMeter_WipeResourceData()
+AND
+DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString)
+THEN
+RemoveBoosts(_Character, _BoostString, 0, "", _Character);
+NOT DB_PPMeter_CurrentResourceBoost(_Character, _ResourceName, _Lifetime, _StatsType, _BoostString);
+//END_REGION
+
+
 //REGION  // PROC_PPMeter_InitializeCharacterData
 PROC
 PROC_PPMeter_InitializeCharacterData((CHARACTER)_Character)
