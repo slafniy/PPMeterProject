@@ -28,5 +28,8 @@
     <content contentuid="h639e9f3cg4b0bg4173gaa28g2c5a1df98836" version="1">Show external healing received data (excluding overheal).</content>
     <content contentuid="hf427232ag72fag4b61g9adeg767c875cdba4" version="1">Show self-healing data (excluding overheal).</content>
 
-    <content contentuid="hbde88da4gb79eg4983g8cfdg357f30b48c63" version="1">PPMETER FULL WIPE</content>
+    <content contentuid="hbde88da4gb79eg4983g8cfdg357f30b48c63" version="1">PPMeter: toggle pause</content>
+    <content contentuid="he9a49ef8g0c14g4c9dgac08g46f834586f3f" version="1">Stops PPMeter GUI updates (clears hidden mod's resources). Activate it BEFORE mod deletion to avoid issues with missing Short Rests, Inspiration Points etc.</content>
+    <content contentuid="h50e0fb80g0c94g4a0cg9743gbf19fc6c2dfe" version="1">PPMeter: Safe to remove</content>
+    <content contentuid="hd0003e21g9477g469bg8896g888b1b05db46" version="1">PPMeter cleared its hidden technical data and is ready for safe disabling. Don't forget to save your game before exiting to the main menu!</content>
 </contentList>

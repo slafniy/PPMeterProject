@@ -27,4 +27,9 @@
     <content contentuid="h14159632g0a47g4048g8f84ga6ac8860a6b7" version="1">Показать данные об исцелении в бою (включая себя, исключая избыточное исцеление).</content>
     <content contentuid="h639e9f3cg4b0bg4173gaa28g2c5a1df98836" version="1">Показать данные о полученном внешнем исцелении в бою (исключая избыточное исцеление).</content>
     <content contentuid="hf427232ag72fag4b61g9adeg767c875cdba4" version="1">Показать данные о самоисцелении в бою (исключая избыточное).</content>
+
+    <content contentuid="hbde88da4gb79eg4983g8cfdg357f30b48c63" version="1">PPMeter: поставить на паузу</content>
+    <content contentuid="he9a49ef8g0c14g4c9dgac08g46f834586f3f" version="1">Прекращает обновления данных в интерфейсе PPMeter (очищает скрытые ресурсы мода). Включите ПЕРЕД отключением мода, чтобы избежать проблем с отсутствующими Короткими отдыхами, Очками вдохновения и т.д.</content>
+    <content contentuid="h50e0fb80g0c94g4a0cg9743gbf19fc6c2dfe" version="1">PPMeter: Безопасное удаление</content>
+    <content contentuid="hd0003e21g9477g469bg8896g888b1b05db46" version="1">PPMeter почистил свои скрытые технические данные и готов для безопасного отключения. Не забудьте сохранить вашу игру перед выходом в главное меню!</content>
 </contentList>
