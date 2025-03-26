@@ -15,38 +15,6 @@ INITSECTION
 // DB_PPMeter_HealEventTimers(_Val1, _Val2, _Val3)
 // DB_PPMeter_HealEventTimerValueMs(_Val1)
 KBSECTION
-//REGION // handle LevelGameplayStarted - Add Shout_PPMeterWipe spell after timeout
-IF
-TimerFinished("PPMeter_TimerLevelGameplayStarted")
-AND
-DB_PartyMembers(_Character)
-AND
-GetHostCharacter(_Character)
-AND
-GUIDToString(_Character, _onlyOnceStr1)
-AND
-Concatenate(_onlyOnceStr1, "PPMeterWipeButtonAdd", _onlyOnceStr)
-AND
-QRY_OnlyOnce(_onlyOnceStr)
-THEN
-AddSpell(_Character, "Shout_PPMeterWipe", 1, 0);
-//END_REGION
-
-
-//REGION  // Process Shout_PPMeterWipe
-IF
-CastedSpell((CHARACTER)_Player, "Shout_PPMeterWipe", _, _, _)
-THEN
-DebugText(_Player, "Shout_PPMeterWipe cast!");
-PROC_PPMeter_WipeAllData();
-
-IF
-CastedSpell((CHARACTER)_Player, "Shout_PPMeterWipe", _, _, _)
-THEN
-RemoveSpell(_Player, "Shout_PPMeterWipe", 0);
-//END_REGION
-
-
 //REGION // PROC_PPMeter_WipeAllData()
 // Remove existing boosts first!
 PROC

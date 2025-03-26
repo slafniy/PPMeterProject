@@ -127,6 +127,20 @@ DB_PartyMembers(_Character)
 THEN
 PROC_PPMeter_UpdateCharacterGUI(_Character);
 DebugText(_Character, "Initialization by PPMeter_TimerLevelGameplayStarted!");
+
+// handle LevelGameplayStarted - Add PPMeter_UpdateGUI_Passive after timeout
+IF
+TimerFinished("PPMeter_TimerLevelGameplayStarted")
+AND
+DB_PartyMembers(_Character)
+AND
+GUIDToString(_Character, _onlyOnceStr1)
+AND
+Concatenate(_onlyOnceStr1, "PPMeter_UpdateGUI_Passive_Added", _onlyOnceStr)
+AND
+QRY_OnlyOnce(_onlyOnceStr)
+THEN
+AddPassive(_Character, "PPMeter_UpdateGUI_Passive");
 //END_REGION
 
 
