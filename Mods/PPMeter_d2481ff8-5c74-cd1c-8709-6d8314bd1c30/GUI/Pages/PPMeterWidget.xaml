@@ -1035,7 +1035,7 @@
             <Grid x:Name="root">
 
                 <!-- PPMeter widget -->
-                <Grid x:Name="PPMeterWidget" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Grid x:Name="PPMeterWidget" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed">
                     <b:Interaction.Behaviors>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=Header,Mode=OneWay}"/>
                         <ls:LSMouseDragElementBehavior HitArea="{Binding ElementName=HeaderName,Mode=OneWay}"/>
