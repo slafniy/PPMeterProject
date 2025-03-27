@@ -11,7 +11,7 @@ I believe this mod is atomic and compatible with any other mod.
 Important notes:
 - Requires Keyboard+Mouse UI, won't work with a Controller!
 - Does not require a new game.
-- Does not break a save file if you disable it mid-game, but **collected data will be lost**!
+- Does not break a save file if you **PROPERLY** disable it mid-game (see Uninstallation section below), but **collected data will be lost**!
 - Will work if you re-enable it, but will collect the data from scratch.
 - Will work if you update it mid-game, and _should keep collected data_, but GUI can show empty strings instead of zeros. It will be back to normal when a corresponding value will be updated.
 - Should be compatible with other GUI mods. Please let me know if you have issues.
@@ -37,7 +37,8 @@ PPMeter accumulates combat data for party members and shows it in a table.
   - Overall - never resets.
 
     
-### Known limitations 
+### Known limitations  and issues
+- PPMeter UI can miss some updates during online game (affects only UI, internal data collecting logic always works as intended).
 - Cannot guarantee correct healer detection if two or more healers use their heal abilities simultaneously, PPMeter needs at least 0.1 sec window between them.
 - Healing from [Amulet of the Drunkard](https://bg3.wiki/wiki/Amulet_of_the_Drunkard) does not count.
 - Temporary HPs do not count, except from [Boots of Aid and Comfort](https://bg3.wiki/wiki/Boots_of_Aid_and_Comfort).
@@ -45,6 +46,15 @@ PPMeter accumulates combat data for party members and shows it in a table.
 - Damage made while hiding does not count.
 
 Some healing mechanics are very strange, and the game does not provide "X healed Y by N hp" Osiris event. So healing counting background logic is complicated and has limitations. Some issues I can fix, but it will require more time. Please consider healing counter experimental :) and report all bugs you've found.
+
+
+### Uninstallation
+If you want to disable it mid-game you should do this:
+ - Activate "PPMeter: toggle pause" passive
+ - **Save the game**
+ - Exit to main menu and disable/unsubscribe the mod as usual 
+
+If you ignore this passive and simply disable the mod, you can (and will) have issues with missing resources - Warlock Spell Slots, Short Rests, Inspiration Points etc. However, you can re-enable the mod and try again.
 
 
 ### Development and future plans
