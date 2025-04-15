@@ -1,0 +1,4 @@
+new entry "ExtraAttack_BonusTechnical"
+type "PassiveData"
+using "ExtraAttack_BonusTechnical"
+data "Conditions" "not HasActionResource('BonusActionPoint', 1, 0, false, false, context.Source)"
