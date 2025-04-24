@@ -2,7 +2,8 @@ Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
 DB_PPMeter_TurnStartedTimerPrefix("PPMeterTurnStartedTimer_");
-DB_PPMeter_TurnStartedTimerDelayMs(250);
+DB_PPMeter_DamageDoneTimerPrefix("PPMeterDamageDoneTimer_");
+DB_PPMeter_CombatMinimumLengthMs(250);
 
 // DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
 KBSECTION
@@ -14,7 +15,7 @@ DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
 AND
 ConcatenateGUID(_Prefix, _Character, _TimerStr)
 AND
-DB_PPMeter_TurnStartedTimerDelayMs(_Delay)
+DB_PPMeter_CombatMinimumLengthMs(_Delay)
 THEN
 RealtimeObjectTimerLaunch(_Character, _TimerStr, _Delay);
 
@@ -51,9 +52,34 @@ AND
 IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
 AND
 IntegerToReal(_DamageAmount, _DamageAmountReal)
+AND
+DB_PPMeter_DamageDoneTimerPrefix(_Prefix)
+AND
+DB_PPMeter_CombatMinimumLengthMs(_Delay)
+AND
+ConcatenateGUID(_Prefix, _AttackerOwner, _TimerStr1)
+AND
+ConcatenateInteger(_TimerStr1, _StoryActionID, _TimerStr)
 THEN
-PROC_PPMeter_ProcessAddDamage(_AttackerOwner, _DamageAmountReal);
+DB_PPMeter_TempDamage(_AttackerOwner, _DamageAmountReal, _TimerStr);
+RealtimeObjectTimerLaunch(_AttackerOwner, _TimerStr, _Delay);
 
+IF
+ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+AND
+IsInCombat(_Character, 1)  // count damage only if entity is still in combat
+AND
+DB_PPMeter_TempDamage(_Character, _Damage, _TimerStr)
+THEN
+PROC_PPMeter_ProcessAddDamage(_Character, _Damage);
+
+// Clear DB record after processed timer
+IF
+ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+AND
+DB_PPMeter_TempDamage(_Character, _Damage, _TimerStr)
+THEN
+NOT DB_PPMeter_TempDamage(_Character, _Damage, _TimerStr);
 
 PROC
 PROC_PPMeter_ProcessAddDamage((CHARACTER)_Character, (REAL)_Damage)
