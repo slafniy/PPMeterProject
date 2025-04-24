@@ -1,107 +1,43 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-DB_PPMeter_TurnStartedTimerPrefix("PPMeterTurnStartedTimer_");
-DB_PPMeter_DamageDoneTimerPrefix("PPMeterDamageDoneTimer_");
-DB_PPMeter_IsLongCombatTimerPrefix("PPMeterIsLongCombatTimer_");
-DB_PPMeter_AfterLongCombatDelayPrefix("PPMeterAfterLongCombatDelayTimer_");
 DB_PPMeter_DataWriteDelayMs(250);
-DB_PPMeter_LongCombatMinimumLengthMs(500);
-DB_PPMeter_LongCombatRecordsDeletionDelay(5000);
-DB_PPMeter_JustLeftCombatDelayMs(500);
+DB_PPMeter_DataWriteTimerPrefix("PPMeterDataWriteTimer_");
+DB_PPMeter_RoundsCountTimerPrefix("PPMeterRoundsCountTimer_");
 
-// DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
-// DB_PPMeter_LongCombatCandidate((GUIDSTRING)_CombatGuid, (STRING)_TimerStr);
-// DB_PPMeter_LongCombat((GUIDSTRING)_CombatGuid);
-// DB_PPMeter_IsOrJustLeftLongCombat((CHARACTER)_Character);
+DB_PPMeter_JustLeftCombatDelayMs(500);
+DB_PPMeter_JustLeftCombatTimerPrefix("PPMeterJustLeftCombatTimer_");
+
 KBSECTION
-// Process CombatStarted, CombatEnded - fill DB_PPMeter_LongCombat
+// Track if character recently left combat
 //REGION
 IF
-CombatStarted(_CombatGuid)
+LeftCombat((CHARACTER)_Character, _)
 AND
-DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
+DB_PartyMembers(_Character)
 AND
-ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
-THEN
-PROC_PPMeter_ProcessCombatStartedInner(_CombatGuid, _TimerString);
-
-PROC
-PROC_PPMeter_ProcessCombatStartedInner((GUIDSTRING)_CombatGuid, (STRING)_TimerStr)
-THEN
-DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr);
-DebugLog("PPMLog: DB_PPMeter_LongCombatCandidate added");
-
-PROC
-PROC_PPMeter_ProcessCombatStartedInner((GUIDSTRING)_CombatGuid, (STRING)_TimerStr)
+DB_PPMeter_JustLeftCombatTimerPrefix(_Prefix)
 AND
-DB_PPMeter_LongCombatMinimumLengthMs(_Delay)
+ConcatenateGUID(_Prefix, _Character, _TimerStr)
+AND
+DB_PPMeter_JustLeftCombatDelayMs(_Delay)
 THEN
 TimerLaunch(_TimerStr, _Delay);
-DebugLog("PPMLog: Combat Minimum Length timer started");
-
-IF
-CombatEnded(_CombatGuid)
-AND
-DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr)
-AND
-TimerExists(_TimerStr, 1)  // if timer still ticking
-THEN
-TimerCancel(_TimerStr);
-NOT DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr);
-DebugLog("PPMLog: Combat was short");
-
-IF
-TimerFinished(_TimerStr)
-AND
-DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr)  // if Timer Strings match
-THEN
-DB_PPMeter_LongCombat(_CombatGuid);
-NOT DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr);
-DebugLog("PPMLog: Combat is long!");
-
-
-
-// Remove DB_PPMeter_LongCombat after configured delay
-IF
-CombatEnded(_CombatGuid)
-AND
-DB_PPMeter_LongCombat(_CombatGuid)
-AND
-DB_PPMeter_LongCombatRecordsDeletionDelay(_Delay)
-AND
-DB_PPMeter_AfterLongCombatDelayPrefix(_Prefix)
-AND
-ConcatenateGUID(_Prefix, _CombatGuid, _TimerStr)
-THEN
-TimerLaunch(_TimerStr, _Delay);
-DebugLog("PPMLog: Long combat ended, scheduled deletion timer");
-
-IF
-TimerFinished(_TimerStr)
-AND
-DB_PPMeter_LongCombat(_CombatGuid)
-AND
-GUIDToString(_CombatGuid, _CombatGUIDStr)
-AND
-IsSubstring(_TimerStr, _CombatGUIDStr, 1)
-THEN
-NOT DB_PPMeter_LongCombat(_CombatGuid);
-DebugLog("PPMLog: Long combat removed after delay");
+DebugLog("PPMLog: Just Left Combat Timer launched");
 //END_REGION
 
-// Process EnteredCombat, LeftCombat - check if character joined to LONG combat
-// and check if it just left such combat
+// QRY_InCombatRecently((CHARACTER)_Character)
 //REGION
-IF
-EnteredCombat((CHARACTER)_Character, _CombatGuid)
+QRY
+QRY_InCombatRecently((CHARACTER)_Character)
 AND
-DB_PPMeter_LongCombat((GUIDSTRING)_CombatGuid)
+DB_PPMeter_JustLeftCombatTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _Character, _TimerStr)
+AND
+TimerExists(_TimerStr, 1)
 THEN
-DB_PPMeter_IsOrJustLeftLongCombat((CHARACTER)_Character);
-DebugLog("PPMLog: character joined existing long combat");
-
-
+DB_NOOP(1);
 //END_REGION
 
 
@@ -109,7 +45,7 @@ DebugLog("PPMLog: character joined existing long combat");
 IF
 TurnStarted((CHARACTER)_Character)
 AND
-DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
+DB_PPMeter_RoundsCountTimerPrefix(_Prefix)
 AND
 ConcatenateGUID(_Prefix, _Character, _TimerStr)
 AND
@@ -120,9 +56,22 @@ RealtimeObjectTimerLaunch(_Character, _TimerStr, _Delay);
 IF
 ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
 AND
-IsInCombat(_Character, 1)  // rounds++ only if entity is still in combat
+IsInCombat(_Character, 1)  // is in combat now
 AND
-DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
+DB_PPMeter_RoundsCountTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _Character, _TimerStr)  // if strings match
+THEN
+PROC_PPMeter_ProcessTurnStartedWithDelay(_Character);
+
+IF
+ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+AND
+IsInCombat(_Character, 0)  // not in combat now ...
+AND
+QRY_InCombatRecently(_Character)  // ... but was in combat recently
+AND
+DB_PPMeter_RoundsCountTimerPrefix(_Prefix)
 AND
 ConcatenateGUID(_Prefix, _Character, _TimerStr)  // if strings match
 THEN
@@ -151,7 +100,7 @@ IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
 AND
 IntegerToReal(_DamageAmount, _DamageAmountReal)
 AND
-DB_PPMeter_DamageDoneTimerPrefix(_Prefix)
+DB_PPMeter_DataWriteTimerPrefix(_Prefix)
 AND
 DB_PPMeter_DataWriteDelayMs(_Delay)
 AND
@@ -165,7 +114,18 @@ RealtimeObjectTimerLaunch(_AttackerOwner, _TimerStr, _Delay);
 IF
 ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
 AND
-IsInCombat(_Character, 1)  // count damage only if entity is still in combat
+IsInCombat(_Character, 1)  // is in combat now
+AND
+DB_PPMeter_TempDamage(_Character, _Damage, _TimerStr)
+THEN
+PROC_PPMeter_ProcessAddDamage(_Character, _Damage);
+
+IF
+ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+AND
+IsInCombat(_Character, 0)  // not in combat now ...
+AND
+QRY_InCombatRecently(_Character)  // ... but left it recently
 AND
 DB_PPMeter_TempDamage(_Character, _Damage, _TimerStr)
 THEN
