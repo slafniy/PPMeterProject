@@ -3,10 +3,51 @@ SubGoalCombiner SGC_AND
 INITSECTION
 DB_PPMeter_TurnStartedTimerPrefix("PPMeterTurnStartedTimer_");
 DB_PPMeter_DamageDoneTimerPrefix("PPMeterDamageDoneTimer_");
-DB_PPMeter_CombatMinimumLengthMs(250);
+DB_PPMeter_IsLongCombatTimerPrefix("PPMeterIsLongCombatTimer_");
+DB_PPMeter_DataWriteDelayMs(250);
+DB_PPMeter_LongCombatMinimumLengthMs(500);
 
 // DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
+// DB_PPMeter_CharacterIsInLongCombat((CHARACTER)_Character);
 KBSECTION
+// Process combat start and end to be aware if it's "long" or "instant".
+// In case of "instant" we won't count damage made "not in combat" in case of the last killing blow
+//REGION
+IF
+EnteredCombat((CHARACTER)_Character, _)
+AND
+DB_PartyMembers(_Character)
+AND
+DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _Character, _TimerStr)
+AND
+DB_PPMeter_LongCombatMinimumLengthMs(_Delay)
+THEN
+RealtimeObjectTimerLaunch(_Character, _TimerStr, _Delay);
+
+IF
+ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+AND
+IsInCombat(_Character, 1)  // if it is still in combat it's a long enough combat
+AND
+DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _Character, _TimerStr)  // if strings match
+THEN
+DB_PPMeter_CharacterIsInLongCombat(_Character);
+DebugText(_Character, "Joined long combat!");
+
+IF
+LeftCombat((CHARACTER)_Character, _)
+AND
+DB_PPMeter_CharacterIsInLongCombat(_Character)
+THEN
+NOT DB_PPMeter_CharacterIsInLongCombat(_Character);
+DebugText(_Character, "Left long combat!");
+//END_REGION
+
+
 //REGION // handle TurnStarted - count rounds
 IF
 TurnStarted((CHARACTER)_Character)
@@ -15,7 +56,7 @@ DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
 AND
 ConcatenateGUID(_Prefix, _Character, _TimerStr)
 AND
-DB_PPMeter_CombatMinimumLengthMs(_Delay)
+DB_PPMeter_DataWriteDelayMs(_Delay)
 THEN
 RealtimeObjectTimerLaunch(_Character, _TimerStr, _Delay);
 
@@ -55,7 +96,7 @@ IntegerToReal(_DamageAmount, _DamageAmountReal)
 AND
 DB_PPMeter_DamageDoneTimerPrefix(_Prefix)
 AND
-DB_PPMeter_CombatMinimumLengthMs(_Delay)
+DB_PPMeter_DataWriteDelayMs(_Delay)
 AND
 ConcatenateGUID(_Prefix, _AttackerOwner, _TimerStr1)
 AND
