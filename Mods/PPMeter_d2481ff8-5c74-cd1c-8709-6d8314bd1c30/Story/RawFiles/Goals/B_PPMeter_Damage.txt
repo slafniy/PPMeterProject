@@ -3,8 +3,10 @@ SubGoalCombiner SGC_AND
 INITSECTION
 DB_PPMeter_TurnStartedTimerPrefix("PPMeterTurnStartedTimer_");
 DB_PPMeter_TurnStartedTimerDelayMs(250);
+
+// DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
 KBSECTION
-//REGION // handle TurnEnded - count rounds
+//REGION // handle TurnStarted - count rounds
 IF
 TurnStarted((CHARACTER)_Character)
 AND
@@ -48,11 +50,17 @@ _DamageAmount > 0.0
 AND
 IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
 AND
-DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
-AND
 IntegerToReal(_DamageAmount, _DamageAmountReal)
 THEN
-PROC_PPMeterAdd(_AttackerOwner, _Lifetime, "Damage", _DamageAmountReal);
+PROC_PPMeter_ProcessAddDamage(_AttackerOwner, _DamageAmountReal);
+
+
+PROC
+PROC_PPMeter_ProcessAddDamage((CHARACTER)_Character, (REAL)_Damage)
+AND
+DB_PPMeter_Lifetime(_Lifetime)  // Apply damage to every lifetime
+THEN
+PROC_PPMeterAdd(_Character, _Lifetime, "Damage", _Damage);
 //END_REGION
 
 
