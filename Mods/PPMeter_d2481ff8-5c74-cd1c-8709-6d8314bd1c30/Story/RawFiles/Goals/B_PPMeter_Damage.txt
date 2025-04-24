@@ -7,11 +7,13 @@ DB_PPMeter_IsLongCombatTimerPrefix("PPMeterIsLongCombatTimer_");
 DB_PPMeter_AfterLongCombatDelayPrefix("PPMeterAfterLongCombatDelayTimer_");
 DB_PPMeter_DataWriteDelayMs(250);
 DB_PPMeter_LongCombatMinimumLengthMs(500);
-DB_PPMeter_LongCombatAfterCombatDelay(250);
+DB_PPMeter_LongCombatRecordsDeletionDelay(5000);
+DB_PPMeter_JustLeftCombatDelayMs(500);
 
 // DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
 // DB_PPMeter_LongCombatCandidate((GUIDSTRING)_CombatGuid, (STRING)_TimerStr);
 // DB_PPMeter_LongCombat((GUIDSTRING)_CombatGuid);
+// DB_PPMeter_IsOrJustLeftLongCombat((CHARACTER)_Character);
 KBSECTION
 // Process CombatStarted, CombatEnded - fill DB_PPMeter_LongCombat
 //REGION
@@ -66,7 +68,7 @@ CombatEnded(_CombatGuid)
 AND
 DB_PPMeter_LongCombat(_CombatGuid)
 AND
-DB_PPMeter_LongCombatAfterCombatDelay(_Delay)
+DB_PPMeter_LongCombatRecordsDeletionDelay(_Delay)
 AND
 DB_PPMeter_AfterLongCombatDelayPrefix(_Prefix)
 AND
@@ -86,6 +88,20 @@ IsSubstring(_TimerStr, _CombatGUIDStr, 1)
 THEN
 NOT DB_PPMeter_LongCombat(_CombatGuid);
 DebugLog("PPMLog: Long combat removed after delay");
+//END_REGION
+
+// Process EnteredCombat, LeftCombat - check if character joined to LONG combat
+// and check if it just left such combat
+//REGION
+IF
+EnteredCombat((CHARACTER)_Character, _CombatGuid)
+AND
+DB_PPMeter_LongCombat((GUIDSTRING)_CombatGuid)
+THEN
+DB_PPMeter_IsOrJustLeftLongCombat((CHARACTER)_Character);
+DebugLog("PPMLog: character joined existing long combat");
+
+
 //END_REGION
 
 
