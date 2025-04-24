@@ -4,13 +4,16 @@ INITSECTION
 DB_PPMeter_TurnStartedTimerPrefix("PPMeterTurnStartedTimer_");
 DB_PPMeter_DamageDoneTimerPrefix("PPMeterDamageDoneTimer_");
 DB_PPMeter_IsLongCombatTimerPrefix("PPMeterIsLongCombatTimer_");
+DB_PPMeter_AfterLongCombatDelayPrefix("PPMeterAfterLongCombatDelayTimer_");
 DB_PPMeter_DataWriteDelayMs(250);
 DB_PPMeter_LongCombatMinimumLengthMs(500);
+DB_PPMeter_LongCombatAfterCombatDelay(250);
 
 // DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
-// DB_PPMeter_IsLongCombat((STRING)_TimerStr);
+// DB_PPMeter_LongCombatCandidate((GUIDSTRING)_CombatGuid, (STRING)_TimerStr);
+// DB_PPMeter_LongCombat((GUIDSTRING)_CombatGuid);
 KBSECTION
-// Process combat start and end to be aware if it's "long" or "instant".
+// Process CombatStarted, CombatEnded - fill DB_PPMeter_LongCombat
 //REGION
 IF
 CombatStarted(_CombatGuid)
@@ -18,50 +21,71 @@ AND
 DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
 AND
 ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
+THEN
+PROC_PPMeter_ProcessCombatStartedInner(_CombatGuid, _TimerString);
+
+PROC
+PROC_PPMeter_ProcessCombatStartedInner((GUIDSTRING)_CombatGuid, (STRING)_TimerStr)
+THEN
+DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr);
+DebugLog("PPMLog: DB_PPMeter_LongCombatCandidate added");
+
+PROC
+PROC_PPMeter_ProcessCombatStartedInner((GUIDSTRING)_CombatGuid, (STRING)_TimerStr)
 AND
 DB_PPMeter_LongCombatMinimumLengthMs(_Delay)
 THEN
-TimerLaunch(_TimerString, _Delay);
+TimerLaunch(_TimerStr, _Delay);
+DebugLog("PPMLog: Combat Minimum Length timer started");
+
+IF
+CombatEnded(_CombatGuid)
+AND
+DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr)
+AND
+TimerExists(_TimerStr, 1)  // if timer still ticking
+THEN
+TimerCancel(_TimerStr);
+NOT DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr);
+DebugLog("PPMLog: Combat was short");
 
 IF
 TimerFinished(_TimerStr)
 AND
-DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
-AND
-IsSubstring(_TimerStr, _Prefix, 1)
-AND
-GetHostCharacter(_HostCharacter)
+DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr)  // if Timer Strings match
 THEN
-DB_PPMeter_IsLongCombat(_TimerStr);
-DebugText(_HostCharacter, "Long combat started");
+DB_PPMeter_LongCombat(_CombatGuid);
+NOT DB_PPMeter_LongCombatCandidate(_CombatGuid, _TimerStr);
+DebugLog("PPMLog: Combat is long!");
 
+
+
+// Remove DB_PPMeter_LongCombat after configured delay
 IF
 CombatEnded(_CombatGuid)
 AND
-DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
+DB_PPMeter_LongCombat(_CombatGuid)
 AND
-ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
+DB_PPMeter_LongCombatAfterCombatDelay(_Delay)
 AND
-TimerExists(_TimerString, 1)
+DB_PPMeter_AfterLongCombatDelayPrefix(_Prefix)
 AND
-GetHostCharacter(_HostCharacter)
+ConcatenateGUID(_Prefix, _CombatGuid, _TimerStr)
 THEN
-TimerCancel(_TimerString);
-DebugText(_HostCharacter, "That was a short combat");
+TimerLaunch(_TimerStr, _Delay);
+DebugLog("PPMLog: Long combat ended, scheduled deletion timer");
 
 IF
-CombatEnded(_CombatGuid)
+TimerFinished(_TimerStr)
 AND
-DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
+DB_PPMeter_LongCombat(_CombatGuid)
 AND
-ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
+GUIDToString(_CombatGuid, _CombatGUIDStr)
 AND
-DB_PPMeter_IsLongCombat(_TimerStr)
-AND
-GetHostCharacter(_HostCharacter)
+IsSubstring(_TimerStr, _CombatGUIDStr, 1)
 THEN
-NOT DB_PPMeter_IsLongCombat(_TimerStr);
-DebugText(_HostCharacter, "Long combat ended");
+NOT DB_PPMeter_LongCombat(_CombatGuid);
+DebugLog("PPMLog: Long combat removed after delay");
 //END_REGION
 
 
