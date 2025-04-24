@@ -1,15 +1,34 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-
+DB_PPMeter_TurnStartedTimerPrefix("PPMeterTurnStartedTimer_");
+DB_PPMeter_TurnStartedTimerDelayMs(250);
 KBSECTION
-
-
-
 //REGION // handle TurnEnded - count rounds
-// Note: cannot count on round start because it races with EnteredCombat event in case if player joined to existing fight
 IF
-TurnEnded((CHARACTER)_Character)  // Round == Turn in case of each character I suppose
+TurnStarted((CHARACTER)_Character)
+AND
+DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _Character, _TimerStr)
+AND
+DB_PPMeter_TurnStartedTimerDelayMs(_Delay)
+THEN
+RealtimeObjectTimerLaunch(_Character, _TimerStr, _Delay);
+
+IF
+ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+AND
+IsInCombat(_Character, 1)  // rounds++ only if entity is still in combat
+AND
+DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _Character, _TimerStr)  // if strings match
+THEN
+PROC_PPMeter_ProcessTurnStartedWithDelay(_Character);
+
+PROC
+PROC_PPMeter_ProcessTurnStartedWithDelay((CHARACTER)_Character)
 AND
 DB_PartyMembers(_Character)
 AND
