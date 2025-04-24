@@ -8,43 +8,60 @@ DB_PPMeter_DataWriteDelayMs(250);
 DB_PPMeter_LongCombatMinimumLengthMs(500);
 
 // DB_PPMeter_TempDamage((CHARACTER)_Character, (REAL)_Damage, (STRING)_TimerStr);
-// DB_PPMeter_CharacterIsInLongCombat((CHARACTER)_Character);
+// DB_PPMeter_IsLongCombat((STRING)_TimerStr);
 KBSECTION
 // Process combat start and end to be aware if it's "long" or "instant".
-// In case of "instant" we won't count damage made "not in combat" in case of the last killing blow
 //REGION
 IF
-EnteredCombat((CHARACTER)_Character, _)
-AND
-DB_PartyMembers(_Character)
+CombatStarted(_CombatGuid)
 AND
 DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
 AND
-ConcatenateGUID(_Prefix, _Character, _TimerStr)
+ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
 AND
 DB_PPMeter_LongCombatMinimumLengthMs(_Delay)
 THEN
-RealtimeObjectTimerLaunch(_Character, _TimerStr, _Delay);
+TimerLaunch(_TimerString, _Delay);
 
 IF
-ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
+TimerFinished(_TimerStr)
 AND
-IsInCombat(_Character, 1)  // if it is still in combat it's a long enough combat
+DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
 AND
-DB_PPMeter_TurnStartedTimerPrefix(_Prefix)
+IsSubstring(_TimerStr, _Prefix, 1)
 AND
-ConcatenateGUID(_Prefix, _Character, _TimerStr)  // if strings match
+GetHostCharacter(_HostCharacter)
 THEN
-DB_PPMeter_CharacterIsInLongCombat(_Character);
-DebugText(_Character, "Joined long combat!");
+DB_PPMeter_IsLongCombat(_TimerStr);
+DebugText(_HostCharacter, "Long combat started");
 
 IF
-LeftCombat((CHARACTER)_Character, _)
+CombatEnded(_CombatGuid)
 AND
-DB_PPMeter_CharacterIsInLongCombat(_Character)
+DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
+AND
+TimerExists(_TimerString, 1)
+AND
+GetHostCharacter(_HostCharacter)
 THEN
-NOT DB_PPMeter_CharacterIsInLongCombat(_Character);
-DebugText(_Character, "Left long combat!");
+TimerCancel(_TimerString);
+DebugText(_HostCharacter, "That was a short combat");
+
+IF
+CombatEnded(_CombatGuid)
+AND
+DB_PPMeter_IsLongCombatTimerPrefix(_Prefix)
+AND
+ConcatenateGUID(_Prefix, _CombatGuid, _TimerString)
+AND
+DB_PPMeter_IsLongCombat(_TimerStr)
+AND
+GetHostCharacter(_HostCharacter)
+THEN
+NOT DB_PPMeter_IsLongCombat(_TimerStr);
+DebugText(_HostCharacter, "Long combat ended");
 //END_REGION
 
 
