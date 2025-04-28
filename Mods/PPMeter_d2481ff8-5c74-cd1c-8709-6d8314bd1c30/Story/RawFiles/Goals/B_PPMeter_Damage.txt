@@ -1,11 +1,17 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-DB_PPMeter_DataWriteDelayMs(250);
+// We give a time for EnteredCombat event to wipe the old data before writing a new one
+// NOTE: sometimes the game do not fire TurnStarted event on joining the combat,
+// so it is possible that in some cases we'll have 0 rounds for character which is in fact started its turn
+DB_PPMeter_DataWriteDelayMs(300);
+
 DB_PPMeter_DataWriteTimerPrefix("PPMeterDataWriteTimer_");
 DB_PPMeter_RoundsCountTimerPrefix("PPMeterRoundsCountTimer_");
 
-DB_PPMeter_JustLeftCombatDelayMs(500);
+// This timer is needed to correctly handle one-shot fights with delayed data writing
+// We consider if this timer exists that means player just left combat and we should write delayed data
+DB_PPMeter_JustLeftCombatDelayMs(600);
 DB_PPMeter_JustLeftCombatTimerPrefix("PPMeterJustLeftCombatTimer_");
 
 KBSECTION
