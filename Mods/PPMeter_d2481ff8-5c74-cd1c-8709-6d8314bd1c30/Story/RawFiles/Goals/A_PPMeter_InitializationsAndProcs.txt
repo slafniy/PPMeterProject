@@ -132,13 +132,9 @@ DebugText(_Character, "Initialization by PPMeter_TimerLevelGameplayStarted!");
 IF
 TimerFinished("PPMeter_TimerLevelGameplayStarted")
 AND
-DB_PartyMembers(_Character)
+GetHostCharacter(_Character)
 AND
-GUIDToString(_Character, _onlyOnceStr1)
-AND
-Concatenate(_onlyOnceStr1, "PPMeter_UpdateGUI_Passive_Added", _onlyOnceStr)
-AND
-QRY_OnlyOnce(_onlyOnceStr)
+HasPassive(_Character, "PPMeter_UpdateGUI_Passive", 0)
 THEN
 AddPassive(_Character, "PPMeter_UpdateGUI_Passive");
 //END_REGION
