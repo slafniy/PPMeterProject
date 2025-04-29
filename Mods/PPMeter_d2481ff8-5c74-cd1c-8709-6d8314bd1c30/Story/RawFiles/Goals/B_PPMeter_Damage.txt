@@ -20,7 +20,7 @@ KBSECTION
 IF
 LeftCombat((CHARACTER)_Character, _)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 AND
 DB_PPMeter_JustLeftCombatTimerPrefix(_Prefix)
 AND
@@ -50,6 +50,8 @@ DB_NOOP(1);
 //REGION // handle TurnStarted - count rounds
 IF
 TurnStarted((CHARACTER)_Character)
+AND
+DB_Players(_Character)
 AND
 DB_PPMeter_RoundsCountTimerPrefix(_Prefix)
 AND
@@ -86,7 +88,7 @@ PROC_PPMeter_ProcessTurnStartedWithDelay(_Character);
 PROC
 PROC_PPMeter_ProcessTurnStartedWithDelay((CHARACTER)_Character)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 AND
 DB_PPMeter_Lifetime(_Lifetime)
 THEN
@@ -98,7 +100,7 @@ PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1.0);
 IF
 AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
 AND
-DB_PartyMembers(_AttackerOwner)
+DB_Players(_AttackerOwner)
 AND
 _DamageAmount > 0.0
 AND
@@ -158,7 +160,7 @@ PROC_PPMeterAdd(_Character, _Lifetime, "Damage", _Damage);
 IF
 AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
 AND
-DB_PartyMembers((CHARACTER)_Defender)
+DB_Players((CHARACTER)_Defender)
 AND
 _DamageAmount > 0.0
 AND
