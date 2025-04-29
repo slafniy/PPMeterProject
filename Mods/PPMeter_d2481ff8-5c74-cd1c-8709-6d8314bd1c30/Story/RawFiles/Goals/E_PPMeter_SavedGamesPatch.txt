@@ -3,14 +3,14 @@ SubGoalCombiner SGC_AND
 INITSECTION
 
 KBSECTION
-// v2.6.0.80+ - remove PPMeter_UpdateGUI_Passive from every character except Host
+// v2.7+ - remove PPMeter_UpdateGUI_Passive from every character except Avatars
 //REGION
 IF
 TimerFinished("PPMeter_TimerLevelGameplayStarted")
 AND
-DB_PartyMembers(_Character)
+DB_PartOfTheTeam(_Character)
 AND
-NOT GetHostCharacter(_Character)
+NOT DB_Avatars(_Character)
 AND
 HasPassive(_Character, "PPMeter_UpdateGUI_Passive", 1)
 THEN
