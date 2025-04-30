@@ -107,6 +107,9 @@ DB_PPMeter_LevelGameplayStartedTimerMs(500);
 // Character which data should be collected
 NOT DB_PPMeter_Players((CHARACTER)NULL_00000000-0000-0000-0000-000000000000);
 
+// Store character max reached level to handle leveling up properly and do not trigger data reset on respec
+NOT DB_PPMeter_PlayerMaxLevel((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
+
 KBSECTION
 //REGION // handle LevelGameplayStarted - Initialize character data, refresh GUI
 IF
@@ -188,11 +191,34 @@ PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
 //END_REGION
 
 
-//REGION // handle LeveledUp - on levelup reset per Level stats
+//REGION // handle LeveledUp - on levelup store new level and reset per Level stats
+// case if no level data
 IF
 LeveledUp((CHARACTER)_Character)
 AND
-DB_Players(_Character)
+NOT DB_PPMeter_PlayerMaxLevel(_Character, _)
+AND
+GetLevel(_Character, _Level)
+THEN
+DB_PPMeter_PlayerMaxLevel(_Character, _Level);
+PROC_PPMeterResetLevelStats(_Character);
+
+// case if data exists and new level is greater than the old one
+IF
+LeveledUp((CHARACTER)_Character)
+AND
+DB_PPMeter_PlayerMaxLevel(_Character, _OldLevel)
+AND
+GetLevel(_Character, _NewLevel)
+AND
+_NewLevel > _OldLevel
+THEN
+DB_PPMeter_PlayerMaxLevel(_Character, _NewLevel);
+NOT DB_PPMeter_PlayerMaxLevel(_Character, _OldLevel);
+PROC_PPMeterResetLevelStats(_Character);
+
+PROC
+PROC_PPMeterResetLevelStats((CHARACTER)_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
@@ -260,6 +286,7 @@ PROC_PPMeter_InitDataReal(_Character);
 PROC_PPMeter_InitEventsCounter(_Character);
 PROC_PPMeter_InitPreviousHP(_Character);
 PROC_PPMeter_EnsurePPMeterPlayers(_Character);
+PROC_PPMeter_EnsurePlayerMaxLevel(_Character);
 
 PROC
 PROC_PPMeter_InitDataReal((CHARACTER)_Character)
@@ -291,7 +318,6 @@ THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
 //DebugText(_Character, "Initialized PreviousHP");
 
-
 // Add player to the list if not added
 PROC
 PROC_PPMeter_EnsurePPMeterPlayers((CHARACTER)_Character)
@@ -300,6 +326,16 @@ NOT DB_PPMeter_Players(_Character)
 THEN
 DB_PPMeter_Players(_Character);
 DebugText(_Character, "I'm added to DB_PPMeter_Players");
+
+// Store current level
+PROC
+PROC_PPMeter_EnsurePlayerMaxLevel((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_PlayerMaxLevel(_Character, _)
+AND
+GetLevel(_Character, _Level)
+THEN
+DB_PPMeter_PlayerMaxLevel(_Character, _Level);
 //END_REGION
 
 

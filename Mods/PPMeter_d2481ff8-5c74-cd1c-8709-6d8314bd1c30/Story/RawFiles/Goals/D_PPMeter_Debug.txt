@@ -231,6 +231,21 @@ AND
 GetHostCharacter(_HostChar)
 THEN
 DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_levels")
+AND
+DB_PPMeter_PlayerMaxLevel(_Character, _Level)
+AND
+GUIDToString(_Character, _msg1)
+AND
+Concatenate(_msg1, " - ", _msg2)
+AND
+ConcatenateInteger(_msg2, _Level, _msg)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _msg);
 EXITSECTION
 
 ENDEXITSECTION
