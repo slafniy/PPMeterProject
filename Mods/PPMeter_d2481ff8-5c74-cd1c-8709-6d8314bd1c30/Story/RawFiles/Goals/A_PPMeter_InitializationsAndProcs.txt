@@ -104,6 +104,9 @@ NOT DB_PPMeter_CurrentResourceBoost((CHARACTER)NULL_00000000-0000-0000-0000-0000
 // how much time to wait after LevelGameplayStarted event
 DB_PPMeter_LevelGameplayStartedTimerMs(500);
 
+// Character which data should be collected
+NOT DB_PPMeter_Players((CHARACTER)NULL_00000000-0000-0000-0000-000000000000);
+
 KBSECTION
 //REGION // handle LevelGameplayStarted - Initialize character data, refresh GUI
 IF
@@ -116,14 +119,14 @@ TimerLaunch("PPMeter_TimerLevelGameplayStarted", _Timeout);  // give some time f
 IF
 TimerFinished("PPMeter_TimerLevelGameplayStarted")
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 THEN
 PROC_PPMeter_InitializeCharacterData(_Character);
 
 IF
 TimerFinished("PPMeter_TimerLevelGameplayStarted")
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 THEN
 PROC_PPMeter_UpdateCharacterGUI(_Character);
 DebugText(_Character, "Initialization by PPMeter_TimerLevelGameplayStarted!");
@@ -143,11 +146,15 @@ AddPassive(_Character, "PPMeter_UpdateGUI_Passive");
 //REGION // handle CharacterJoinedParty - Initialize character data, refresh GUI
 IF
 CharacterJoinedParty(_Character)
+AND
+DB_Players(_Character)
 THEN
 PROC_PPMeter_InitializeCharacterData(_Character);
 
 IF
 CharacterJoinedParty(_Character)
+AND
+DB_Players(_Character)
 THEN
 PROC_PPMeter_UpdateCharacterGUI(_Character);
 DebugText(_Character, "Initialization on CharacterJoinedParty");
@@ -158,14 +165,14 @@ DebugText(_Character, "Initialization on CharacterJoinedParty");
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 THEN
 PROC_PPMeter_InitializeCharacterData(_Character);
 
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 THEN
 PROC_PPMeter_UpdateCharacterGUI(_Character);
 DebugText(_Character, "Initialization on EnteredCombat");
@@ -173,7 +180,7 @@ DebugText(_Character, "Initialization on EnteredCombat");
 IF
 EnteredCombat((CHARACTER)_Character, _)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
@@ -185,7 +192,7 @@ PROC_PPMeter_ReplaceInDB(_Character, "Combat", _StatsName, 0.0);
 IF
 LeveledUp((CHARACTER)_Character)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
@@ -197,7 +204,7 @@ PROC_PPMeter_ReplaceInDB(_Character, "Level", _StatsName, 0.0);
 IF
 LongRestFinished()
 AND
-DB_PartOfTheTeam(_Character)  // not DB_PartyMembers because we want to handle camp fellas too
+DB_PPMeter_Players(_Character)  // not just DB_Players to handle out-of-party dudes too
 AND
 DB_PPMeter_StatsType(_StatsName)
 THEN
@@ -252,6 +259,7 @@ THEN
 PROC_PPMeter_InitDataReal(_Character);
 PROC_PPMeter_InitEventsCounter(_Character);
 PROC_PPMeter_InitPreviousHP(_Character);
+PROC_PPMeter_EnsurePPMeterPlayers(_Character);
 
 PROC
 PROC_PPMeter_InitDataReal((CHARACTER)_Character)
@@ -282,6 +290,16 @@ GetHitpoints(_Character, _HP)
 THEN
 DB_PPMeter_PreviousHP(_Character, _HP);
 //DebugText(_Character, "Initialized PreviousHP");
+
+
+// Add player to the list if not added
+PROC
+PROC_PPMeter_EnsurePPMeterPlayers((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_Players(_Character)
+THEN
+DB_PPMeter_Players(_Character);
+DebugText(_Character, "I'm added to DB_PPMeter_Players");
 //END_REGION
 
 

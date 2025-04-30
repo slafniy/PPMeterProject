@@ -15,11 +15,15 @@ KBSECTION
 //REGION store actual HP value on HitpointsChanged and handle hp change
 IF
 HitpointsChanged((CHARACTER)_Character, _)
+AND
+DB_Players(_Character)
 THEN
 PROC_PPMeter_ProcessHPChanged(_Character);
 
 IF
 ShapeshiftedHitpointsChanged((CHARACTER)_Character, _)
+AND
+DB_Players(_Character)
 THEN
 PROC_PPMeter_ProcessHPChanged(_Character);
 //END_REGION
@@ -30,6 +34,8 @@ IF
 StatusApplied((CHARACTER)_Target, "HEAL", (CHARACTER)_Caster, _)
 AND
 IsInCombat(_Target, 1)
+AND
+DB_Players(_Target)
 AND
 DB_PPMeter_HealEvents(_Target, _HealValue, _EventID)
 AND
@@ -78,7 +84,7 @@ PROC_PPMeterAdd(_Target, _Lifetime, "HealingSelf", _HealValueReal);
 PROC
 PROC_PPMeter_ProcessHPChanged((CHARACTER)_Character)
 AND
-DB_PartyMembers(_Character)
+DB_Players(_Character)
 AND
 GetHitpoints(_Character, _HPCurrent)
 THEN

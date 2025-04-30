@@ -126,6 +126,111 @@ TextEvent("ppmwipe")
 THEN
 PROC_PPMeter_WipeResourceData();
 
+
+IF
+TextEvent("ppm_players")
+AND
+DB_Players(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_party")
+AND
+DB_PartyMembers(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_team")
+AND
+DB_PartOfTheTeam(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_teamplayers")
+AND
+DB_PartOfTheTeam(_Character)
+AND
+QRY_IsPlayerActor(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_playable")
+AND
+DB_GLO_Playable(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_heroes")
+AND
+DB_GLO_Playable(_Character)
+AND
+GetBaseFaction(_Character, Hero_a1542c81-6895-929e-4522-10ce218bb360)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_playeractors")
+AND
+DB_GLO_Playable(_Character)
+AND
+QRY_IsPlayerActor(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_incamp")
+AND
+DB_InCamp(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
+
+IF
+TextEvent("ppm_list")
+AND
+DB_PPMeter_Players(_Character)
+AND
+GUIDToString(_Character, _CharacterStr)
+AND
+GetHostCharacter(_HostChar)
+THEN
+DebugText(_HostChar, _CharacterStr);
 EXITSECTION
 
 ENDEXITSECTION
