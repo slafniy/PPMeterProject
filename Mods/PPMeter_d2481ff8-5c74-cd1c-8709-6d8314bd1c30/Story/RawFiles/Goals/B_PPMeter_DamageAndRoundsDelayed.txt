@@ -14,7 +14,44 @@ DB_PPMeter_RoundsCountTimerPrefix("PPMeterRoundsCountTimer_");
 DB_PPMeter_JustLeftCombatDelayMs(600);
 DB_PPMeter_JustLeftCombatTimerPrefix("PPMeterJustLeftCombatTimer_");
 
+// Character - DamageAmount - TimerStr
+NOT DB_PPMeter_TempDamage((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0.0, "");
+
+NOT DB_PPMeter_DamageEventsCounter((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 KBSECTION
+//REGION // Damage events counter and procs
+QRY
+QRY_PPMeter_IsHighestDamageEventCounter((CHARACTER)_Character, (INTEGER)_ValueToCheck)
+AND
+DB_PPMeter_DamageEventsCounter(_Character, _Value)
+AND
+_ValueToCheck >= _Value
+THEN
+DB_NOOP(1);
+
+PROC
+PROC_PPMeter_DamageEventsCounterIncrease((CHARACTER)_Character)
+AND
+DB_PPMeter_DamageEventsCounter(_Character, _Value)
+AND
+QRY_PPMeter_IsHighestDamageEventCounter(_Character, _Value)
+AND
+IntegerSum(_Value, 1, _NewValue)
+THEN
+DB_PPMeter_DamageEventsCounter(_Character, _NewValue);
+NOT DB_PPMeter_DamageEventsCounter(_Character, _Value);
+DebugText(_Character, "DB_PPMeter_DamageEventsCounter++");
+
+PROC
+PROC_PPMeter_DamageEventsCounterIncrease((CHARACTER)_Character)
+AND
+NOT DB_PPMeter_DamageEventsCounter(_Character, _)
+THEN
+DB_PPMeter_DamageEventsCounter(_Character, 0);
+DebugText(_Character, "DB_PPMeter_DamageEventsCounter set to 0");
+//END_REGION
+
+
 // Track if character recently left combat
 //REGION
 IF
@@ -96,7 +133,7 @@ PROC_PPMeterAdd(_Character, _Lifetime, "RoundsCount", 1.0);
 //END_REGION
 
 
-//REGION // handle AttackedBy - count damage dealt
+//REGION // handle AttackedBy - count damage done
 IF
 AttackedBy((GUIDSTRING)_Defender, (CHARACTER)_AttackerOwner, (GUIDSTRING)_Attacker, (STRING)_DamageType, (INTEGER)_DamageAmount, (STRING)_DamageCause, (INTEGER)_StoryActionID)
 AND
@@ -107,6 +144,20 @@ AND
 IsEnemy(_AttackerOwner, (CHARACTER)_Defender, 1)
 AND
 IntegerToReal(_DamageAmount, _DamageAmountReal)
+THEN
+PROC_PPMeter_ProcessAttackedByDamageDone(_AttackerOwner, _DamageAmountReal);
+
+PROC
+PROC_PPMeter_ProcessAttackedByDamageDone((CHARACTER)_AttackerOwner, (REAL)_DamageAmountReal)
+THEN
+PROC_PPMeter_DamageEventsCounterIncrease(_AttackerOwner);
+
+PROC
+PROC_PPMeter_ProcessAttackedByDamageDone((CHARACTER)_AttackerOwner, (REAL)_DamageAmountReal)
+AND
+DB_PPMeter_DamageEventsCounter(_AttackerOwner, _Counter)
+AND
+QRY_PPMeter_IsHighestDamageEventCounter(_AttackerOwner, _Counter)
 AND
 DB_PPMeter_DataWriteTimerPrefix(_Prefix)
 AND
@@ -114,10 +165,13 @@ DB_PPMeter_DataWriteDelayMs(_Delay)
 AND
 ConcatenateGUID(_Prefix, _AttackerOwner, _TimerStr1)
 AND
-ConcatenateInteger(_TimerStr1, _StoryActionID, _TimerStr)
+Concatenate(_TimerStr1, "_", _TimerStr2)
+AND
+ConcatenateInteger(_TimerStr2, _Counter, _TimerStr)
 THEN
 DB_PPMeter_TempDamage(_AttackerOwner, _DamageAmountReal, _TimerStr);
 RealtimeObjectTimerLaunch(_AttackerOwner, _TimerStr, _Delay);
+
 
 IF
 ObjectTimerFinished((CHARACTER)_Character, _TimerStr)
