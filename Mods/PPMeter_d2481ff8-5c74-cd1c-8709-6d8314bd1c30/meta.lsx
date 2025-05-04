@@ -32,7 +32,7 @@
                     <attribute id="FileSize" type="uint64" value="20431403"/>
                     <attribute id="Folder" type="LSString" value="PPMeter_d2481ff8-5c74-cd1c-8709-6d8314bd1c30"/>
                     <attribute id="LobbyLevelName" type="FixedString" value=""/>
-                    <attribute id="MD5" type="LSString" value="fae7092a12df85023956bce0bf0658de"/>
+                    <attribute id="MD5" type="LSString" value="e42f1a5e2c5e04863f4de693ee2f9bdd"/>
                     <attribute id="MenuLevelName" type="FixedString" value=""/>
                     <attribute id="Name" type="LSString" value="PPMeter damage meter and combat statistics"/>
                     <attribute id="NumPlayers" type="uint8" value="4"/>
@@ -40,7 +40,7 @@
                     <attribute id="PublishHandle" type="uint64" value="4407001"/>
                     <attribute id="StartupLevelName" type="FixedString" value=""/>
                     <attribute id="UUID" type="FixedString" value="d2481ff8-5c74-cd1c-8709-6d8314bd1c30"/>
-                    <attribute id="Version64" type="int64" value="73183496092254299"/>
+                    <attribute id="Version64" type="int64" value="73183498239737951"/>
                     <children>
                         <node id="PublishVersion">
                             <attribute id="Version64" type="int64" value="144255927717549775"/>
