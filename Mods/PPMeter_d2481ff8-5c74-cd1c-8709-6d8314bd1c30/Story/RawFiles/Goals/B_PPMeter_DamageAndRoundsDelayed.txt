@@ -24,21 +24,29 @@ IF
 TimerFinished("PPMeter_TimerLevelGameplayStarted")
 AND
 DB_Players(_Character)
-AND
-NOT DB_PPMeter_DamageEventsCounter(_Character, _)
 THEN
-DB_PPMeter_DamageEventsCounter(_Character, 0);
-DebugText(_Character, "DB_PPMeter_DamageEventsCounter set to 0 on LevelGameplayStarted after delay");
+PROC_PPMeter_DamageEventsCounterReset(_Character);
 
 IF
 CharacterJoinedParty(_Character)
 AND
 DB_Players(_Character)
+THEN
+PROC_PPMeter_DamageEventsCounterReset(_Character);
+
+PROC
+PROC_PPMeter_DamageEventsCounterReset((CHARACTER)_Character)
 AND
-NOT DB_PPMeter_DamageEventsCounter(_Character, _)
+DB_PPMeter_DamageEventsCounter(_Character, _Counter)
+THEN
+NOT DB_PPMeter_DamageEventsCounter(_Character, _Counter);
+
+PROC
+PROC_PPMeter_DamageEventsCounterReset((CHARACTER)_Character)
 THEN
 DB_PPMeter_DamageEventsCounter(_Character, 0);
-DebugText(_Character, "DB_PPMeter_DamageEventsCounter set to 0 on CharacterJoinedParty");
+DebugText(_Character, "DB_PPMeter_DamageEventsCounter reset");
+
 
 QRY
 QRY_PPMeter_IsHighestDamageEventCounter((CHARACTER)_Character, (INTEGER)_ValueToCheck)
