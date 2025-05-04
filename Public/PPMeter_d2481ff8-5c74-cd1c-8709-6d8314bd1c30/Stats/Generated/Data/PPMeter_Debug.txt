@@ -1,0 +1,8 @@
+# to make enemy fat
+new entry "PPM_DEBUG_HP_BOOST"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "PPM_DEBUG_HP_BOOST"
+data "Boosts" "IncreaseMaxHP(655)"
+data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead"
+data "DisplayName" ""

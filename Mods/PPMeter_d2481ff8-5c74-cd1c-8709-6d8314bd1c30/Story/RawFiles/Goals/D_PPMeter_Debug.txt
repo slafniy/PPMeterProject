@@ -246,6 +246,22 @@ AND
 GetHostCharacter(_HostChar)
 THEN
 DebugText(_HostChar, _msg);
+
+// spawn fat wolf that can run and attack to test damage
+IF
+TextEvent("ppm_psina")
+AND
+GetHostCharacter(_Player)
+AND
+GetPosition(_Player,_X,_Y,_Z)
+AND
+RealSum(_X,5.0,_XOffset)
+AND
+CreateAt((CHARACTERROOT)Wolf_41da0eff-b533-43cc-a014-218f7d23fa11,_XOffset,_Y,_Z,1,0,"",_Wolf)
+THEN
+SetFaction(_Wolf,(FACTION)Evil_4be9261a-e481-8d9d-3528-f36956a19b17);
+PROC_MakeNPCHostile((CHARACTER)_Wolf,_Player);
+ApplyStatus(_Wolf, "PPM_DEBUG_HP_BOOST", -1.0, 1, _Wolf);
 EXITSECTION
 
 ENDEXITSECTION
