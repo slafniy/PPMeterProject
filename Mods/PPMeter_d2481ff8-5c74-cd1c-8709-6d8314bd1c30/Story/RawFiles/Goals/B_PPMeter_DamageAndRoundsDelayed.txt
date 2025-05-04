@@ -20,6 +20,26 @@ NOT DB_PPMeter_TempDamage((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 
 NOT DB_PPMeter_DamageEventsCounter((CHARACTER)NULL_00000000-0000-0000-0000-000000000000, 0);
 KBSECTION
 //REGION // Damage events counter and procs
+IF
+TimerFinished("PPMeter_TimerLevelGameplayStarted")
+AND
+DB_Players(_Character)
+AND
+NOT DB_PPMeter_DamageEventsCounter(_Character, _)
+THEN
+DB_PPMeter_DamageEventsCounter(_Character, 0);
+DebugText(_Character, "DB_PPMeter_DamageEventsCounter set to 0 on LevelGameplayStarted after delay");
+
+IF
+CharacterJoinedParty(_Character)
+AND
+DB_Players(_Character)
+AND
+NOT DB_PPMeter_DamageEventsCounter(_Character, _)
+THEN
+DB_PPMeter_DamageEventsCounter(_Character, 0);
+DebugText(_Character, "DB_PPMeter_DamageEventsCounter set to 0 on CharacterJoinedParty");
+
 QRY
 QRY_PPMeter_IsHighestDamageEventCounter((CHARACTER)_Character, (INTEGER)_ValueToCheck)
 AND
@@ -41,14 +61,6 @@ THEN
 DB_PPMeter_DamageEventsCounter(_Character, _NewValue);
 NOT DB_PPMeter_DamageEventsCounter(_Character, _Value);
 DebugText(_Character, "DB_PPMeter_DamageEventsCounter++");
-
-PROC
-PROC_PPMeter_DamageEventsCounterIncrease((CHARACTER)_Character)
-AND
-NOT DB_PPMeter_DamageEventsCounter(_Character, _)
-THEN
-DB_PPMeter_DamageEventsCounter(_Character, 0);
-DebugText(_Character, "DB_PPMeter_DamageEventsCounter set to 0");
 //END_REGION
 
 
